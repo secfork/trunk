@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="dyaliasApp">
+
+<head>
+
+	<meta http-equiv="content-type" content="text/html;charset=utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=9">
+	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+
+	<link rel="stylesheet" href="css/dstyle.css" type="text/css" />
+	<link rel="stylesheet" href="css/sstyle.css" type="text/css" />
+	<link rel="stylesheet" href="css/uiProperties.css" type="text/css" />
+
+
+	<script type="text/javascript" src="lib/jquery.min.js"></script>
+	<script type="text/javascript" src="lib/undomanager.js"></script>
+
+	<link rel="stylesheet" href="lib/jquery-ui/jquery-ui.min.css" type="text/css" />
+	<script type="text/javascript" src="lib/jquery-ui/jquery-ui.min.js"></script>
+
+	<script type="text/javascript" src="lib/angular.min.js"></script>
+	<script type="text/javascript" src="lib/ui-load.js"></script>
+	<script type="text/javascript" src="lib/angular-file-upload.min.js"></script>
+
+	<link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<script type="text/javascript" src="lib/bootstrap/js/bootstrap.min.js"></script>
+
+	<script type="text/javascript" src="lib/ui-bootstrap-tpls-0.13.0.min.js"></script>
+
+	<link rel="stylesheet" href="lib/animate-css/animate.min.css" type="text/css" />
+
+	<script type="text/javascript" src="lib/malihu/jquery.mCustomScrollbar.concat.min.js"></script>
+	<link rel="stylesheet" href="lib/malihu/jquery.mCustomScrollbar.min.css" type="text/css" />
+
+	<script type="text/javascript" src="lib/angularjsColorPicker/bootstrap-colorpicker-module.min.js"></script>
+	<link rel="stylesheet" href="lib/angularjsColorPicker/colorpicker.min.css" type="text/css" />
+
+	<script type="text/javascript" src="lib/open-weather-master/openWeather.min.js"></script>
+
+
+</head>
+
+<body ng-controller="bodyController">
+
+	<div ui-loading class="uiLoading" ng-hide="loading"></div>
+	<div ui-toolbar class="uiTooBar"></div>
+	<div ui-editor-panel class="uiEditorPanel"></div>
+	<div ui-draw-panel class="uiDrawPanel"></div>
+	<div ui-component-properties class="uiComponentProperties"></div>
+	<div ui-alert class="uiAlert"></div>
+
+</body>
+
+<!-- Latest compiled and minified JavaScript -->
+<!-- app -->
+<script type="text/javascript" src="dyaliasController/app.js"></script>
+
+<!-- controller -->
+<script type="text/javascript" src="dyaliasController/bodyController.js"></script>
+<script type="text/javascript" src="dyaliasController/createPageController.js"></script>
+<script type="text/javascript" src="dyaliasController/editorPanelPageController.js"></script>
+<script type="text/javascript" src="dyaliasController/componentController.js"></script>
+<script type="text/javascript" src="dyaliasController/componentPropertiesController.js"></script>
+<script type="text/javascript" src="dyaliasController/elementListController.js"></script>
+<script type="text/javascript" src="dyaliasController/toolbarController.js"></script>
+<script type="text/javascript" src="dyaliasController/alertController.js"></script>
+<script type="text/javascript" src="dyaliasController/imagePlayerController.js"></script>
+
+<!-- directive -->
+<script type="text/javascript" src="directive/selectorDirective.js"></script>
+<script type="text/javascript" src="directive/droppable_directive.js"></script>
+<script type="text/javascript" src="directive/selectable_directive.js"></script>
+<script type="text/javascript" src="directive/draggable_directive.js"></script>
+<script type="text/javascript" src="directive/directive.js"></script>
+
+<!-- common class -->
+<script type="text/javascript" src="common/directive.js"></script>
+<script type="text/javascript" src="common/common_service_base.js"></script>
+
+<script type="text/javascript" src="common/component_service.js"></script>
+<script type="text/javascript" src="common/data_connect_service.js"></script>
+<script type="text/javascript" src="common/common_filter.js"></script>
+
+<!-- datasource service -->
+<script type="text/javascript" src="service/datasource_factory.js"></script>
+
+
+<!--ocLazyLoad-->
+<script type="text/javascript" src="lib/lazyload/ocLazyLoad.js"></script>
+
+<!--  component controller factory -->
+<script type="text/javascript" src="componentsController/componentControllerFactory.js"></script>
+
+
+</html>

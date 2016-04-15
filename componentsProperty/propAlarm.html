@@ -1,0 +1,149 @@
+<div>
+  <!-- 组件名 -->
+  <div class="uiPropertyTitle">
+    <input class="uiPropertyBaseName" type="text" ng-model="base.name"></input>
+    <div class="uiPropertyDelete" ng-click="del(base)"></div>
+    <!--<button class="btn btn-xs" style="float: right" ng-click="save()">保存</button>-->
+  </div>
+
+  <!-- 选项卡 -->
+  <div class="uiEditorPanelTabs" ng-init="componentProp='propertyList'">
+    <span ng-class="{'uiEditorPanelTabsActive':componentProp=='propertyList'}" ng-click="componentProp='propertyList'">属性</span>
+    <span ng-class="{'uiEditorPanelTabsActive':componentProp=='dataLink'}" ng-click="componentProp='dataLink'">数据连接</span>
+  </div>
+
+  <!-- 内容 -->
+  <div class="uiPropertyTabsContent" style="height:auto;">
+
+    <!-- 属性 -->
+    <div class="uiPropertyAttr" ng-show="componentProp=='propertyList'">
+
+      <div properties-box dir-title="布局">
+
+        <div>
+          <label class="w-60">宽度</label>
+          <div unit-select dir-class="w-40" dir-model="style.width"></div>
+        </div>
+
+        <div>
+          <label class="w-60">高度</label>
+          <div unit-select dir-class="w-40" dir-model="style.height"></div>
+        </div>
+
+        <div class="half">
+          <label class="w-60">左边距</label>
+          <!-- <input class='w-40' type="text" ng-model="style.marginLeft"/> -->
+          <div unit-out dir-class='w-40' dir-unit="px" dir-model="style.marginLeft"></div>
+        </div>
+
+        <div class="half">
+          <label class="w-60">上边距</label>
+          <!-- <input class="w-40" type="text" ng-model="style.marginTop"/> -->
+          <div unit-out dir-class='w-40' dir-unit="px" dir-model="style.marginTop"></div>
+        </div>
+
+        <div class="half">
+          <label class="w-60">右边距</label>
+          <!-- <input class="w-40" type="text" ng-model="style.marginRight"/> -->
+          <div unit-out dir-class='w-40' dir-unit="px" dir-model="style.marginRight"></div>
+        </div>
+
+        <div class="half">
+          <label class="w-60">下边距</label>
+          <!-- <input class="w-40" type="text" ng-model="style.marginBottom"/> -->
+          <div unit-out dir-class='w-40' dir-unit="px" dir-model="style.marginBottom"></div>
+        </div>
+
+        <div>
+          <label class="w-100">自适应缩放</label>
+          <select class="w-100" ng-model="style.flex">
+            <option value="1 1 auto">适应缩放</option>
+            <option value="0 0 auto">不缩放</option>
+          </select>
+        </div>
+
+        <div class="clear"></div>
+      </div>
+
+      <div properties-box dir-title="样式">
+        <div>
+          <label class="w-80">时间格式</label>
+          <select class="w-80">
+          </select>
+        </div>
+        <div>
+          <label class="w-140">显示报警查询选项</label>
+          <input type="checkbox" ng-model="style.alarmCtrl" ng-change="alarmCtrl()" ng-true-value="1" ng-false-value="0" />
+        </div>
+        <div>
+          <label class="w-80">报表边框</label>
+          <input type="checkbox" ng-model="style.tbBorder" ng-true-value='1' ng-false-value='0' />
+        </div>
+        <div>
+          <label class="w-80">颜色</label>
+          <select class="w-80" ng-model="tbColor" style="background:{{tbColors[tbColor].even}}" ng-change="changeColor(tbColor)">
+            <option ng-repeat="color in tbColors track by $index" style="background:{{color.even}};color:#000000;" value="{{$index}}">
+              <span class="glyphicon glyphicon-remove"></span>
+            </option>
+          </select>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 数据连接 -->
+    <div class="uiPropertyDataLink" ng-show="componentProp=='dataLink'">
+
+      <div properties-box dir-title="数据源">
+        <div>
+          <label class="w-80">类型</label>
+          <select class="w-80">
+            <option value="getSystemAlarms">报警数据源</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="w-80">模型</label>
+          <select class="w-80"></select>
+        </div>
+
+        <div>
+          <label class="w-80">系统</label>
+          <select class="w-80"></select>
+        </div>
+      </div>
+
+      <div properties-box dir-title="展示内容">
+
+        <div ng-repeat="(key,val) in data.op.headJson track by $index">
+          <label class="w-80">{{val.title}}</label>
+          <input type="checkbox" ng-model="val.state" ng-change='changeCondition()' ng-true-value='1' ng-false-value='0' />
+        </div>
+
+        <div>
+          <!-- 列表 -->
+          <div class="w-140" style="height:100px;float:left;margin:15px;border:solid #CCC 1px;overflow:auto;">
+            <div ng-repeat="tag in data.op.headList track by $index" ng-class="{'pageElementActive':tagIdx==$index}" ng-click="selectTag($index)">{{tag.title}}</div>
+          </div>
+          <!-- 按钮 -->
+          <div class="w-40" style="height:100px;float:left;margin:15px auto;">
+            <span class="btn btn-xs m-t-10" ng-click="upTag(tagIdx)"><i class="glyphicon glyphicon-chevron-up"></i></span>
+            <span class="btn btn-xs m-t-10" ng-click="downTag(tagIdx)"><i class="glyphicon glyphicon-chevron-down"></i></span>
+          </div>
+          <div class="clear"></div>
+        </div>
+        <div ng-if="style.alarmCtrl=='1'">
+          <label>每页显示</label>
+          <input type='number' ng-model="data.op.size" class="w-40" />
+          <span>条</span>
+        </div>
+        <div ng-if="style.alarmCtrl=='0'">
+          <label>刷新周期</label>
+          <input type='number' ng-model="data.op.cycle" ng-change="alarmCtrl()" class="w-40" />
+          <span>秒</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

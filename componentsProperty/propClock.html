@@ -1,0 +1,143 @@
+<div>
+  <!-- 组件名 -->
+  <div class="uiPropertyTitle">
+    <input class="uiPropertyBaseName" type="text" ng-model="base.name"></input>
+    <div class="uiPropertyDelete" ng-click="del(base)"></div>
+    <!--<button class="btn btn-xs" style="float: right" ng-click="save()">保存</button>-->
+  </div>
+
+  <!-- 选项卡 -->
+  <div class="uiEditorPanelTabs">
+    <span class="uiEditorPanelTabsActive">属性</span>
+    <span>数据连接</span>
+  </div>
+
+  <!-- 内容 -->
+  <div class="uiPropertyTabsContent" style="height:auto;">
+
+    <!-- 属性 -->
+    <div class="uiPropertyAttr">
+
+
+      <div properties-box dir-title="布局">
+        <div>
+          <label class="w-60">宽度</label>
+          <div unit-select dir-class="w-40" dir-model="style.width"></div>
+        </div>
+
+        <div>
+          <label class="w-60">高度</label>
+          <div unit-select dir-class="w-40" dir-model="style.height"></div>
+        </div>
+
+        <div class="half">
+          <label class="w-60">左边距</label>
+          <div unit-out dir-class='w-40' dir-unit="px" dir-model="style.marginLeft"></div>
+        </div>
+
+        <div class="half">
+          <label class="w-60">上边距</label>
+          <div unit-out dir-class='w-40' dir-unit="px" dir-model="style.marginTop"></div>
+        </div>
+
+        <div class="half">
+          <label class="w-60">右边距</label>
+          <div unit-out dir-class='w-40' dir-unit="px" dir-model="style.marginRight"></div>
+        </div>
+
+        <div class="half">
+          <label class="w-60">下边距</label>
+          <div unit-out dir-class='w-40' dir-unit="px" dir-model="style.marginBottom"></div>
+        </div>
+
+        <div class="clear"></div>
+      </div>
+
+
+      <div properties-box dir-title="样式">
+        <div>
+          <label class="w-80">显示时间</label>
+          <input type="checkbox" ng-model="data.timeDisplay" />
+        </div>
+        <div>
+          <label class="w-80">时间格式</label>
+          <select class="w-100" ng-model="data.timeType">
+            <option value="0">下午 1:30:55</option>
+            <option value="1">下午 1:30</option>
+            <option value="2">13:30:55</option>
+            <option value="3">13:30</option>
+            <option value="4">1:30:55 PM</option>
+            <option value="5">1:30 PM</option>
+            <option value="6">1时30分55秒</option>
+            <option value="7">13时30分</option>
+            <option value="8">下午 1时30分55秒</option>
+            <option value="9">下午 1时30分</option>
+          </select>
+        </div>
+        <div>
+          <label class="w-80">显示日期</label>
+          <input type="checkbox" ng-model="data.dateDisplay" />
+        </div>
+        <div>
+          <label class="w-80">日期格式</label>
+          <select class="w-100" ng-model="data.dateType">
+            <option value="0">2015/03/14</option>
+            <option value="1">2015/3/14</option>
+            <option value="2">2015年3月14日</option>
+            <option value="3">三月十四日</option>
+            <option value="4">3月14日</option>
+            <option value="5">15/3/14</option>
+            <option value="6">3/14</option>
+            <option value="7">3/14/15</option>
+            <option value="8">03/14/15</option>
+            <option value="9">14-Mar</option>
+            <option value="10">14-Mar-15</option>
+            <option value="11">14-03-15</option>
+            <option value="12">14-03</option>
+          </select>
+        </div>
+        <div>
+          <label class="w-80">显示星期</label>
+          <input type="checkbox" ng-model="data.weekDisplay" />
+        </div>
+        <div>
+          <label class="w-80">星期格式</label>
+          <select class="w-100" ng-model="data.weekType">
+            <option value="0">星期三</option>
+            <option value="1">周三</option>
+            <option value="2">Wednesday</option>
+            <option value="3">Wed</option>
+          </select>
+        </div>
+
+
+        <div class="h-auto">
+          <label class="w-80">字体颜色</label>
+          <input type="text" colorpicker="rgba" ng-model="style.color" class="w-100"/>
+        </div>
+
+        <div class="h-auto">
+          <label class="w-80"></label>
+          <div class="w-100" ng-model="style.color" ng-style="{'background-color' : style.color}" colorpicker="rgba" style="position:relative;display:inline-block;height:20px;"></div>
+        </div>
+
+        <div class="h-auto">
+          <label class="w-80">背景颜色</label>
+          <input type="text" colorpicker="rgba" ng-model="style.backgroundColor" class="w-100" />
+        </div>
+
+        <div class="h-auto">
+          <label class="w-80"></label>
+          <div class="w-100" ng-model="style.backgroundColor" ng-style="{'background-color' : style.backgroundColor}" colorpicker="rgba" style="position:relative;display:inline-block;height:20px;"></div>
+        </div>
+
+      </div>
+    </div>
+    <!-- 数据连接 -->
+    <div class="uiPropertyDataLink">
+
+    </div>
+
+  </div>
+
+</div>

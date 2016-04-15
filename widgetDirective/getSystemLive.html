@@ -1,0 +1,73 @@
+<div class="dy_datasource_datasource_widget" ng-controller="getSystemLive" ng-show="tags.length != 0">
+	<div class="list-group" style="margin-left:205px;">
+	  <a class="list-group-item"
+		ng-class="{'active' : tag.display}"
+		style="width:244px;margin-bottom:5px;"
+		ng-click="tag.display = !tag.display"
+		ng-repeat="tag in tags"
+		ng-model="tag">
+			{{tag.name}}
+		</a>
+	</div>
+</div>
+
+
+<script>
+	app.registerCtrl('getSystemLive', ['$scope' , '$datasource_factory' , '$_getAccessKey' , '$http' , '$element' ,
+
+        function ($scope , $datasource_factory , $_getAccessKey , $http , $element) {
+
+			$scope.tags = $scope.options[0].value;
+
+			$scope.$watch("parameters", function (n, o) {
+				if($scope.parameters)
+				{
+					var ds = $datasource_factory.find($scope.parameters[0].value);
+					if(!ds){
+						return;
+					}
+
+					$.each(ds.parameters[0].para_dependent , function(idx , val){
+						if(ds.parameters[0].value == val.name){
+							var uuid = val.uuid;
+							$_getAccessKey.get(function(ack){
+								var url = "/v2/json/sysmodels/"+uuid+"/tags?" + ack ;
+								$http.get(url).success(function( data , state ){
+									if(!data.err){
+										var ret = data.ret;
+										$scope.tags = ret;
+										$.each($scope.tags , function(xidx , xval){
+											xval['display'] = false;
+											$.each($scope.options[0].value , function(cidx , cval){
+												if(xval.name == cval.name)
+												{
+													xval['display'] = true;
+												}
+											})
+										})
+										createTagsWatch();
+									}
+								});
+							})
+							
+						}
+					})
+				}
+				return;
+			},true);
+
+			var createTagsWatch = function(){
+				$scope.$watch("tags", function (n, o) {
+					$scope.options[0].value = [];
+					$.each($scope.tags , function(idx , val){
+						if(val.display)
+						{
+							$scope.options[0].value.push(val);
+						}
+					})
+				},true);
+			}
+
+		}
+	]);
+</script>

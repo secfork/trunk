@@ -1,0 +1,3 @@
+{
+    "content" : "<div dy-chart selector-directive class='noContain' id='{{base.id}}' name='{{base.name}}' ng-style='style' ng-show='base.display==\"flex\"' data='{\"base\":{},\"style\":{},\"data\":{}}'></div>"
+}

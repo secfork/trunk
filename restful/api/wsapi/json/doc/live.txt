@@ -1,0 +1,5 @@
+// READ SYSTEM STATES BY SYSTEM_IDS
+GET {BASE_URL}/systems/states?accesskey={accesskey}[&id={system_id}][&id=....]
+
+//READ CURRENT VALUES
+GET {BASE_URL}/systems/{system_id}/live?accesskey={accesskey}[&tag={tag_name}][&tag=....]

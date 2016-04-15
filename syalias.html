@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="syaliasApp" ng-controller="main" style="background-color:#FFFFFF !important;">
+
+<head>
+
+	<meta http-equiv="content-type" content="text/html;charset=utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=9">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<script type="text/javascript" src="lib/jquery.min.js"></script>
+
+	<script type="text/javascript" src="lib/angular.min.js"></script>
+	<script type="text/javascript" src="lib/angular-route.js"></script>
+	<script type="text/javascript" src="lib/ui-load.js"></script>
+	<script type="text/javascript" src="lib/angular-file-upload.min.js"></script>
+
+	<link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<script type="text/javascript" src="lib/bootstrap/js/bootstrap.min.js"></script>
+
+	<script type="text/javascript" src="lib/ui-bootstrap-tpls-0.13.0.min.js"></script>
+
+	<script type="text/javascript" src="lib/open-weather-master/openWeather.min.js"></script>
+
+	<!--ocLazyLoad-->
+	<script type="text/javascript" src="lib/lazyload/ocLazyLoad.js"></script>
+	<!-- 组件展示样式表 -->
+	<link rel="stylesheet" href="css/sstyle.css" type="text/css" />
+	<style type="text/css">
+		html,
+		body {
+			height: 100%;
+			width: 100%;
+		}
+	</style>
+</head>
+
+<body>
+	<div ui-loading class="uiLoading" ng-hide="loading"></div>
+	<div ng-show="loading" id="uiDrawPanel" class="uiDrawPanel" style="height:100%;width:100%;font-size:62.5%;"></div>
+</body>
+
+<!-- Latest compiled and minified JavaScript -->
+<script type="text/javascript" src="syaliasController/app.js"></script>
+<script type="text/javascript" src="syaliasController/controllers.js"></script>
+
+<!--  component controller factory -->
+<script type="text/javascript" src="componentsController/componentControllerFactory.js"></script>
+
+<!-- common class -->
+<script type="text/javascript" src="common/directive.js"></script>
+<script type="text/javascript" src="common/data_connect_service.js"></script>
+<script type="text/javascript" src="common/common_service_base.js"></script>
+<script type="text/javascript" src="common/component_service.js"></script>
+
+<!-- datasource factory -->
+<script type="text/javascript" src="service/datasource_factory.js"></script>
+
+</html>

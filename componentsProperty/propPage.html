@@ -1,0 +1,111 @@
+<div>
+  <!-- 组件名 -->
+  <div class="uiPropertyTitle">
+    <input class="uiPropertyBaseName" type="text" ng-model="base.name"></input>
+    <div class="uiPropertyDelete" ng-click="del(base)"></div>
+    <!--<button class="btn btn-xs" style="float: right" ng-click="save()">保存</button>-->
+  </div>
+
+  <!-- 内容 -->
+  <div class="uiPropertyTabsContent" style="height:auto;">
+
+    <!-- 属性 -->
+    <div class="uiPropertyAttr">
+
+      <div properties-box dir-title="布局">
+          <div class="h-auto">
+            <label class="w-80">背景图片</label>
+
+            <div class="uploadImage" ng-click="uploadImage()"></div>
+
+            <div class="uploadOffImage" ng-click="uploadOffImage()"></div>
+
+            <input type="file" name="file" id="file" class="uploadImageFile" file-model="file" ng-model="file" onchange="angular.element(this).scope().uploadFile(this.files)"></input>
+
+            <div ng-show="style.backgroundImage" class="uploadImageThumbnail" ng-style="{'background-image' : style.backgroundImage}">
+
+            </div>
+          </div>
+
+          <div class="h-auto">
+            <label class="w-80">背景颜色</label>
+            <input type="text" colorpicker="rgba" ng-model="style.backgroundColor" class="w-100" />
+          </div>
+
+          <div class="h-auto">
+            <label class="w-80"></label>
+            <div class="w-100" ng-model="style.backgroundColor" ng-style="{'background-color' : style.backgroundColor}" colorpicker="rgba" style="position:relative;display:inline-block;height:20px;"></div>
+          </div>
+
+          <div class="clear"></div>
+
+
+      </div>
+
+      <div properties-box dir-title="排列">
+
+        <div>
+          <label class="w-100">方向</label>
+          <div style="padding-left:15px;margin:5px auto">
+            <div class="btn btn-p" style="background-image:url(img/componentProp/direction/row.png)" ng-class="{'btn-active' : style.flexDirection=='row'}" ng-click="style.flexDirection='row'"></div>
+            <div class="btn btn-p" style="background-image:url(img/componentProp/direction/row-reverse.png)" ng-class="{'btn-active' : style.flexDirection=='row-reverse'}" ng-click="style.flexDirection='row-reverse'"></div>
+            <div class="btn btn-p" style="background-image:url(img/componentProp/direction/column.png)" ng-class="{'btn-active' : style.flexDirection=='column'}" ng-click="style.flexDirection='column'"></div>
+            <div class="btn btn-p" style="background-image:url(img/componentProp/direction/column-reverse.png)" ng-class="{'btn-active' : style.flexDirection=='column-reverse'}" ng-click="style.flexDirection='column-reverse'"></div>
+          </div>
+        </div>
+
+        <div>
+          <label class="w-100">换行</label>
+          <div style="padding-left:15px;margin:5px auto">
+            <div class="btn btn-p" style="background-image:url(img/componentProp/flex-wrap/wrap.png)" ng-class="{'btn-active' : style.flexWrap=='wrap'}" ng-click="style.flexWrap='wrap'"></div>
+            <div class="btn btn-p" style="background-image:url(img/componentProp/flex-wrap/wrap-reverse.png)" ng-class="{'btn-active' : style.flexWrap=='wrap-reverse'}" ng-click="style.flexWrap='wrap-reverse'"></div>
+            <div class="btn btn-p" style="background-image:url(img/componentProp/flex-wrap/nowrap.png)" ng-class="{'btn-active' : style.flexWrap=='nowrap'}" ng-click="style.flexWrap='nowrap'"></div>
+          </div>
+        </div>
+
+        <div>
+          <label class="w-100">主轴对齐</label>
+          <div style="padding-left:15px;margin:5px auto">
+            <div class="btn btn-p" style="background-image:url(img/componentProp/justify-content/flex-start.png)" ng-class="{'btn-active' : style.justifyContent=='flex-start'}" ng-click="style.justifyContent='flex-start'"></div>
+            <div class="btn btn-p" style="background-image:url(img/componentProp/justify-content/flex-end.png)" ng-class="{'btn-active' : style.justifyContent=='flex-end'}" ng-click="style.justifyContent='flex-end'"></div>
+            <div class="btn btn-p" style="background-image:url(img/componentProp/justify-content/center.png)" ng-class="{'btn-active' : style.justifyContent=='center'}" ng-click="style.justifyContent='center'"></div>
+            <div class="btn btn-p" style="background-image:url(img/componentProp/justify-content/space-between.png)" ng-class="{'btn-active' : style.justifyContent=='space-between'}" ng-click="style.justifyContent='space-between'"></div>
+            <div class="btn btn-p" style="background-image:url(img/componentProp/justify-content/space-around.png)" ng-class="{'btn-active' : style.justifyContent=='space-around'}" ng-click="style.justifyContent='space-around'"></div>
+          </div>
+        </div>
+
+        <div>
+          <label class="w-100">交叉轴对齐</label>
+          <div style="padding-left:15px;margin:5px auto">
+            <div class="btn btn-p" style="background-image:url(img/componentProp/item/flex-start.png)" ng-class="{'btn-active' : style.alignItems=='flex-start'}" ng-click="style.alignItems='flex-start'"></div>
+            <div class="btn btn-p" style="background-image:url(img/componentProp/item/flex-end.png)" ng-class="{'btn-active' : style.alignItems=='flex-end'}" ng-click="style.alignItems='flex-end'"></div>
+            <div class="btn btn-p" style="background-image:url(img/componentProp/item/center.png)" ng-class="{'btn-active' : style.alignItems=='center'}" ng-click="style.alignItems='center'"></div>
+            <div class="btn btn-p" style="background-image:url(img/componentProp/item/baseline.png)" ng-class="{'btn-active' : style.alignItems=='baseline'}" ng-click="style.alignItems='baseline'"></div>
+            <div class="btn btn-p" style="background-image:url(img/componentProp/item/stretch.png)" ng-class="{'btn-active' : style.alignItems=='stretch'}" ng-click="style.alignItems='stretch'"></div>
+          </div>
+        </div>
+
+        <div>
+          <label class="w-100">多轴线对齐</label>
+          <div style="padding-left:15px;margin:5px auto">
+            <div class="btn btn-p" style="background-image:url(img/componentProp/align-content/flex-start.png)" ng-class="{'btn-active' : style.alignContent=='flex-start'}" ng-click="style.alignContent='flex-start'"></div>
+            <div class="btn btn-p" style="background-image:url(img/componentProp/align-content/flex-end.png)" ng-class="{'btn-active' : style.alignContent=='flex-end'}" ng-click="style.alignContent='flex-end'"></div>
+            <div class="btn btn-p" style="background-image:url(img/componentProp/align-content/center.png)" ng-class="{'btn-active' : style.alignContent=='center'}" ng-click="style.alignContent='center'"></div>
+            <div class="btn btn-p" style="background-image:url(img/componentProp/align-content/stretch.png)" ng-class="{'btn-active' : style.alignContent=='stretch'}" ng-click="style.alignContent='stretch'"></div>
+            <div class="btn btn-p" style="background-image:url(img/componentProp/align-content/space-between.png)" ng-class="{'btn-active' : style.alignContent=='space-between'}" ng-click="style.alignContent='space-between'"></div>
+            <div class="btn btn-p" style="background-image:url(img/componentProp/align-content/space-around.png)" ng-class="{'btn-active' : style.alignContent=='space-around'}" ng-click="style.alignContent='space-around'"></div>
+          </div>
+        </div>
+
+        <div class="clear"></div>
+
+      </div>
+
+    </div>
+
+    <!-- 数据连接 -->
+    <div class="uiPropertyDataLink"></div>
+
+  </div>
+
+</div>

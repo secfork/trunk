@@ -1,0 +1,73 @@
+//CREATE SERVICE OF MESSAGE CENTER
+POST {BASE_URL}/msgcenter/services
+{
+	"service_name":"mail",
+	"support":1
+}
+//GET SERVICE OF MESSAGE CENTER BY SERVICE NAME
+GET {BASE_URL}/msgcenter/services/{service_name}
+
+//MODIFY SERVICE OF MESSAGE CENTER BY SERVICE NAME 
+PUT {BASE_URL}/msgcenter/services/{service_name}
+
+//DELETE SERVICE OF MESSAGE CENTER BY SERVICE NAME
+DELETE {BASE_URL}/msgcenter/services/{service_name}
+
+//LIST SUPPORT SERVICES OF MESSAGE CENTER
+GET {BASE_URL}/query/msgcenter/services?[&service_name=xxx][&support=xxx]
+
+
+//CREATE MAIL SETTINGS OF MESSAGE SERVICE 
+POST {BASE_URL}/account/{account_id}/mailsetting
+
+//GET MAIL SETTINGS OF MESSAGE SERVICE
+GET {BASE_URL}/account/{account_id}/mailsetting
+
+//MODEIFY MAIL SETTINGS OF MESSAGE SERVICE
+SET {BASE_URL}/account/{account_id}/mailsetting
+
+//DELETE MAIL SETTINGS OF MESSAGE SERVICE
+DELETE {BASE_URL}/account/{account_id}/mailsetting
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+//CREATE SMS SETTINGS OF MESSAGE SERVICE 
+POST {BASE_URL}/account/{account_id}/smssetting
+
+//GET SMS SETTINGS OF MESSAGE SERVICE
+GET {BASE_URL}/account/{account_id}/smssetting
+
+//MODEIFY SMS SETTINGS OF MESSAGE SERVICE
+SET {BASE_URL}/account/{account_id}/smssetting
+
+//DELETE SMS SETTINGS OF MESSAGE SERVICE
+DELETE {BASE_URL}/account/{account_id}/smssetting
+
+
+user_category:发给什么类型用户,默认发送给平台用户
+	0:平台用户
+	1:联系人用户
+user_id:给平台用户发信息时必须指定user_id
+
+//SEND Message
+POST {BASE_URL}/systems/{system_id}/message/send 
+{
+	user_categort:1,
+	user_id:1,
+	message:xxxx
+}
+
+
+
+source={
+	account_id : xxxxx,
+	system_id : xxxxxx
+}
+profile_messages={
+	action:xxx,
+	user_id:xxx,
+	user_category:xx,
+	message_params:xxxx
+}
+
+messageCenter.send(source,profile_message,messageInfo,cb);

@@ -1,0 +1,190 @@
+/*组件展示需要的样式表
+	需要被运行态和组态同时引入
+*/
+
+
+.pointer{
+  cursor: pointer;
+}
+
+.panel{
+  border-radius: 0 !important;
+}
+
+.clear {
+  float: none !important;
+  display: block;
+  height: 0px !important;
+  clear: both !important;
+}
+
+/*table组件样式*/
+.table_ctrl label{
+	padding: 0;
+	height: 30px;
+	line-height: 30px;
+}
+
+.no-padder{
+	padding: 0 !important;
+}
+
+
+/**********************************************
+ *                                            *
+ *                 uiAlert                    *
+ *                                            *
+ **********************************************/
+.weather-place {
+  position: relative;
+  display: flex;
+  padding: 2px 0 0 4px;
+  width: 100%;
+  height: 30px;
+}
+.weatherT {
+  position: relative;
+  display: flex;
+  font-size: 52px;
+  width: 50%;
+  height: 70px;
+}
+.weatherDi {
+  position: relative;
+  display: flex;
+  flex-flow: column nowrap;
+  width: 50%;
+  height: 70px;
+}
+.weatherDi img {
+  position: relative;
+  display: flex;
+  margin: auto;
+  width: 60px;
+  height: 50px;
+}
+.weatherDi span {
+  position: relative;
+  display: flex;
+  margin: auto;
+}
+.weatherH {
+  position: relative;
+  display: flex;
+  width: 50%;
+  height: 25px;
+}
+.weatherH p {
+  margin:auto;
+}
+.weatherWs {
+  position: relative;
+  display: flex;
+  width: 50%;
+  height: 25px;
+}
+.weatherWs p {
+  margin:auto;
+}
+
+
+/**********************************************
+ *                                            *
+ *                 uiLoading                  *
+ *                                            *
+ **********************************************/
+.uiLoading {
+  position: fixed;
+  display: block;
+  width: inherit;
+  height: inherit;
+  z-index: 99999;
+  background-color: #343C46;
+}
+.uiLoadingLogo {
+  position: relative;
+  display: block;
+  top: 30%;
+  width: inherit;
+  height: 200px;
+  background-color: #252C33;
+}
+.uiLoadingLogo span {
+  display: block;
+  text-align: center;
+  font-size: 14px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 32px;
+  margin-bottom: 3px;
+  color: #FFFFFF;
+}
+
+.sk-cube-grid {
+  width: 40px;
+  height: 40px;
+  margin: 100px auto;
+}
+.sk-cube-grid .sk-cube {
+  width: 33%;
+  height: 33%;
+  background-color: #FFFFFF;
+  float: left;
+  -webkit-animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
+  animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
+}
+.sk-cube-grid .sk-cube1 {
+  -webkit-animation-delay: 0.2s;
+  animation-delay: 0.2s;
+}
+.sk-cube-grid .sk-cube2 {
+  -webkit-animation-delay: 0.3s;
+  animation-delay: 0.3s;
+}
+.sk-cube-grid .sk-cube3 {
+  -webkit-animation-delay: 0.4s;
+  animation-delay: 0.4s;
+}
+.sk-cube-grid .sk-cube4 {
+  -webkit-animation-delay: 0.1s;
+  animation-delay: 0.1s;
+}
+.sk-cube-grid .sk-cube5 {
+  -webkit-animation-delay: 0.2s;
+  animation-delay: 0.2s;
+}
+.sk-cube-grid .sk-cube6 {
+  -webkit-animation-delay: 0.3s;
+  animation-delay: 0.3s;
+}
+.sk-cube-grid .sk-cube7 {
+  -webkit-animation-delay: 0s;
+  animation-delay: 0s;
+}
+.sk-cube-grid .sk-cube8 {
+  -webkit-animation-delay: 0.1s;
+  animation-delay: 0.1s;
+}
+.sk-cube-grid .sk-cube9 {
+  -webkit-animation-delay: 0.2s;
+  animation-delay: 0.2s;
+}
+@-webkit-keyframes sk-cubeGridScaleDelay {
+  0%, 70%, 100% {
+    -webkit-transform: scale3D(1, 1, 1);
+    transform: scale3D(1, 1, 1);
+  }
+  35% {
+    -webkit-transform: scale3D(0, 0, 1);
+    transform: scale3D(0, 0, 1);
+  }
+}
+@keyframes sk-cubeGridScaleDelay {
+  0%, 70%, 100% {
+    -webkit-transform: scale3D(1, 1, 1);
+    transform: scale3D(1, 1, 1);
+  }
+  35% {
+    -webkit-transform: scale3D(0, 0, 1);
+    transform: scale3D(0, 0, 1);
+  }
+}

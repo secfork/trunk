@@ -1,0 +1,276 @@
+/*
+	数据结构
+
+		* thinglinx (DB)
+
+			* abstracts (collection)
+
+				* account
+				* name
+				* id
+				* valid
+
+			* projects (collection)
+
+				* Description (document)
+					* project_locked : false
+					* page_list : [
+									{id : xxx},
+									{id : xxx},
+									...
+								]
+
+				* page_1 (document)
+					* attr :
+						* name :
+						* type :
+						* locked :
+						* operator :
+						* doc_type : "page",
+					* content :
+
+				* page_2 (document)
+
+				* datasource_1 (document)
+					* name :
+					* datasource_type :
+					* parameters :
+
+				* datasource_2 (document)
+
+		* DatasourceTypes
+			* [
+				{ name : "GetSystemsByModel" , service : "getSystemsByModel" , description : "a"} ,
+				{ name : "GetSystemLive" , service : "getSystemLive" , description : "a"} ,
+				{ name : "GetSystemHistory" , service : "getSystemHistory" , description : "a"} ,
+				{ name : "GetSystemWrite" , service : "getSystemWrite" , description : "a"},
+				{ name : "GetSystemAlarm" , service : "getSystemAlarms" , description : "a"},
+				{ name : "CloseAlarm" , service : "closeAlarm" , description : "a"},
+				{ name : "CallSystemRealTimeData" , service : "callSystemRealTimeData" , description : "a"}
+			]
+*/
+
+
+
+/*  1
+	target : 获取布局列表，即获取relationship.json
+	return : {
+				"1" : {
+					"url" : "layout_1/data.json" ,
+					"type" : "" ,
+					"thumbnail" : ""
+				},
+				...
+			}
+	param : null
+*/
+√1. GET /v2/json/syalias/layout.get
+
+
+/*	2
+	target : 获取指定id(id是relationship的key)的layout配置信息，一次请求只允许用户获取一个layout(参数唯一)
+	return : {
+				"content" : "<div class='container'><div class='item col-7' view-selector  droppable  style='height:700px;'></div>"
+			}
+	param : null
+*/
+√2. GET /v2/json/syalias/layout.get?id=xxx
+
+
+/*	3
+	target : 获取组件列表，即获取relationship.json
+	return : {
+				"1" : {
+					"url" : "generator/data.json" ,
+					"type" : [1,2,3,4,5,6,7] ,
+					"thumbnail" : "img/logo_1.png" ,
+					"desc" : "live component - power-generating" ,
+					"patten" : "live" ,
+					"text" : "generator"
+				},
+				...
+			}
+	param : null
+*/
+√3. GET /v2/json/syalias/component.get
+
+
+/*	4
+	target : 获取指定id(id是relationship的key)的component配置信息，一次请求只允许用户获取一个component(参数唯一)
+	return : {
+				"content" : "<div dy-table draggable class='dy_component_model' style='position:absolute;width:400px;height:300px;' data='[{\"common\":{\"name\":\"table name\",\"left\":0,\"top\":0,\"width\":400,\"height\":300,\"zIndex\":0,\"display\":\"block\",\"enable\":true,\"fontfamily\":\"微软雅黑\",\"fontsize\":\"\",\"fontalign\":\"center\",\"underline\":false,\"bold\":false,\"italic\":false,\"textcolor\":\"#000\"},\"connect\":\"\",\"extend\":{}}]'></div>"
+			}
+	param : null
+*/
+√4. GET /v2/json/syalias/component.get?id=xxx
+
+
+/*	5
+	target : 创建一个project,需要一个输入一个project name,如果没有输入名称，会自动生成一个project name
+	return : project id
+	param : {name : xxx}
+*/
+√5. PUT /v2/json/syalias/project.create
+
+
+/*	6
+	target : 删除指定id的project
+	return : null
+	param : {id : xxx}
+*/
+√6. PUT /v2/json/syalias/project.del
+
+
+/*	7
+	target : 修改project name
+	return : null
+	param : {id : xxx , name : xxx}
+*/
+√7. PUT /v2/json/syalias/project.rename
+
+
+/*	8
+	target : 查询项目列表
+	return : [
+				{_id: "55fbb8ab7c8a01c426e4b363", account: "xiaoming", name: "prj_2", valid: true, uuid: "Ey3pwoNCK2"},
+				{_id: "55ff62865a4c518809fc8664", account: "xiaoming", name: "prj_1", valid: true, uuid: "4yevjbIOAQe"},
+				{_id: "55ff62865a4c518809fc8663", account: "xiaoming", name: "prj_1", valid: true, uuid: "N1DsZUORYM"},
+				{_id: "55ff63a05a4c518809fc866b", account: "xiaoming", name: "prj_3", valid: true, uuid: "4yW6G8dC0x"}
+			]
+	param :
+*/
+√8. GET /v2/json/syalias/project.list?account=xxx
+
+
+
+/*	9
+	target : 保存当前正在操作页面，保存页面时，需要判定当前用户是否为操作用户
+	return : null
+	param : {
+				id : xxx , // project id
+				name : xx , // page name
+				content : xx ,
+				type : init ,
+				doc_type : "page",
+				operator : "" ,
+				locked : false
+			}
+*/
+√9. POST /v2/json/syalias/page.save
+
+
+/* 	10
+	target : 根据project id & page name 删除 page(删除页面信息，同时删除列表信息)
+	return : null
+	param : {id : xxx , name : xxx}
+*/
+√10. PUT /v2/json/syalias/page.del
+
+
+/*	11
+	target : 根据project id & page id主动获取page content
+	return : {content : "xxx"}
+	param : null
+*/
+√11. GET /v2/json/syalias/page.get?id=xxx&name=xxx
+
+
+
+/*	12
+	target : 获取page列表
+	return : [
+				{
+					name :
+					type :
+					locked :
+				},
+				...
+			]
+	param : null
+*/
+√12. GET /v2/json/syalias/pages.list?project_id=xxx
+
+
+/*	13
+	target : page rename
+	return : true/false
+	param : {id : xxx , oname : xxx , nname : xx}
+*/
+√13 PUT /v2/json/syalias/page.rename
+
+
+
+/*	14
+	target : 添加/修改项目datasource(如果当前项目不存储datasource，则创建datasource，如果已经存在datasource，覆盖 )
+	return : null
+	param : [
+				{
+					"name" : "xxx" ,
+					"type" : "SystemsByModel/SystemLive/SystemHistory",
+					"parameters" : "",
+					"dependent" : { "value" : "" }
+				},
+				...
+			]
+*/
+√14. POST /v2/json/syalias/datasource.save
+
+
+/*	15
+	target : 根据名称删除指定的数据源
+	return : null
+	param : {id : xxx , name : xxx}
+*/
+√15. PUT /v2/json/syalias/datasource.del?name=xxx
+
+
+/*	16
+	target : 获取指定数据源
+	return : json list [{}]
+	param : null
+*/
+√16. GET /v2/json/syalias/datasource.get?id=xxx&name=xxx
+
+
+/*	17
+	target : 获取数据源列表
+	return : json list [{}]
+	param : null
+*/
+√17. GET /v2/json/syalias/datasource.list?id=xxx
+
+
+/*	18
+	target : 获取数据源列表
+	return : json list [{}]
+	param : null
+*/
+√18. GET /v2/json/syalias/datasourcetype.query
+
+
+/*	19
+	target : 获取 access key
+	return : json {'ack' : xxx , 'sid' : xxx}
+	param : ack=xxx || sid=xxx
+*/
+√19. GET /v2/json/syalias/ack.get
+
+
+/*	20
+	target : 使用syalias系统登录thinglinx
+	return : true/false
+	param : ack,sid
+*/
+√20. POST /v2/json/syalias/login
+
+/*	21
+	target : 使用syalias系统登出thinglinx
+	return : null
+	param : ack
+√20. POST /v2/json/syalias/out
+
+/*	22
+	target : 获取组件directive依赖的所有controller文件
+	return : []
+	param : null
+√20. GET /v2/json/syalias/componentController.get

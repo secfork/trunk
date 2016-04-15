@@ -1,0 +1,45 @@
+<div class="uiEditorPanelTabs" ng-init="widgetState='pageList'">
+	<span ng-class="{'uiEditorPanelTabsActive' : widgetState=='pageList'}" ng-click="widgetState='pageList'">页面</span>
+	<span ng-class="{'uiEditorPanelTabsActive' : widgetState=='componentList'}" ng-click="widgetState='componentList'">组件</span>
+	<span ng-class="{'uiEditorPanelTabsActive' : widgetState=='elementList'}" ng-click="widgetState='elementList';toggleElementList()">元素</span>
+</div>
+
+<div class="uiEditorPanelPages" ng-show="widgetState=='pageList'">
+      <div  id="uiEditorPanelPages" class="uiEditorPanelElementList" ng-controller="editorPanelPage" ng-click="cancelEditor()">
+            <div class="pageElement" ng-repeat="page in pageList" ng-click="pageSelected(page);$event.stopPropagation();" ng-class="{'pageElementActive' : page.state=='active'}">
+                  <div class="pageElementIcon" ng-class="{'homeIcon' : page.home == 'init'}" ng-click="setHome(page.name)"></div>
+                  <div class="pageElementName">
+				<input ng-class="{'nameNotEditor' : page.editor , 'nameEditor' : !page.editor}" ng-readonly="page.editor" ng-model="page.name" ng-dblclick="setEditor(page.name)" ng-blur="pageRename(this)"></input>
+			</div>
+                  <div class="pageElementIcon deleteIcon elementNoBorder" ng-show="page.editor" ng-click="deletePage(page)"></div>
+			<div class="pageRenamePrompts" ng-if="page.prompt">{{page.prompt}}</div>
+            </div>
+      </div>
+
+      <!-- <div class="uiEditorPanelAddPage" ng-click="createPageState=true">+</div> -->
+</div>
+
+<div class="uiEditorPanelComponents" ng-show="widgetState=='componentList'" ng-controller="componentController">
+	<div class="componentSearch">
+		<input type="text" class="form-control" placeholder="Search for..." ng-model="searchText">
+		<span class="glyphicon glyphicon-remove componentSearchClear" aria-hidden="true" ng-click="searchText=''"></span>
+	</div>
+
+	<div class="componentList">
+		<div class="componentElement" ng-repeat="(k , v) in component_list | filter:searchText" ng-mouseenter="v.state=true" ng-mouseleave ="v.state=false">
+			<img ng-src="{{v.thumbnail}}" width="100%" height="100%"></img>
+			<span>{{v.text}}</span>
+			<div class="componentElementAdd" ng-if="v.state">
+				<button type="button" class="btn btn-primary" ng-click="add_component(k)">添加</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div  id="uiEditorElementList" class="uiEditorPanelElements cssExtend-uiEditorPanelPages uiEditorPanelPages" ng-show="widgetState=='elementList'" ng-controller="elementListController" ng-init="nameEditorState=false">
+	<div id="elementListTreeOuter" class="uiEditorPanelElementList"  ng-click="nameEditorState=false">
+
+        <!-- <div element-tree ng-model="elementList"></div> -->
+
+    </div>
+</div>

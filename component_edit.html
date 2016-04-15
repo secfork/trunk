@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="test">
+	<head>
+		<meta http-equiv="content-type" content="text/html;charset=utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=9">
+		
+		<link rel="stylesheet" href="css/dstyle.css" type="text/css" />
+
+		<script type="text/javascript" src="lib/jquery.min.js"></script>
+		
+		<script type="text/javascript" src="lib/angular.min.js"></script>
+		<script type="text/javascript" src="lib/angular-route.js"></script>		
+		
+		<link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		<script type="text/javascript" src="lib/bootstrap/js/bootstrap.min.js"></script>
+		
+		
+	</head>
+	
+	<body>
+	
+		<div ng-controller="dy_nav">
+			<nav class="navbar navbar-inverse">
+			  <div class="container-fluid">		
+				<div id="nav" class="collapse navbar-collapse">
+				  <ul class="nav navbar-nav">
+					<li ng-class="{'active' : nav.state==true}" ng-click="seleced(nav)"><a href=""></a></li>
+				  </ul>
+				</div>				
+			  </div>
+			</nav>
+			
+			
+			
+			<div class="dy_component_property property_show" ng-class="{'property_show' : property_show}">
+				<div class="dy_stations_title_close" ng-click="close_property()"><div ng-click="selected.value = null"></div>
+			</div>
+			<div class="dy_stations_title bg">
+				<div class="dy_stations_title_add">
+					<div>Property</div>
+				</div>
+				<div class="dy_stations_title_desc dy_font_family">设置组件属性</div>
+			</div>
+			<button type="button" class="btn btn-default" aria-label="Left Align" style="position:absolute;top:45px;right:10px;" ng-click="add()">
+			  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+			</button>
+			
+			<div class="input-group" style="width : 230px ; margin : 5px;" ng-repeat="nav in nav_button">
+			  <span class="input-group-btn">
+				<button class="btn btn-default" type="button" style="margin-right: 1px;" ng-click="dele(nav)">
+					<span class="glyphicon glyphicon-remove" style="height: 17px;margin-top: 3px;" ></span>
+				</button>
+			  </span>
+			   <span class="input-group-btn">
+				<button class="btn btn-default" type="button" style="margin-right: 1px;" ng-click="href(nav)">
+					<span class="glyphicon glyphicon-cog" style="height: 17px;margin-top: 3px;" ></span>
+				</button>
+			  </span>
+			  <input type="text" class="form-control" ng-model="nav.name">
+			</div>
+			
+			<div ng-init="href_input=false" ng-show="href_input" style="position: fixed;  top: 65px;  right: 290px;margin-left: 30px;  min-width: 200px;  width: auto;  min-height: 463px; background-color: rgb(253, 253, 253);  box-shadow: rgb(0, 0, 0) -3px 0px 50px 0px;  border-radius: 6px 6px 6px 6px;  z-index: 9999;">
+				<div ng-class="{'property_show' : property_show}">
+					<div class="dy_stations_title_close" ng-click="href_input=false"><div ng-click="href_input=false"></div>
+				</div>
+				<div class="dy_stations_title bg">
+					<div class="dy_stations_title_add dy_font_family">
+						<div>跳转链接</div>
+					</div>
+					<div class="dy_stations_title_desc dy_font_family">设置当前按钮跳转页面</div>
+				</div>
+				
+				<div class="input-group" style="width : 230px ; margin : 5px;">
+				  <input type="text" class="form-control" ng-model="button_selected.href">
+				</div>
+
+			</div>
+			
+		</div>
+		
+	</body>
+	
+	
+	<script>
+		
+		var app = angular.module("test" , [ 'syaliasApp.service' , 'syaliasApp.factory' ]);		
+		
+		app.controller('dy_nav', ['$scope' , '$SYclock' , '$unique_id' , '$timeout' , '$element' ,
+			
+			function($scope , $SYclock , $unique_id , $timeout  , $element ){
+				
+				var uid = $unique_id();
+				$element.attr("id" , uid);
+				
+				$scope.nav_button = [];
+				$scope.add = function(){
+					var str = '<ul class="nav navbar-nav">'
+										+'<li><a href=""></a></li>'
+									+'</ul>'
+					$element.find("#nav").append(str);
+				}
+				
+				
+				
+				$scope.seleced = function(obj){
+					for(var i in $scope.nav_button){
+						$scope.nav_button[i].state = false ;
+					}
+					obj.state = true;
+				}
+				
+				$scope.dele = function(obj){
+					for(var i in $scope.nav_button){
+						if($scope.nav_button[i].name == obj.name){
+							$scope.nav_button.splice(i , 1);
+						}
+					}
+				}
+				
+				
+				
+				$scope.href = function(nav){
+					$scope.href_input = true;
+					$scope.button_selected = nav;
+				}
+				
+				// set component property
+				$scope.property_show = false ;
+				$scope.show_property = function(ele){
+					$scope.property_show = true ;
+				}	
+				$scope.close_property = function(){
+					$scope.property_show = false ;
+				}
+			
+			}
+			
+		]);
+	</script>
+	<script type="text/javascript" src="js/factory.js"></script>
+	<script type="text/javascript" src="js/services.js"></script>
+	
+</html>

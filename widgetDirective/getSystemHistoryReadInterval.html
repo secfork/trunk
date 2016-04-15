@@ -1,0 +1,95 @@
+<div class="dy_datasource_datasource_widget">
+	<span style="width:10px;color:#FF0000;">*</span>
+	<span>start</span>
+	<input tranlate-time type="datetime-local" style="height:30px;width:244px;" class="form-control input-sm" name="input" ng-model="options[1].value"
+      placeholder="yyyy-MM-ddTHH:mm" min="1970-01-01T00:00" max="2040-12-31T00:00" required />
+</div>
+
+<div class="dy_datasource_datasource_widget">
+	<span style="width:10px;color:#FF0000;">*</span>
+	<span>end</span>
+	<input tranlate-time type="datetime-local" style="height:30px;width:244px;" class="form-control input-sm" name="input" ng-model="options[2].value" placeholder="yyyy-MM-ddTHH:mm" min="1970-01-01T00:00" max="2040-12-31T00:00" required />
+</div>
+
+<div class="dy_datasource_datasource_widget">
+	<span style="width:10px;color:#FF0000;">*</span>
+	<span>count</span>
+	<input input-length-limit-one class="form-control input-sm" style="height:30px;width:244px;" type="number" name="input" ng-model="options[3].value" min="0" max="100"  placeholder="0-100" required/>
+</div>
+
+<div class="dy_datasource_datasource_widget" ng-controller="getSystemHistory" ng-show="tags.length != 0" style="margin-top:40px;">
+	<span style="width:10px;color:#FF0000;">*</span>
+	<span>tags</span>
+	<div class="list-group" style="margin-left:205px;">
+	  <a class="list-group-item"
+		ng-class="{'active' : tag.display}"
+		style="width:244px;margin-bottom:5px;"
+		ng-click="tag.display = !tag.display"
+		ng-repeat="tag in tags"
+		ng-model="tag">
+			{{tag.name}}
+		</a>
+	</div>
+</div>
+
+<script>
+	app.registerCtrl('getSystemHistory', ['$scope' , '$datasource_factory' , '$_getAccessKey' , '$http' , '$element' ,
+
+        function ($scope , $datasource_factory , $_getAccessKey , $http , $element) {
+
+			$scope.tags = $scope.options[0].value;
+
+			$scope.$watch("parameters", function (n, o) {
+				if($scope.parameters)
+				{
+					var ds = $datasource_factory.find($scope.parameters[0].value);
+					if(!ds){
+						return;
+					}
+
+					$.each(ds.parameters[0].para_dependent , function(idx , val){
+						if(ds.parameters[0].value == val.name){
+							var uuid = val.uuid;
+							$_getAccessKey.get(function(ack){
+								var url = "/v2/json/sysmodels/"+uuid+"/tags?" + ack ;
+								$http.get(url).success(function( data , state ){
+									if(!data.err){
+										var ret = data.ret;
+										$scope.tags = ret;
+										$.each($scope.tags , function(xidx , xval){
+											xval['display'] = false;
+											$.each($scope.options[0].value , function(cidx , cval){
+												if(xval.name == cval.name)
+												{
+													xval['display'] = true;
+												}
+											})
+										})
+										createTagsWatch();
+									}
+								});
+							})							
+						}
+					})
+				}
+				return;
+			},true);
+
+			var createTagsWatch = function(){
+				$scope.$watch("tags", function (n, o) {
+					$scope.options[0].value = [];
+					$.each($scope.tags , function(idx , val){
+						if(val.display)
+						{
+							$scope.options[0].value.push(val);
+						}
+					})
+					console.log(1111)
+					console.log($scope.options[0].value)
+					console.log($scope.$parent.options[0].value)
+				},true);
+			}
+
+		}
+	]);
+</script>

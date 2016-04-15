@@ -1,0 +1,47 @@
+{
+	"1" : {
+		"url" : "layout_1/data.json" ,
+		"type" : "" ,
+		"thumbnail" : ""
+	},
+	"2" : {
+		"url" : "layout_2/data.json" ,
+		"type" : "" ,
+		"thumbnail" : ""
+	},
+	"3" : {
+		"url" : "layout_3/data.json" ,
+		"type" : "" ,
+		"thumbnail" : ""
+	},
+	"4" : {
+		"url" : "layout_4/data.json" ,
+		"type" : "" ,
+		"thumbnail" : ""
+	},
+	"5" : {
+		"url" : "layout_5/data.json" ,
+		"type" : "" ,
+		"thumbnail" : ""
+	},
+	"6" : {
+		"url" : "layout_6/data.json" ,
+		"type" : "" ,
+		"thumbnail" : ""
+	},
+	"7" : {
+		"url" : "layout_7/data.json" ,
+		"type" : "" ,
+		"thumbnail" : ""
+	},
+	"8" : {
+		"url" : "layout_8/data.json" ,
+		"type" : "" ,
+		"thumbnail" : ""
+	},
+	"9" : {
+		"url" : "layout_9/data.json" ,
+		"type" : "" ,
+		"thumbnail" : ""
+	}
+}

@@ -1,0 +1,5 @@
+read me :
+本文件夹，存储Syalias系统使用的组件
+每个组件都是一个文件夹，文件夹中包括当前组件的JSON配置文件
+component文件夹下，还包括一个relationship.json，用来存储组件所有组件名称以及分类信息
+component文件最终会部署到CDN节点中

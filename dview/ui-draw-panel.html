@@ -1,0 +1,53 @@
+<div class="uiCreatePage" ng-if="createPageState" ng-controller="createPageController">
+
+  <div class="uiCreatePageTitle">
+    <span>Create A New Page</span>
+  </div>
+
+  <div class="uiCreatePageCreateName">
+    <input class="form-control" placeholder="new page name" ng-model="pageName"></input>
+  </div>
+
+  <div class="uiCreatePageCreateName">
+    <span class="uiCreatePagePrompts">{{prompts}}</span>
+  </div>
+
+  <div class="uiCreatePageDescription">
+    <span>Choose a template ... </span>
+  </div>
+
+  <div class="uiCreatePageTemplates">
+    <div class="pageTemplate" ng-click="layoutId=1;layoutState='l_1'" ng-class="{templateSelected : layoutState=='l_1'}"></div>
+    <div class="pageTemplate" ng-click="layoutId=2;layoutState='l_2'" ng-class="{templateSelected : layoutState=='l_2'}"></div>
+    <div class="pageTemplate" ng-click="layoutId=3;layoutState='l_3'" ng-class="{templateSelected : layoutState=='l_3'}"></div>
+    <div class="pageTemplate" ng-click="layoutId=4;layoutState='l_4'" ng-class="{templateSelected : layoutState=='l_4'}"></div>
+    <div class="pageTemplate" ng-click="layoutId=5;layoutState='l_5'" ng-class="{templateSelected : layoutState=='l_5'}"></div>
+    <div class="pageTemplate" ng-click="layoutId=6;layoutState='l_6'" ng-class="{templateSelected : layoutState=='l_6'}"></div>
+  </div>
+
+  <div class="uiCreatePageAddButton">
+    <button type="button" class="btn btn-primary uiCreatePageAddButtonWidth" ng-click="addPage()">创建</button>
+    <button type="button" class="btn btn-danger uiCreatePageAddButtonWidth" ng-click="closePage()">关闭</button>
+  </div>
+
+</div>
+
+<div class="uiCreatePage" id="dyaliasImagePlayer" ng-show="imagePlayerState&&!createPageState"  ng-controller="imagePlayerController">
+
+  <div class="uiCreatePageAddButton imagePlayerContent">
+
+    <div class="uiImagePlayer">
+      <div ng-repeat="item in playList" ng-if="index == $index" ng-style="{'width':'inherit','height':'inherit'}">
+        <div ng-style="{'background-image':'url(' + item.rurl + ')' , 'background-size':'100% 100%' , 'height':'inherit'}"></div>
+      </div>
+
+      <div class="uiImagePlayerIcon" ng-class="{'imgListPlay_play' : !playState , 'imgListPlay_pause' : playState}" ng-click="play()"></div>
+    </div>
+
+  </div>
+
+</div>
+
+<div id="dyaliasDrawArea" class="dyaliasDrawArea" ng-show="!createPageState && !imagePlayerState">
+
+</div>

@@ -1,0 +1,33 @@
+// READ CURRENT ALARMS
+GET {BASE_URL}/systems/{system_id}/alarm?accesskey={accesskey}[&device_id={device_id}[&device_id=...]]
+[&type={number}[&type=...]]
+[&info={*string*}]
+[&severity={number}[&severity=...]]
+[&class_id={number}[&class_id=...]]
+[&sorts={field[-]}[&sorts=...]]
+[&offset={start_item_index}]
+[&limit={max_count}]
+[&calc_sum={true|false}]
+
+//READ ALARM HISTORY
+GET {BASE_URL}/systems/{system_id}/alarm/historical?accesskey={accesskey}
+start={number}
+[&end={number}]
+[&device_id={device_id}[&device_id=...]]
+[&type={number}[&type=...]]
+[&info={*string*}]
+[&severity={number}[&severity=...]]
+[&class_id={number}[&class_id=...]]
+[&sorts={field[-]}[&sorts=...]]
+[&offset={start_item_index}]
+[&limit={max_count}]
+[&calc_sum={true|false}]
+
+//ACKNOWLEDGE ALARM / AND CLOSE IT
+POST {BASE_URL}/systems/{system_id}/alarm/ack?accesskey={accesskey}
+&id={number}
+[&user_id={number}]
+[&message={string}]
+
+//GET ACK MESSAGE
+GET /systems/{system_id}/alarm/ack?accesskey={accesskey}&id={number}

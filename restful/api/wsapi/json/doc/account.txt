@@ -1,0 +1,191 @@
+******************
+私有接口
+******************
+//account 相关接口
+//////////////////////////////
+//添加一个account
+POST {BASE_URL}/accounts
+
+// admin 是管理员用户(超级用户),必须指定用户名和密码,其他可选字段参照user表
+required:
+{
+	"name":"xxxxx",
+	"admin":{
+		"username":"xxxx",
+		"password":"xxxxx"
+	}
+}
+
+//获取account信息
+GET {BASE_URL}/accounts/{account_id}
+
+//查询account
+GET {BASE_URL}/query/accounts
+
+
+//修改account信息
+PUT {BASE_URL}/accounts/{account_id}
+
+//删除account
+DELETE {BASE_URL}/accounts/{account_id}
+
+//////////////////////////////////////////////////////////////////////////////
+
+***********
+***公开接口
+*************
+// user相关接口
+//添加用户,
+当用户是刚建立时的超级用户,需要指定{"is_super_user"=1}
+
+POST {BASE_URL}/users?accesskey={accesskey}
+required:
+{
+	"username":"xxxx",
+	"password":"xxxxx"
+
+}
+
+//根据id获取用户
+GET {BASE_URL}/users/user_id?accesskey={accesskey}
+
+//根据名称获取用户
+GET {BASE_URL}/users?name={user_name}?accesskey={accesskey}
+
+//获取某个账户下的所有用户
+GET {BASE_URL}/query/users?accesskey={accesskey}
+
+//根据id修改用户信息
+PUT {BASE_URL}/users/user_id?accesskey={accesskey}
+
+//根据id删除用户信息
+DELETE {BASE_URL}/users/user_id?accesskey={accesskey}
+
+////////////////////////////////////////////////////////
+角色相关,角色是权限的集合,方便进行权限分配和管理
+////////////////////////////////////////////////////////////
+
+//添加一个角色,默认权限为空
+POST  {BASE_URL}/roles?accesskey={accesskey}
+required:
+{
+	"name":"游客",
+	"role_category":0//0, 账户角色，1区域角色
+}
+//获取指定角色信息
+GET   {BASE_URL}/roles/{role_id}?accesskey={accesskey}
+
+//根据名称获取角色信息
+GET {BASE_URL}/roles?role_name={role_name}?accesskey={accesskey}
+
+//查询当前账户下的所有角色
+GET {BASE_URL}/query/roles?accesskey={accesskey}
+
+// 修改指定角色信息
+PUT   {BASE_URL}/roles/{role_id}?accesskey={accesskey}
+
+//删除指定角色信息
+DELETE   {BASE_URL}/roles/{role_id}?accesskey={accesskey}
+
+///////////////////////////////////////////////////////////////////////////////////
+//区域相关接口
+///////////////////////////////////////////////////////////////////////////////////
+
+//创建区域
+POST {BASE_URL}/regions?accesskey={accesskey}
+required:
+{
+	"name":"region_1"
+}
+//根据id获取区域信息
+GET {BASE_URL}/regions/{region_id}?accesskey={accesskey}
+
+//根据名称获取区域信息
+GET {BASE_URL}/regions?name={region_name}&accesskey={accesskey}
+
+//查询账户下所有的区域
+GET {BASE_URL}/query/regions?accesskey={accesskey}
+
+//根据id修改区域信息
+PUT {BASE_URL}/regions/{region_id}?accesskey={accesskey}
+
+
+/根据id删除区域信息
+DELETE {BASE_URL}/regions/{region_id}?accesskey={accesskey}
+
+
+///////////////////////////////////////////////////////////////////////////////////
+用户组相关接口
+/////////////////////////////////////////////////////////////////////////////////
+
+//添加一个用户组,可指定账户权限
+POST {BASE_URL}/groups?accesskey={accesskey}
+required:
+{
+	"name":"group_name_1"
+}
+
+
+
+//根据id获取这个用户组的信息
+GET {BASE_URL}/groups/{group_id}?accesskey={accesskey}
+
+//根据名称获取用户组信息
+GET {BASE_URL}/groups?name={group_name}&accesskey={accesskey}
+
+//查询账户下所有的用户组
+GET {BASE_URL}/query/groups?accesskey={accesskey}
+
+//根据id设置/编辑这个用户组的信息
+PUT {BASE_URL}/groups/{group_id}?accesskey={accesskey}
+
+//根据id删除用户组
+DELETE {BASE_URL}/groups/{group_id}?accesskey={accesskey}
+
+/////////////////////////////////////////////////
+权限相关
+/////////////////////////////////////////////////
+
+//给用户组中的某个资源添加权限,默认privilege为空
+privilege:权限数组
+["REGION_MANAGE","GROUP_MANAGE"]
+
+
+PUT {BASE_URL}/permission/groups/{group_id}?accesskey={accesskey}&isaccount={true|false}[&region_id={region_id}][&appid=...]
+
+//获取一个资源下的的所有用户组包含权限
+GET {BASE_URL}/permission/groups?isaccount={true|false}[&region_id={region_id}][&appid=...]&accesskey={accesskey}
+
+//获取一个用户组指定资源的权限
+GET {BASE_URL}/permission/groups/:group_id?isaccount={true|false}[&region_id={region_id}][&appid=...]accesskey={accesskey}
+
+//将用户组中指定资源删除
+DELETE {BASE_URL}/permission/groups/{group_id}?isaccount={true|false}[&region_id={region_id}][&appid=...]&accesskey={accesskey}
+
+
+//////////////////////////////////////////////////////////////////////////////
+用户组成员管理相关接口
+//////////////////////////////////////////////////////////////////////////
+
+//向用户组添加一个用户
+PUT {BASE_URL}/groups/{group_id}/users/{user_id}?accesskey={accesskey}
+
+//获取用户组中所有的用户
+GET {BASE_URL}/groups/{group_id}/users?accesskey={accesskey}
+
+//从用户组中删除用户
+DELETE {BASE_URL}/groups/{group_id}/users/{user_id}?accesskey={accesskey}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

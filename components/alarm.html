@@ -1,0 +1,95 @@
+<div style="position:absolute;width:100%;height:100%;z-index:1;overflow:auto;min-width:500px">
+	
+	<div ng-if="style.alarmCtrl=='1'" style="background:{{style.oddColor}};width:100%;" class="table_ctrl container no-padder">
+
+<!-- 		<div class="col-sm-6 col-xs-12" ng-if="data.op.headJson.sys.state=='1'">
+			<label class="col-sm-4">系统</label>
+			<div class="col-sm-8 no-padder"><select class="form-control input-sm"></select></div>
+		</div> -->
+		<div class="col-sm-6 col-xs-12" ng-if="data.op.headJson.importance.state=='1'">
+			<label class="col-sm-4">重要性</label>
+			<div class="col-sm-8 no-padder">
+				<select class="form-control input-sm" ng-model="options.severity">
+					<option value='0'>不确定的</option>
+					<option value='1'>紧急的</option>
+					<option value='2'>重要的</option>
+					<option value='3'>一般的</option>
+					<option value='4'>警告</option>
+				</select>
+			</div>
+		</div>
+		<div class="col-sm-6 col-xs-12" ng-if="data.op.headJson.type.state=='1'">
+			<label class="col-sm-4">类别</label>
+			<div class="col-sm-8 no-padder">
+				<select class="form-control input-sm" ng-model="options.class_id" ng-options="option for option in ['0','1','2','3','4','5','6','7','8','9']"></select>
+			</div>
+		</div>
+		<div class="col-sm-6 col-xs-12">
+			<label class="col-sm-4">报警主题</label>
+			<div class="col-sm-8 no-padder">
+				<input type="text" class="form-control input-sm" ng-model="options.desc">
+			</div>
+		</div>
+		<div class="col-sm-6 col-xs-12" ng-if="data.op.headJson.state.state=='1'">
+			<label class="col-sm-4">活跃状态</label>
+			<div class="col-sm-8 no-padder">
+				<select class="form-control input-sm" ng-model="options.active">
+					<option value="0">cleared </option>
+					<option value="-1">closed </option>
+					<option value="1">occured </option>
+				</select>
+			</div>
+		</div>
+		<div class="col-sm-12 col-xs-12">
+			<label class="col-sm-3">报警产生时间范围</label>
+			<div class="col-sm-4 no-padder" style="height:30px;line-height:30px;padding:0">
+		        <div class="input-group date form_datetime dtp1" data-date-format="yyyy/mm/dd hh:ii" data-link-field="dtp_input1">
+		            <input class="form-control input-sm" type="text" value=""  ng-model="options.start" readonly>
+					<span class="input-group-addon btn" ng-click="showDate1()"><span class="glyphicon glyphicon-calendar"></span></span>
+		        </div>
+				<input type="hidden" id="dtp_input1" value=""/><br/>
+		    </div>
+		    <label style="float:left"> — </label>
+		    <div class="col-sm-4 no-padder" style="height:30px;line-height:30px;padding:0">
+		        <div class="input-group date form_datetime dtp2" data-date-format="yyyy/mm/dd hh:ii" data-link-field="dtp_input2">
+		            <input class="form-control input-sm" type="text" value=""  ng-model="options.end" readonly>
+					<span class="input-group-addon btn" ng-click="showDate2()"><span class="glyphicon glyphicon-calendar"></span></span>
+		        </div>
+				<input type="hidden" id="dtp_input2" value=""/><br/>
+		    </div>
+			
+		</div>
+		<div class="col-sm-4 col-xs-12" style="margin-bottom:5px">
+			<button class="btn btn-info btn-sm" ng-click="query()">query</button>
+		</div>
+	</div>
+
+
+	<!-- table表格 -->
+	<div style="width:100%;overflow:auto;">
+		<table class="table" ng-class="{'table-bordered':style.tbBorder=='1'}" style="width:100%;height:100%;margin:0">
+			<thead style="background:#E9E9E9">
+				<tr>
+					<th ng-repeat="alarm in thead track by $index"><span>{{alarm.title}}</span></th>
+				</tr>	
+			</thead>
+			<tbody>
+				<tr ng-repeat="tr in tbody track by $index" ng-class="{'active':rowSelected==$index}" style="background:{{$index%2==0?style.oddColor:style.evenColor}}">
+					<td ng-repeat="value in tr track by $index">
+						<div ng-if="value=='td_operate'">
+							<button class="btn btn-xs btn-info" ng-if="realData[tr.state].active=='活跃'" ng-click="closeAlarm(tr.state)">确认</button>
+							<span ng-if="realData[tr.state].active!='活跃'">已关闭</span>
+						</div>
+						<span ng-if="value!='td_operate'">{{value}}</span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<!-- 分页 -->
+		<!-- <pagination total-items="bigTotalItems" ng-change="pageChanged()" items-per-page="itemsPerPage"  ng-model="bigCurrentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" rotate="false" num-pages="numPages" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
+
+		</pagination> -->
+
+	</div>
+	
+</div>

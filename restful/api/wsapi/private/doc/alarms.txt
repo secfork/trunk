@@ -1,0 +1,149 @@
+= 报警空间相关接口 =
+* '''创建报警空间'''
+创建account的时候需要创建报警空间（在关系库中创建相应的表，用于存放报警记录）
+{{{
+POST /alarm/account/{account_id}/create
+body include：
+save_period_type ： 0-days, 1-weeks, 2-months, 3-years 
+max_save_period : number
+}}}
+
+* '''删除报警空间'''
+{{{
+DELETE /alarm/account/{account_id}/drop
+}}}
+
+* '''获得报警空间'''
+{{{
+GET /alarm/account/{account_id}/get
+}}}
+
+* '''设置报警空间'''
+{{{
+PUT /alarm/account/{account_id}/set
+body include：
+save_period_type ： 0-days, 1-weeks, 2-months, 3-years 
+max_save_period : number
+}}}
+
+= 产生报警相关接口 =
+* '''CREATE AN NEW ALARM'''
+{{{
+POST /alarm/account/{account_id}/newalarm
+body include:
+//		source : { account_id:number, project_id:number, station_id:number, device_id:number }
+// 		fields : {
+//			trigger_id : number,
+//			[class_id] : number,
+//			[info] : string,
+//			[severity] : number [0-5],
+//		}
+}}}
+
+* '''CLOSE ALARM'''
+{{{
+PUT /alarm/account/{account_id}/closealarm?id={number}
+}}}
+
+* '''CLEAR ALARM'''
+{{{
+PUT /alarm/account/{account_id}/clearalarm?device_id={number}&trigger_id={number}
+}}}
+
+* '''ACKNOWLEDGE ALARM / AND CLOSE IT'''
+{{{
+PUT /alarm/account/{account_id}/ackalarm?id={number}[&user_id={number}][&message={string}]
+}}}
+
+* '''GET ACK MESSAGE'''
+{{{
+GET /alarm/acks/{ack_id}
+}}}
+
+* '''DELETE ALARM HISTORY'''
+{{{
+DELETE /alarm/account/{account_id}/deletealarms?start={number}&end={number}
+}}}
+
+= 报警查询相关接口 =
+* '''查询当前报警（active=1）的情况'''
+{{{
+GET /alarm/account/{account_id}/getalarms?
+[&station_id={number}[&station_id=...]]
+[&project_id={number}[&project_id=...]]
+[&device_id={device_id}[&device_id=...]]
+[&type={number}[&type=...]]
+[&info={*string*}]
+[&severity={number}[&severity=...]]
+[&class_id={number}[&class_id=...]]
+[&sorts={field[-]}[&sorts=...]]
+[&offset={start_item_index}]
+[&limit={max_count}]
+[&calc_sum={true|false}]
+
+}}}
+
+* '''查询报警历史（包括当前正在发生的报警，可以通过active属性进行过滤）'''
+{{{
+GET /alarm/account/{account_id}/getalarmhistory?
+start={number}
+[&end={number}]
+[&station_id={number}[&station_id=...]]
+[&project_id={number}[&project_id=...]]
+[&device_id={device_id}[&device_id=...]]
+[&type={number}[&type=...]]
+[&active={active_code}]
+[&info={*string*}]
+[&severity={number}[&severity=...]]
+[&class_id={number}[&class_id=...]]
+[&sorts={field[-]}[&sorts=...]]
+[&offset={start_item_index}]
+[&limit={max_count}]
+[&calc_sum={true|false}]
+}}}
+	其中：
+	active 0:cleared, 1:occured, -1:closed
+	可以用"&active=<1"查询所有非活跃状态的报警。
+= 查询报警的一些技巧 =
+* '''如果要表示大于小于某个条件'''
+可以用这样的写法 &field_name=>value 或 &field_name=<value
+
+* '''如果要用通配符'''
+可以用这样的写法 &field_name=*value*
+
+= 报警表定义 =
+{{{
+#!sql
+create table if not exists
+(
+	`id` bigint unsigned not null auto_increment,
+	`source_id` bigint unsigned not null,
+	`trigger_id` bigint unsigned not null,
+	`class_id` smallint unsigned default 0,
+	`type` tinyint unsigned,
+	`active` tinyint default 1,
+	`info` text,
+	`severity` tinyint unsigned default 0,
+	`timestamp` timestamp default current_timestamp not null,
+	`close_time` timestamp,
+	`ack_id` int unsigned,
+	index (`source_id`, `trigger_id`, `timestamp`),
+	primary key (`id`)
+) engine=InnoDB;
+}}}
+
+= 报警相关字段定义 =
+||='''name''' ||='''desc''' ||
+||id ||alarm id (PK)	||
+||source_id ||alarm source id, reference to t_alarm_sources(id)	||
+||name ||alarm topic name 	||
+||class_id ||alarm class id, reference to t_alarm_classes(class_id)	||
+||type || alarm type\\0 = "越限值报警 >"\\1 = "越限值报警 >="\\2 = "越限值报警 <"\\3 = "越限值报警 <="\\4 = "变化报警 ="\\5 = "变化报警 !="\\6 = "位报警 &&"\\7 = "位报警 与"\\8 = "位报警 xor"\\9 = "位报警 not &&"\\10 = "位报警 not 与"\\11 = "位报警 not xor"	||
+||active ||active status, default to 1.\\0 : cleared\\-1 : closed\\1 : occured	||
+||info ||JSON string, information about the alarm, could be for example the current value, who acknowledged an alarm etc.	|| 
+||severity ||The severity level of this alarm. Can be used to sort alarms and for further notification and handling depending on how serious the alarm is. \\The severity level can be:\\0 = Indeterminate. Should as long as it is possible not be used.\\1 = Critical alarm\\2 = Major alarm\\3 = Minor alarm\\4 = Warning\\5 =Normal alarm 	|| 
+||timestamp ||Start date and time, in UTC, when the parameter value was logged. 	||
+||close_time ||Close date and time, in UTC.	||
+||occur_trigger ||产生报警的触发器ID	||
+||clear_trigger ||消除报警的触发器ID	||
+||ack_id ||acknowledge id, reference to t_ack_***(id)	||

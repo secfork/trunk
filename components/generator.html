@@ -1,0 +1,631 @@
+<div  id='{{id}}' name="{{common.name}}" ng-controller="dy_generator" type="dy_component" style="width:100%;height:100%;">
+	
+	<!-- generator component -->	
+	
+   <div  style='position : absolute ; width : 100% ; height : 100% ; z-index:1;' ng-style="{'display':common.display}">
+      <image id="g1" src='img/generator/g1.png' style='position : absolute ; width : 100% ; height : 100% ; display : block ;'></image>
+      <image id="g2" src='img/generator/g2.png' style='position : absolute ; width : 100% ; height : 100% ; display : none ;'></image>
+      <image id="g3" src='img/generator/g3.png' style='position : absolute ; width : 100% ; height : 100% ; display : none ;'></image>
+      <image id="g4" src='img/generator/g4.png' style='position : absolute ; width : 100% ; height : 100% ; display : none ;'></image>
+      <image id="g5" src='img/generator/g5.png' style='position : absolute ; width : 100% ; height : 100% ; display : none ;'></image>
+      <image id="g6" src='img/generator/g6.png' style='position : absolute ; width : 100% ; height : 100% ; display : none ;'></image>
+      <image id="g7" src='img/generator/g7.png' style='position : absolute ; width : 100% ; height : 100% ; display : none ;'></image>
+   </div>
+
+    <style>
+        .ds_btn,.ds_btn:focus{
+            width:30px;
+            height: 30px;
+            border: 1px solid #FFFFFF;
+            background: rgba(0,0,0,0);
+            position: absolute;
+            top: 0;
+            right: -45px;
+            color: #FFFFFF;
+            padding: 0;
+        }
+        .ds_btn:hover{
+            border: 1px solid #CCCCCC;
+            color: #CCCCCC;
+        }
+    </style>
+
+    <!-- config nav component -->
+    <script type="text/ng-template" id="set_property">
+
+        <!--config nav component -->
+        <div class="dy_widget_config_property">
+            <!-- widget display area -->
+            <div class="dy_widget_config_property_display_area">
+
+                <!-- title -->
+                <div class="dy_widget_title">
+                    <span>{{glanguage.componentSetWidgetProperties}}</span>
+                    <div ng-click="close_property()"><i class="glyphicon glyphicon-remove"></i></div>
+                    <div ng-click="saveFn()"><i class="glyphicon glyphicon-transfer"></i></div>
+                </div>
+
+                <!--tabs标签-->
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#common" data-toggle="tab">{{glanguage.componentCommon}}</a></li>
+                    <li><a href="#connect" data-toggle="tab">{{glanguage.componentData}}</a></li>
+                    <li><a href="#extend" data-toggle="tab">{{glanguage.componentExtends}}</a></li>
+                </ul>
+
+                <!-- config property container and tabs content-->
+                <div class="dy_widget_config_property_container tab-content">
+
+                    <!-- common property -->
+                    <div class="dy_widget_common_property tab-pane fade in active" id="common">
+
+                        <!-- 用户可以在这里开始定义通用属性 -->
+                        <div class="dy_widget_common_property_info">
+                            <dl>
+                                <dt>
+                                    <i class="glyphicon glyphicon-cog" style="margin: 0px 10px"></i>
+                                    <label>{{glanguage.componentName}} :</label>
+                                </dt>
+                                <dd>
+                                    <input type="text" class="form-control input-sm" ng-model="commonMirror.name"/>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt>
+                                    <i class="glyphicon glyphicon-cog" style="margin: 0px 10px"></i>
+                                    <label>{{glanguage.componentzIndex}} :</label>
+                                </dt>
+                                <dd>
+                                    <input type="text" class="form-control input-sm" ng-model="commonMirror.zIndex" placeholder="0-99"/>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt>
+                                    <i class="glyphicon glyphicon-cog" style="margin: 0px 10px"></i>
+                                    <label>{{glanguage.componentWidth}} :</label>
+                                </dt>
+                                <dd>
+                                    <input type="text" class="form-control input-sm" ng-model="commonMirror.width"/>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt>
+                                    <i class="glyphicon glyphicon-cog" style="margin: 0px 10px"></i>
+                                    <label>{{glanguage.componentHeight}} :</label>
+                                </dt>
+                                <dd>
+                                    <input type="text" class="form-control input-sm" ng-model="commonMirror.height"/>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt>
+                                    <i class="glyphicon glyphicon-cog" style="margin: 0px 10px"></i>
+                                    <label>{{glanguage.componentLeft}} :</label>
+                                </dt>
+                                <dd>
+                                    <input type="text" class="form-control input-sm" ng-model="commonMirror.left"/>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt>
+                                    <i class="glyphicon glyphicon-cog" style="margin: 0px 10px"></i>
+                                    <label>{{glanguage.componentTop}} :</label>
+                                </dt>
+                                <dd>
+                                    <input type="text" class="form-control input-sm" ng-model="commonMirror.top"/>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt>
+                                    <i class="glyphicon glyphicon-cog" style="margin: 0px 10px"></i>
+                                    <label>{{glanguage.componentDisplay}} :</label>
+                                </dt>
+                                <dd>
+                                    <input type="checkbox" ng-model="commonMirror.display" ng-true-value="'block'" ng-false-value="'none'" ng-checked="commonMirror.display == 'block'"/>
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+
+                    <!-- connect property -->
+                    <div class="dy_widget_connect_property tab-pane fade" id="connect">
+
+                        <!-- 用户可以在这里开始定义连接数据 -->
+                        <div class="dy_widget_connect_property_info">
+                            <dl>
+                                <dt>
+                                    <i class="glyphicon glyphicon-cog" style="margin: 0px 10px"></i>
+                                    <label>{{glanguage.componentDatasource}} :</label>
+                                </dt>
+                                <dd style="position: relative">
+
+                                    <input type="text" class="form-control input-sm" ng-model="connectMirror.datasource"/>
+                                    <button class="btn ds_btn" ng-click="showDatasources(40,173)">
+                                        <span class="glyphicon glyphicon-th-list"></span>
+                                    </button>
+
+
+                                    <div class="dy_popover animated"
+                                         ng-class="{'fadeIn' : ds_type_popover}"
+                                         ng-style="{'display':pop_show,'left':pop_y,'top':pop_x}"
+                                            >
+                                        <div class="arrow"></div>
+                                        <div class="popover-inner">
+
+                                            <form class="dy_component_search" style="width:90%;">
+                                                <input type="text" placeholder="Search" ng-model="searchText" class="dy_component_pristine">
+                                            </form>
+
+                                            <div class="dy_datasource_type_list">
+                                                <div ng-repeat="list in pop_list | $filter_json:searchText" ng-click="selectDatasource($index)">
+                                                    <span class="ds_type_name" title="{{list.name}}">{{list.name}}</span>
+                                                    <span class="ds_type_desc" title="{{list.type}}">{{list.type}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </dd>
+                            </dl>
+                            <dl style="margin-left: 100px">
+                                <dt>
+                                    <i class="glyphicon glyphicon-cog" style="margin: 0px 10px"></i>
+                                    <label>{{glanguage.componentTag}} :</label>
+                                </dt>
+								
+                                <dd>
+                                    <select class="form-control input-sm" ng-model="connectMirror.tag" ng-options="option for option in tags"></select>
+                                </dd>
+                            </dl>
+                        </div>
+
+                    </div>
+
+                    <!--extend property-->
+                    <div class="dy_widget_extend_property tab-pane fade" id="extend">
+
+                        <div class="dy_widget_extend_property_info" id="extend_info">
+							<dl>
+                                <dt>
+                                    <i class="glyphicon glyphicon-cog" style="margin: 0px 10px"></i>
+                                    <label>{{glanguage.componentSpeed}} :</label>
+                                </dt>
+                                <dd>
+                                    <select class="form-control input-sm" ng-init="extendMirror.speed = speed['high']" ng-model="extendMirror.speed" ng-options="v as k for (k,v) in speed"></select>
+                                </dd>
+                            </dl>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </script>
+
+    <!-- 元素反选框 -->
+    <div class="free-transform" style="position:absolute;z-index:9000;width:{{common.width}}px;height:{{common.height}}px;left:0px;top:0px; pointer-events:none;" ng-style="style" ng-show="this_selected == 'active'"></div>
+    <div class="halo animate" style="position:absolute;z-index:9000;width:{{common.width}}px;height:{{common.height}}px;left:0px;top:0px; pointer-events:none;" ng-show="this_selected == 'active'">
+
+        <div class="handle nw remove" ng-click="component_del($event)" data-action="remove"></div>
+
+        <div class="handle ne fork" ng-click="property_display(this)" data-action="fork"></div>
+
+        <!--<label class="box">x : {{common.left}}, y : {{common.top}}, width : {{common.width}}, height : {{common.height}}</label>-->
+
+    </div>
+	
+</div>
+
+<script>
+
+		app.registerCtrl('dy_generator', ['$scope' , '$unique_id' , '$element' , '$datasource_factory' , '$service_clock', '$console' ,
+			
+			function($scope , $unique_id , $element , $datasource_factory ,$service_clock , $console){
+				
+				
+				/**
+					1. 注释标注组件数据格式，注意需要连同connect&extend都标注
+					* common : 通用属性，通用属性一遍标志组件的位置，层级等基本信息
+					* connect : 连接属性，用户标志组件连接数据源，组件通常会连接1-2个左右的数据源,连接数据源后，需要自动显示数据源所需要参数
+					* extend : 扩展属性，组件扩展属性主要是不同组件根据各自不同的特点，会存在与其他组件差异的属性，注意扩展属性不是连接数据源之后的需要添加的数据源参数
+					
+					下面是初始化组件配置参数
+				*/
+				$scope.id;
+				$scope.common = {
+					"name" : "table",
+					"zIndex" : "0",
+					"width" : "600",
+					"height" : "300",
+					"left" : "0",
+					"top" : "0",
+					"display" : "block"
+				};
+				$scope.connect = {
+					"datasource" : "",
+					"tag":""
+				};
+				$scope.extend = {
+					"speed" : "100ms"
+				};
+				
+				$scope.commonMirror;
+				$scope.connectMirror;
+				$scope.extendMirror;
+				
+				/**
+					2. 初始化数据，获取标签data数据，初始化给$scope对象
+				*/
+				
+				var componentDataInit = function(){
+					$console.log("Generator Component : Init Data");
+					var ida = $element.parent().attr('data');
+					idata = angular.fromJson(ida); 
+					//组件通用属性,连接属性，拓展属性
+					$scope.common = idata[0].common;
+					$scope.connect = idata[0].connect;
+					$scope.extend = idata[0].extend;
+					//对新建的组件，创建一个唯一系统id
+					$scope.id = Boolean(idata[0].id)?idata[0].id:$unique_id();
+					
+					$scope.commonMirror = jQuery.extend({},$scope.common);
+					$scope.connectMirror = jQuery.extend({},$scope.connect);
+					$scope.extendMirror = jQuery.extend({},$scope.extend);
+				}
+				componentDataInit();
+				
+				
+				/**
+					3. 变量列表，以下变量都为默认变量，在每个组件中都需要引入
+				*/
+				
+				var idata;
+				var datasource;
+				var datasourceLoadTimes = 0;
+				
+				$scope.pop_show = 'none';
+				$scope.pop_list = [];
+				
+				// 转速
+				$scope.speed = {
+					low : "500ms",
+					middle : "300ms",
+					high : "100ms"
+				}
+				/**
+					4. 建立监听，监听主要包括2个部分监听
+				   * 一部分监听为监听组件初始化所具有的数据
+				   * 另一部分监听是用来监听当前用户在组态过程中对table属性做了改变
+				   
+				   监听中，主要为三部分监听，对common监听，对connect监听，对extend监听
+				*/
+				var createWatching = function(){
+					
+					$scope.$watch("id", function (n, o) {
+						if (n) {
+							idata[0].id = n;
+							writeBack();
+						}
+					}, true);
+					
+					$scope.$watch("common", function (n, o) {
+						if (n) {
+							//保存改变
+							idata[0].common = n;
+							writeBack();
+
+							var height = parseInt(n.height);
+							var width = parseInt(n.width);
+							var top = parseInt(n.top);
+							var left = parseInt(n.left);
+							var zIndex = parseInt(n.zIndex);
+						
+							$element.parent().css({
+								"height": height,
+								"width": width,
+								"top": top,
+								"left": left,
+								"z-index": zIndex
+							});
+							// 同步组件名称
+							syncName(n.name);
+						}
+					}, true);
+					
+					$scope.$watch("connect", function (n, o) {
+						if (n) { 
+							
+							idata[0].connect = n;
+							writeBack();
+							datasourceLoadTimes = 0;
+							getDatasourceByName(n.datasource , function(){
+							
+								// 获取数据源后，展示当前数据源中包涵的数据，如果没有数据不做处理
+								datasource.getAllData(function (data) {
+									if(data){
+										refreshComponent(data)
+									}
+								});
+								// 监听数据源数据变化，如果数据源数据变化，更改数据
+								$scope.$on(datasource.dataChanged(), function (evt,data) {
+								
+									if(datasource){
+										datasource.getAllData(function (data) {
+											if(data){
+												refreshComponent(data)
+											}
+										});
+									}
+									
+								});
+								
+								
+								/**某些组件获取field是有用的，有些组价获取field是没有用的，当前组件不需要获取field
+								datasource.getTableField(function (data) { debugger
+									$scope.tags = data; debugger
+								})
+								*/
+							})
+						}
+					}, true);
+					
+					$scope.$watch("extend", function (n, o) {
+						if (n) {
+							idata[0].extend = n;
+							writeBack();
+						}
+					}, true);
+					
+					$scope.$watch("connectMirror", function (n, o) {
+						selectTag(n.datasource)
+					}, true);
+				}
+				createWatching()
+				
+				// 控制电机组件转动
+				
+				var id = 1;
+				var generator_switch = 0;
+				$scope.$on("100ms" , function(evt , data){
+					if($scope.extend.speed == "100ms"){
+						generatorRun()
+					}					
+				});
+				$scope.$on("300ms" , function(evt , data){
+					if($scope.extend.speed == "300ms"){
+						generatorRun()
+					}					
+				});
+				$scope.$on("500ms" , function(evt , data){
+					if($scope.extend.speed == "500ms"){
+						generatorRun()
+					}					
+				});
+				
+				var generatorRun = function(){
+					if(generator_switch){
+						if(id < 7){
+							id++;
+						}else{
+							id = 1 ;
+						}
+						$('#g'+id).show().siblings().hide();
+					}
+				}
+				// 用户在选择数据源后，需要选择连接数据源哪个点
+				$scope.tags = []
+				var selectTag = function(name){
+					getDatasourceByName(name , function(){
+						datasource.getTableField(function (data) { 
+							$scope.tags = data; 
+						})
+					})
+				}
+				// 连接数据源后，更新组件状态
+				var refreshComponent = function(data){
+					/**
+						更改组件状态之前，首选判断连接数据源(这个数据源返回数据的)类型，
+						-1表示数据源返回的数据是null
+						0表示数据源返回的数据类型是二维数组
+						1表示数据源返回的数据类型是三维数组
+						根据组件的不同，对不同的数据源处理是不同的，当前组件只能够显示二维数组
+					*/
+					switch(datasource.data_type){
+						case -1 :
+							break;
+						case 0 :
+							$.each(data , function(idx , val){
+								if(val.hasOwnProperty($scope.connect.tag)){
+									if(angular.isNumber(val[$scope.connect.tag]) && val[$scope.connect.tag]>0){
+										generator_switch = 1;
+									}
+								}
+							})
+							break;
+						case 1 :
+							break;
+					}
+				}
+				//写回DOM驱动
+				var writeBack = function() {
+					var idataString = JSON.stringify(idata);
+					$element.parent().attr("data", idataString);
+				}
+				
+				//组件名称name同步到页面
+				var syncName = function(name) {
+					if(angular.isArray($scope.element_list)&&$scope.element_list.length>0){
+						$.each($scope.element_list , function(idx , val){
+							$.each(val.child , function(cidx , cval){
+								if(cval.component_id == $scope.id){
+									cval.component_name = name;
+								}
+							})
+						})
+					}
+				}
+				
+				// 根据数据源名称获取数据源
+				var si;
+				var getDatasourceByName = function(n , callback){
+					datasource = $datasource_factory.find(n); 
+					if(datasourceLoadTimes <= 5 && !datasource){ 
+						clearInterval(si);
+						datasourceLoadTimes++;
+						si = setInterval(function(){
+							getDatasourceByName( n , callback )
+						} , 1000)
+						return;
+					}
+					if(datasourceLoadTimes > 5){
+						clearInterval(si);
+					}
+					if(datasource){
+						clearInterval(si);
+						callback();
+					}
+				}
+				
+				//取消修改，属性设置页面关闭按钮触发
+				$scope.resetFn = function () {
+					//common
+					if(angular.isObject($scope.common)){
+						$scope.commonMirror = jQuery.extend({},$scope.common);
+					}
+					//connect
+					$scope.connectMirror = jQuery.extend({},$scope.connect);
+
+					//extend
+					if(angular.isObject($scope.extend)){
+						$scope.extendMirror = jQuery.extend({},$scope.extend);
+					}
+				};
+
+
+				//设置属性保存
+				$scope.saveFn = function () {
+					//common
+					if(angular.isObject($scope.commonMirror)){ 
+						$scope.common = jQuery.extend({},$scope.commonMirror);
+					}
+					//connect
+					$scope.connect = jQuery.extend({},$scope.connectMirror);
+					//extend
+					if(angular.isObject($scope.extendMirror)){
+						$scope.extend = jQuery.extend({},$scope.extendMirror);
+					}
+					$console.log($scope.common)
+					$console.log($scope.connect)
+					$console.log($scope.extend)
+				};
+
+				
+				/**
+					5. 系统设置，组件实现者不需要关心实现
+				*/
+				
+				// 监听元素何时被选中
+				$scope.this_selected = "unactive";
+				$scope.style = {};
+
+				$scope.$watch("element_list", function (n, o) {
+					if(!$scope.element_list){
+						return;
+					}
+					if(angular.isArray($scope.element_list)&&$scope.element_list.length>0){
+						$.each($scope.element_list , function(idx , val){
+							$.each(val.child , function(cidx , cval){
+								if(cval.component_id == $scope.id){
+									$scope.this_selected = cval.state;
+									if(cval.locked){
+										$scope.style = {border : "1px dashed #FF0000"}
+									}else{
+										$scope.style = {border : "1px dashed #000000"}
+									}
+								}
+							})
+						})
+					}
+				}, true);
+				
+				/**
+					关闭属性窗口
+				*/
+				$scope.close_property = function () {
+					$("#componentPropertyDialog").empty();
+					$element.parent().draggable('enable');
+				}
+
+				/**
+					加载属性栏 datasource tree
+				*/
+				$scope.$on('datasource_reload', function (evt, id) { //点击设置重新加载实时数据源
+					if ($scope.id == id) {
+						//打开设置框的时候同步一次before
+						$scope.resetFn();
+					}
+				});
+
+				/**
+					响应组件拖拽，更改元素位置
+				*/
+				$scope.$on('COMPONENT_DRAGGABLE', function (evt, data) {	
+					var left = $element.parent().css("left");
+					var top = $element.parent().css("top");
+					$scope.common.left = parseInt(left);
+					$scope.common.top = parseInt(top);
+				});
+
+				/**
+					响应组件缩放
+				*/
+				$scope.$on('COMPONENT_RESIZABLE', function (evt, data) {
+					var width = $element.parent().css("width");
+					var height = $element.parent().css("height");
+					$scope.common.width = parseInt(width);
+					$scope.common.height = parseInt(height);
+				});
+				
+				/**
+					点击选择数据源按钮
+				*/
+				$scope.showDatasources = function(x,y) {
+					$scope.pop_x = x;
+					$scope.pop_y = y;
+
+					if($scope.pop_show == 'block'){
+						$scope.pop_show = 'none';
+					}else{
+						$scope.pop_show = 'block';
+					}
+					ds_refresh();
+				}
+
+				$scope.selectDatasource = function(index) {
+					$scope.connectMirror.datasource = $scope.pop_list[index].name;
+					$scope.pop_show = 'none';
+				}
+				
+				//形成datasource选择列表
+				function ds_refresh() {
+					$scope.pop_list = []; 
+					var ds_source = $datasource_factory.source;
+					if(ds_source.length>0){
+						for(var x = 0;x<ds_source.length;x++){
+							var json = {
+								name:ds_source[x].name,
+								type:ds_source[x].type.name
+							};
+							$scope.pop_list.push(json);
+						}
+					}
+				}
+				
+				
+			}	
+			
+		]);
+		
+</script>

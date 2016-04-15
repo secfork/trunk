@@ -1,0 +1,87 @@
+<div class="dy_datasource_datasource_widget">
+	<span style="width:10px;color:#FF0000;">*</span>
+	<span>start</span>
+	<input tranlate-time type="datetime-local" style="height:30px;width:244px;" class="form-control input-sm" name="input" ng-model="options[1].value"
+      placeholder="yyyy-MM-ddTHH:mm" min="1970-01-01T00:00" max="2040-12-31T00:00" required />
+</div>
+
+<div class="dy_datasource_datasource_widget">
+	<span style="width:10px;color:#FF0000;">*</span>
+	<span>end</span>
+	<input tranlate-time type="datetime-local" style="height:30px;width:244px;" class="form-control input-sm" name="input" ng-model="options[2].value" placeholder="yyyy-MM-ddTHH:mm" min="1970-01-01T00:00" max="2040-12-31T00:00" required />
+</div>
+
+<div class="dy_datasource_datasource_widget">
+	<span style="width:10px;color:#FF0000;"></span>
+	<span>limit</span>
+	<input input-length-limit-three class="form-control input-sm" style="height:30px;width:244px;" type="number" name="input" ng-model="options[3].value" min="0" max="1000"  placeholder="0-1000" required/>
+</div>
+
+<div class="dy_datasource_datasource_widget">
+	<span style="width:10px;color:#FF0000;"></span>
+	<span>timestamp</span>
+	<select class="form-control" style="height:30px;width:244px;" ng-model="options[4].value">
+		<option value="server_ts">服务器时间戳</option>
+		<option value="source_ts">采集时间戳</option>
+	</select>
+</div>
+
+<div class="dy_datasource_datasource_widget">
+	<span style="width:10px;color:#FF0000;"></span>
+	<span>bound</span>
+	<input input-length-limit-three class="form-control input-sm" style="height:30px;width:244px;" type="number" name="input" ng-model="options[5].value" required/>
+</div>
+
+<div class="dy_datasource_datasource_widget" ng-controller="getSystemHistory" ng-show="tags.length != 0">
+	<span style="width:10px;color:#FF0000;">*</span>
+	<span>tags</span>
+	<select class="select2"
+		style="height:30px;width:244px;" 
+		ng-model="options[0].value"
+		multiple="multiple"
+		>
+		<option ng-repeat="tag in tags" ng-model="tag">{{tag}}</option>
+	</select>
+</div>
+
+<script>
+	app.registerCtrl('getSystemHistory', ['$scope' , '$datasource_factory' , '$_getAccessKey' , '$http' , '$element' ,
+	
+        function ($scope , $datasource_factory , $_getAccessKey , $http , $element) {
+	
+			$scope.tags = $scope.options[0].value;
+			
+			$scope.$watch("parameters", function (n, o) {
+				console.log($scope.parameters);
+				if($scope.parameters)
+				{
+					var ds = $datasource_factory.find($scope.parameters[0].value);
+					if(!ds){
+						return;
+					}
+					var system = ds.ret[ds.index]
+					if(!system){return;}
+					$_getAccessKey.get(function(ack){
+						var url = "/v2/json/systems/"+system.uuid+"/live?" + ack ;
+						$http.get(url).success(function( data , state ){
+							if(!data.err){
+								var ret = data.ret;
+								var klist = Object.keys(ret);
+								$scope.tags = klist;
+								
+								$(".select2").select2({
+									placeholder: "Select a state",
+									allowClear: true
+								});
+							}
+						});
+					})
+					
+				}
+				
+				return;
+			},true);
+		
+		}
+	]);
+</script>

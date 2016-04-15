@@ -1,0 +1,33 @@
+// READ RAW DATA 
+GET {BASE_URL}  /systems/{system_id}/log/readraw?accesskey={accesskey}
+&tag=tag1[&tag=tag2][&tag=...]
+&start={start_timestamp}
+[&end={end_timestamp}
+[&limit={limit_count}]
+[&timestamp={server_ts|source_ts}]
+[&bound={true|false}]
+
+//READ INTERVAL
+GET {BASE_URL}/systems/{system_id}/log/readinterval?accesskey={accesskey}
+&tag=tag1[&tag=tag2][&tag=...]
+&start={start_timestamp}
+&count={count_per_id}
+[&end={end_timestamp}
+[&timestamp={server_ts|source_ts}]
+[&mode={last_value|next_value|linear}]
+
+//READ AT TIME
+GET {BASE_URL}/systems/{system_id}/log/readattime?accesskey={accesskey}
+&tag=tag1[&tag=tag2][&tag=...]
+&t=t1[,t=t2[, ...]]
+[&timestamp={server_ts|source_ts}]
+[&mode={last_value|next_value|linear}]
+
+READ PROCESS
+GET {BASE_URL}/systems/{system_id}/log/readaggregation?accesskey={accesskey}
+&tag=tag1[&tag=tag2][&tag=...]
+[&interval={interval}]
+&stats=<stats_enum>[&stats=<stats_enum>][&stats=...]
+&start={start_timestamp}
+[&end={end_timestamp}
+[&timestamp={server_ts|source_ts}]

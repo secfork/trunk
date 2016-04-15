@@ -1,0 +1,33 @@
+[req]
+    distinguished_name = req_distinguished_name
+    req_extensions = v3_req
+ 
+    [req_distinguished_name]
+    countryName = Country Name (2 letter code)
+    countryName_default = CN
+    stateOrProvinceName = State or Province Name (full name)
+    stateOrProvinceName_default = BeiJing
+    localityName = Locality Name (eg, city)
+    localityName_default = YaYunCun
+    organizationalUnitName	= Organizational Unit Name (eg, section)
+    organizationalUnitName_default	= Domain Control Validated
+    commonName = Internet Widgits Ltd
+    commonName_max	= 64
+ 
+    [ v3_req ]
+    # Extensions to add to a certificate request
+    basicConstraints = CA:FALSE
+    keyUsage = nonRepudiation, digitalSignature, keyEncipherment
+    subjectAltName = @alt_names
+ 
+    [alt_names]
+    DNS.1 = www.thinglinx.net
+    DNS.2 = www.thinglinx.net
+    DNS.3 = www.thinglinx.net
+    DNS.4 = www.thinglinx.net
+    DNS.5 = www.thinglinx.net
+    IP.1 = 172.18.16.254
+    IP.2 = 192.168.122.105
+    IP.3 = 10.162.200.129
+    IP.4 = 182.92.10.169
+   

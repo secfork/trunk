@@ -1,0 +1,9 @@
+<div class="uiPropertyAttrBox">
+    <label ng-click="flexible=!flexible" class="pointer">
+    	{{dirTitle}}
+	    <div ng-class="{flexibleUpImage : !flexible , flexibleDownImage : flexible}" ></div>
+    </label>
+    <div class="uiPropertyContent"  ng-hide="flexible">
+	    <ng-transclude></ng-transclude>
+    </div>
+</div>

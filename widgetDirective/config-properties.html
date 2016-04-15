@@ -1,0 +1,31 @@
+<div class="dy_widget_properties_config_left">
+
+	<div class="dy_widget_properties_config_left_item" ng-repeat="(k,v) in extendMirror.dataFilter" ng-class="{'dy_active' : v.name == extendMirror.dataFilter[index].name}">
+		<label ng-click="metaSelect(k)">{{v.name}}</label>
+		<input type="checkbox" ng-model="v.display">
+	</div>
+
+</div>
+
+
+<div class="dy_widget_properties_config_right" ng-show="extendMirror.dataFilter[index]">
+
+	<div class="dy_widget_properties_config_left_item" style="border-bottom:0px;">
+		<label style="margin-top:5px;width:100px;">{{extendMirror.dataFilter[index].name}}</label>
+	</div>
+	
+	<div class="dy_widget_properties_config_left_item" style="border-bottom:0px;">
+		<label style="margin-top:5px;width:100px;">Alias Name</label>
+		<input class="form-control input-sm" type="string" name="input" ng-model="extendMirror.dataFilter[index].proxyName" style="width:300px;" required/>
+	</div>
+	
+	<div class="dy_widget_properties_config_left_item" style="border-bottom:0px;" ng-show="extendMirror.dataFilter[index].field">
+		<label style="margin-top:5px;width:100px;">properties</label>
+		<select	style="height:30px;width:244px;" ng-model="extendMirror.dataFilter[index].value">
+			<option ng-repeat="(k,v) in extendMirror.dataFilter[index].field" ng-model="k">{{k}}</option>
+		</select>
+	</div>
+	
+</div>
+
+

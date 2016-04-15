@@ -1,0 +1,3 @@
+{ 
+	"content" : "<div dy-nav draggable class='dy_component_model' style='position:absolute;width:500px;height:50px;' data='[{\"id\":\"\",\"common\":{\"name\":\"nav\",\"zIndex\":0,\"left\":0,\"top\":0,\"width\":500,\"height\":50,\"display\":\"block\"},\"extend\":{\"bgColor\":\"\",\"links\":[]}}]'></div>"
+}

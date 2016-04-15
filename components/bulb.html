@@ -1,0 +1,582 @@
+<div id='{{id}}' name="{{common.name}}" ng-controller="dy_bulb" type="dy_component" style="width:100%;height:100%;">
+
+    <!-- 组件主体部分 -->
+    <div style='position : absolute ; width : 100% ; height : 100% ; background-size : 100% 100% ;display: {{common.display}}'>
+        <image ng-src='{{bg}}' style='position : absolute ; width : 100% ; height : 100% ;'></image>
+    </div>
+
+    <!-- 元素反选框 -->
+    <div class="free-transform" style="position:absolute;z-index:9000;width:{{common.width}}px;height:{{common.height}}px;left:0px;top:0px; pointer-events:none;" ng-style="style" ng-show="this_selected == 'active'"></div>
+
+    <div class="halo animate" style="position:absolute;z-index:9000;width:{{common.width}}px;height:{{common.height}}px;left:0px;top:0px; pointer-events:none;" ng-show="this_selected == 'active'">
+
+        <div class="handle nw remove" ng-click="component_del($event)" data-action="remove"></div>
+
+        <div class="handle ne fork" ng-click="open_properties_dialog()" data-action="fork"></div>
+
+    </div>
+
+    <!-- 组件配置页面 -->
+    <div class="dy_widget_property_frame" ng-show="propertiesDisplay" ng-click="$event.stopPropagation();">
+
+        <!-- 配置界面标头 -->
+        <div class="dy_widget_property_nav">
+                <span>{{glanguage.componentSetWidgetProperties}}</span>
+                <div ng-click="close_properties_dialog()"><i class="glyphicon glyphicon-remove"></i></div>
+                <div ng-click="saveFn()"><i class="glyphicon glyphicon-transfer"></i></div>
+        </div>
+
+        <!-- 配置界面切换标签 -->
+        <ul class="dy_widget_property_tab nav nav-tabs" ng-init="selectedTab=1">
+            <li ng-class="{active: selectedTab == 1}">
+                <a ng-click="selectedTab = 1;">{{glanguage.componentCommon}}</a>
+            </li>
+            <li ng-class="{active: selectedTab == 2}">
+                <a ng-click="selectedTab = 2;">{{glanguage.componentExtends}}</a>
+            </li>
+            <li ng-class="{active: selectedTab == 3}">
+                <a ng-click="selectedTab = 3;">{{glanguage.componentData}}</a>
+            </li>
+            <li ng-class="{active: selectedTab == 4}">
+                <a ng-click="selectedTab = 4;">{{glanguage.componentConfig}}</a>
+            </li>
+        </ul>
+
+        <!-- 通用属性 common properties -->
+        <div class="tab-content dy_widget_common_property" ng-show="selectedTab == 1">
+            <div widget-common-properties></div>
+        </div>
+
+        <!-- 扩展属性 extend properties -->
+        <div class="tab-content dy_widget_extend_property" ng-show="selectedTab == 2">
+
+            <!-- set table  -->
+            <div class="dy_widget_properties_common_directive">
+                <label>Synchronize Datasurce Data {{commonMirror.syncDatasourceData}}:</label>
+                <input style="margin-top:10px;width:20px;" type="checkbox" ng-model="extendMirror.syncDatasourceData">
+            </div>
+
+        </div>
+
+        <!-- 数据连接 connect properties -->
+        <div class="tab-content dy_widget_connect_property" ng-show="selectedTab == 3">
+            <div class="dy_widget_properties_common_directive">
+                <label>{{glanguage.componentDatasource}} :</label>
+                <select class="form-control" style="position:relative;float:left;width:300px;color:#000;" ng-model="connectMirror.datasource" ng-init="showDatasources()" ng-focus="ds_refresh()" ng-options="list.name as list.name group by list.type for list in pop_list"></select>
+            </div>
+        </div>
+
+        <!-- 连接配置 config properties -->
+        <div class="tab-content dy_widget_common_property" ng-show="selectedTab == 4">
+            <div widget-single-config-properties></div>
+        </div>
+
+    </div>
+
+    <!--  end  -->
+
+</div>
+
+<script>
+
+    app.registerCtrl('dy_bulb', ['$scope' , '$unique_id' , '$element' , '$datasource_factory' , '$console' , '$timeout' ,
+
+        function ($scope, $unique_id, $element , $datasource_factory , $console , $timeout) {
+                /**
+                    variables:
+
+                    common : 通用属性 所有组件的通用属性一致 可以通过widget-common-properties设置
+                    connect : 连接属性 组件连接数据源名称
+                    extend : 扩展属性 组件之间的差异属性都在这里设置
+
+                    commonMirror , connectMirror , extendMirror 设置属性时，在属性栏中，还没有保存设置
+                */
+                $scope.id;
+                $scope.common = {
+                    "name" : "text",
+                    "zIndex" : "0",
+                    "width" : "60",
+                    "height" : "30",
+                    "left" : "0",
+                    "top" : "0",
+                    "display" : "block"
+                };
+                $scope.connect = {
+                    "datasource" : ""
+                };
+                $scope.extend = {
+                    "options" : [],
+                    "dataFilter" : [], // 数据过滤，在获取数据源数据后，需要根据dataFilter格式，过滤获取的数据，才能显示到table中
+                    "syncDatasourceData" : true // 是否允许组件同步数据源数据变更推送
+                };
+                $scope.bg = 'img/bulb/bulb_2.png';
+
+                $scope.commonMirror;
+                $scope.connectMirror;
+                $scope.extendMirror;
+
+
+                var datasource;
+                var datasourceLoadTimes = 0;
+
+                $scope.propertiesDisplay = false; // 初始化加载组件，不显示组件属性列表
+
+                $scope.options; // 数据源请求参数
+                $scope.meta; // 数据源返回数据描述(meta),这里的meta只是获取数据源的meta，并不对表格数据过滤，需要使用extend.dataFilter过滤
+
+                /**
+                    创建对 id common connect extend 监听
+                */
+                $scope.$watch("id", function (n, o) {
+                    if (n) {
+                        $scope.id = n;
+                        writeBack();
+                    }
+                }, true);
+
+                $scope.$watch("common", function (n, o) {
+                    if (n) {
+                        //保存改变
+                        $scope.common = n;
+                        writeBack();
+
+                        var height = parseInt(n.height);
+                        var width = parseInt(n.width);
+                        var top = parseInt(n.top);
+                        var left = parseInt(n.left);
+                        var zIndex = parseInt(n.zIndex);
+
+                        $element.parent().css({
+                            "height": height,
+                            "width": width,
+                            "top": top,
+                            "left": left,
+                            "z-index": zIndex
+                        });
+                        // 同步组件名称
+                        syncName(n.name);
+                    }
+                }, true);
+
+                $scope.$watch("connect", function (n, o) {
+
+                    if (n) {
+                        $scope.connect = n;
+                        writeBack();
+                        datasourceLoadTimes = 0;
+                        getDatasourceByName(n.datasource , function(){
+
+                            if(datasource && $scope.extend.syncDatasourceData)
+                            {
+                                $scope.$on(datasource.dataChanged(), function (evt,sdata) {
+
+                                    refreshComponent()
+
+                                });
+                            }
+                        })
+                    }
+                }, true);
+
+                $scope.$watch("extend", function (n, o) {
+                    if (n) {
+
+                        $scope.extend = n;
+
+                        if(datasource){
+
+                            refreshComponent()
+
+                        }
+
+                        writeBack();
+                    }
+                }, true);
+
+                $scope.$watch("connectMirror", function (n, o) {
+
+                    getDatasourceByName(n.datasource , function(){
+
+                        /*
+                            组态数据源，切换连接数据源时
+
+                            首先 需要获取数据源列表&参数directive
+                            将数据源参数directive添加到组件connectMirror配置界面中
+                            创建$scope.options 创建的数据源参数都保存到 $scope.options 中
+
+                            然后 通过datasource.getMeta()获取meta数据 设置到 $scope.meta 中
+                            在extendMirror中添加meta directive
+                            通过 meta directive 重置$scope.meta
+                        */
+                        if(!datasource){return;}
+                        var datasource_directive = datasource.directive;
+                        $scope.options = datasource.options;
+
+
+                        datasource.getMeta(function(meta){
+                            $scope.extendMirror.dataFilter = [];
+                            $scope.meta = meta;
+                            $.each($scope.meta , function(idx , val){
+                                var json = {name : idx , proxyName : "" , value : null , field : (val.field) ? val.field : null , display : false};
+                                $scope.extendMirror.dataFilter.push(json);
+                            });
+                        });
+                    });
+
+                }, true);
+
+
+
+                /**
+                    初始化数据，获取标签data数据，初始化给$scope对象
+                */
+                var componentDataInit = function(){
+                    var ida = $element.parent().attr('data');
+                    var idata = angular.fromJson(ida);
+
+                    //组件通用属性,连接属性，拓展属性
+                    $scope.common = idata[0].common;
+                    $scope.connect = idata[0].connect;
+                    $scope.extend = idata[0].extend;
+                    //对新建的组件，创建一个唯一系统id
+                    $scope.id = Boolean(idata[0].id)?idata[0].id:$unique_id();
+                    // 元素初始化以后，父类的element_list中，添加自己
+                    var pageId = $element.parent().parent().parent().attr("id");
+                    if($scope.element_list)
+                    {
+                        $.each($scope.element_list , function(idx , val){
+                            var page_name = val.page_name ;
+                            if(page_name == pageId)
+                            {
+                                var cjson = {"component_id" : $scope.id , "component_name" : $scope.common.name , "state" : "unactive" , "locked" : false};
+                                val.child.push(cjson);
+                            }
+                        });
+                    }
+
+                    $scope.commonMirror = angular.copy($scope.common);
+                    $scope.connectMirror = angular.copy($scope.connect);
+                    $scope.extendMirror = angular.copy($scope.extend);
+                }
+                componentDataInit();
+
+
+
+                // 连接数据源后，更新组件状态
+                var refreshComponent = function(){
+                    if(!datasource)
+                    {
+                        return;
+                    }
+                    datasource.getAllData(function(data){
+                        $console.log(data)
+                        $console.log($scope.extend.dataFilter);
+
+                        if(data.length == 0)
+                        {
+                            return;
+                        }
+                        var index = datasource.index;
+                        var k;
+                        var v;
+                        $.each($scope.extend.dataFilter , function(idx , val){
+                            if(val.display)
+                            {
+                                k = val.name;
+                                if(val.value)
+                                {
+                                    v = val.value;
+                                }
+                            }
+                        })
+
+                        var text = (v)?data[index][k][v]:data[index][k];
+
+                        if(angular.isNumber(text)){
+                            if(text==0){
+                                bulb_switch(false);
+                            }else{
+                                bulb_switch(true);
+                            }
+                        }else{
+                            bulb_switch(false);
+                        }
+
+                    });
+                }
+
+
+                //控制显示灯的亮灭
+                function bulb_switch(value){
+                    if(value){
+                        $scope.bg = 'img/bulb/bulb_1.png';
+                    }else{
+                        $scope.bg = 'img/bulb/bulb_2.png';
+                    }
+                }
+
+                /*
+                    写回DOM驱动
+                */
+                var writeBack = function() {
+                    var idata = [];
+                    if(!$scope.extend.options )
+                    {
+                        $scope.extend.options = [];
+                    }
+                    $.each($scope.extend.options , function(idx , val){
+                        delete val['$$hashKey'];
+                    });
+                    idata.push({'id' : $scope.id , 'common' : $scope.common , 'connect' : $scope.connect , 'extend' : $scope.extend});
+
+                    var idataString = JSON.stringify(idata);
+                    $element.parent().attr("data", idataString);
+                }
+
+
+
+                /**
+                    组件名称name同步到页面
+                */
+                var syncName = function(name) {
+                    if(angular.isArray($scope.element_list)&&$scope.element_list.length>0){
+                        $.each($scope.element_list , function(idx , val){
+                            $.each(val.child , function(cidx , cval){
+                                if(cval.component_id == $scope.id){
+                                    cval.component_name = name;
+                                }
+                            })
+                        })
+                    }
+                }
+
+                /**
+                    组件根据用户配置的数据源名称，在datasource_factory中湖区数据源
+                    如果第一时间没有获取到数据源，本方法会自动递归调用，如果5次没有获取数据源
+                    则放弃获取数据源
+                */
+                var si;
+                var getDatasourceByName = function(n , callback){
+                      if($datasource_factory.source.length == 0 && datasourceLoadTimes <= 5){
+                           datasourceLoadTimes++;
+                        $timeout(function(){
+                            getDatasourceByName( n , callback )
+                        } , 1000)
+                        return;
+                    }
+                    datasource = $datasource_factory.find(n);
+                    if(datasourceLoadTimes <= 5 && !datasource){
+                        clearInterval(si);
+                        datasourceLoadTimes++;
+                        si = setInterval(function(){
+                            getDatasourceByName( n , callback )
+                        } , 1000)
+                        return;
+                    }
+                    if(datasourceLoadTimes > 5){
+                        clearInterval(si);
+                    }
+                    if(datasource){
+                        clearInterval(si);
+                        callback();
+                    }
+                }
+
+
+                 //取消修改，属性设置页面关闭按钮触发
+                $scope.resetFn = function () {
+                    //common
+                    if(angular.isObject($scope.common)){
+                        $scope.commonMirror = jQuery.extend({},$scope.common);
+                    }
+                    //connect
+                    $scope.connectMirror = jQuery.extend({},$scope.connect);
+
+                    //extend
+                    if(angular.isObject($scope.extend)){
+                        $scope.extendMirror = jQuery.extend({},$scope.extend);
+                    }
+
+                };
+
+
+                //设置属性保存
+                $scope.saveFn = function () {
+                    //common
+                    if(angular.isObject($scope.commonMirror)){
+                        $scope.common = jQuery.extend({},$scope.commonMirror);
+                    }
+                    //connect
+                    $scope.connect = jQuery.extend({},$scope.connectMirror);
+                    //extend
+                    if(angular.isObject($scope.extendMirror)){
+                        $scope.extend = jQuery.extend({},$scope.extendMirror);
+                        $scope.extend.options = $scope.extendMirrorOptions;
+                    }
+                    // if datasource , component will set datasource options , save it
+                    if(datasource)
+                    {
+                        datasource.options = $scope.options;
+                    }
+
+                    $console.log($scope.extendMirror , 'bulb.html , show extendMirror - extendMirror');
+                };
+
+
+
+                /**
+                    5. 系统设置，组件实现者不需要关心实现
+                */
+
+                // 监听元素何时被选中
+                $scope.this_selected = "unactive";
+                $scope.style = {};
+
+                $scope.$watch("element_list", function (n, o) {
+                    if(!$scope.element_list){
+                        return;
+                    }
+                    if(angular.isArray($scope.element_list)&&$scope.element_list.length>0){
+                        $.each($scope.element_list , function(idx , val){
+                            $.each(val.child , function(cidx , cval){
+                                if(cval.component_id == $scope.id){
+                                    $scope.this_selected = cval.state;
+                                    if(cval.locked){
+                                        $scope.style = {border : "1px dashed #FF0000"}
+                                    }else{
+                                        $scope.style = {border : "1px dashed #000000"}
+                                    }
+                                }
+                            })
+                        })
+                    }
+                }, true);
+
+                /**
+                    控制属性栏显示，并且在显示属性栏同时，重新加载一次已经创建好的数据源
+                */
+                $scope.open_properties_dialog = function(){
+                    $scope.propertiesDisplay = true;
+                    $scope.$parent.keyboardOperation = false;
+                    $scope.resetFn();
+
+                    try
+                    {
+                        $element.parent().draggable( 'disable' );
+                    }
+                    catch (e)
+                    {
+                        $console.log('Component did not open it has been closed ' , 'bulb.html')
+                    }
+                }
+
+
+                /**
+                    关闭属性窗口
+                */
+                $scope.close_properties_dialog = function () {
+                    $scope.propertiesDisplay = false;
+                    $scope.$parent.keyboardOperation = true;
+
+                    try
+                    {
+                        $element.parent().draggable( 'enable' );
+                    }
+                    catch (e)
+                    {
+                        $console.log('Component did not open it has been closed ' , 'bulb.html')
+                    }
+                }
+
+
+                /**
+                    响应组件拖拽，更改元素位置
+                */
+                $scope.$on('COMPONENT_DRAGGABLE', function (evt, data) {
+                    var left = $element.parent().css("left");
+                    var top = $element.parent().css("top");
+                    $scope.common.left = parseInt(left);
+                    $scope.common.top = parseInt(top);
+                });
+
+                /**
+                    响应组件缩放
+                */
+                $scope.$on('COMPONENT_RESIZABLE', function (evt, data) {
+                    var width = $element.parent().css("width");
+                    var height = $element.parent().css("height");
+                    $scope.common.width = parseInt(width);
+                    $scope.common.height = parseInt(height);
+                });
+
+                /*
+                    响应其他组件被点击，关闭自身的属性栏
+                */
+                $scope.$on('COMPONENT_CLOSE_PROPERTY' , function(evt , data){
+                    if(data != $scope.id)
+                    {
+                        $scope.close_properties_dialog();
+                    }
+                });
+
+                /**
+                    点击选择数据源按钮
+                */
+                $scope.showDatasources = function(x,y) {
+                    $timeout(function(){ds_refresh()} , 3000);
+                }
+
+                $scope.selectDatasource = function(index) {
+                    $scope.connectMirror.datasource = $scope.pop_list[index].name;
+                    $scope.pop_show = 'none';
+                }
+
+                $scope.$on('datasource_changed' , function(evt , data){
+                    ds_refresh();
+                });
+
+                //形成datasource选择列表
+                function ds_refresh() {
+                    $scope.pop_list = [];
+                    var ds_source = $datasource_factory.source;
+                    if(ds_source.length>0){
+                        for(var x = 0;x<ds_source.length;x++){
+                            var json = {
+                                name:ds_source[x].name,
+                                type:ds_source[x].type.name
+                            };
+                            $scope.pop_list.push(json);
+                        }
+                    }
+                }
+
+                // 控制组件在连接数据源列表的时候，只允许连接一列
+                $scope.select_one = function(name){
+                    $.each($scope.extendMirror.dataFilter , function(idx , val){
+                        if(val.name != name)
+                        {
+                            val.display = false;
+                        }
+                        else
+                        {
+                            val.display = true;
+                        }
+                    })
+                }
+
+                $scope.index;
+                $scope.metaSelect = function(idx){
+                    $scope.index = idx;
+                }
+
+                $scope.$on('COMPONENT_DELETE' , function(evt , callback){
+                    callback();
+                });
+
+                $timeout(function(){
+                    $(".dy_widget_properties_config_left").mCustomScrollbar({theme:"rounded-dark"});
+                } , 200);
+        }
+    ]);
+
+</script>

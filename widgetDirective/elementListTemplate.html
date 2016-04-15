@@ -1,0 +1,10 @@
+<!-- 元素列表模板 -->
+<!-- item即元素的base -->
+<div class="pageElement" ng-click="elementSelected(item);toggle()" ng-class="	{'pageElementActive' : item.id==currentSelectedElementId}">
+	<!-- icon -->
+	<div class="pageElementIcon elementNoBorder">
+		<image ng-src="{{item.logo}}" style="width:inherit;height:inherit;"></image>
+	</div>
+	<!-- name -->
+	<div class="pageElementName">{{item.name}}</div>
+</div>

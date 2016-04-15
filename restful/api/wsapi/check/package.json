@@ -1,0 +1,17 @@
+{
+	"name":"thinglinx-check",
+	"description":"thinglinx public api check",
+	"version":"0.0.1",
+	"private":true,
+	"author":"guangfei.me@gmail.com",
+	"contributors":[
+	],
+	"keywords":[
+		"public",
+		"check"
+	],
+	"dependencies":{},
+	"engines": {
+		"node": ">= 0.10.0"
+	}
+}

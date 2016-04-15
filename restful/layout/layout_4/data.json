@@ -1,0 +1,3 @@
+{
+	"content" : "<div class='row'><div class='item col-lg-12' view-selector  droppable selectable style='height:300px;'></div><div class='item col-lg-4' view-selector  droppable selectable style='height:300px;'></div><div class='item col-lg-8' view-selector  droppable selectable style='height:300px;'></div><div class='item col-lg-12' view-selector  droppable selectable style='height:300px;'></div></div>"
+}

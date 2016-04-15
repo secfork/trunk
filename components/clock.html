@@ -1,0 +1,147 @@
+<div ng-show="data.timeDisplay && data.timeType == 0" style="position:relative;display:flex;width:100%;height:100px;align-content:center;font-size:45px;">
+    <span style="position:relative;margin:auto;">
+      <span style="position:relative;font-size:5px;width:17px;word-break:break-all;display:inline-block;">{{halfDay}}</span>
+      {{defaultTime | date:'hh:mm:ss'}}
+    </span>
+</div>
+<div ng-show="data.timeDisplay && data.timeType == 1" style="position:relative;display:flex;width:100%;height:100px;align-content:center;font-size:45px;">
+    <span style="position:relative;margin:auto;">
+      <span style="position:relative;font-size:5px;width:17px;word-break:break-all;display:inline-block;">{{halfDay}}</span>
+      {{defaultTime | date:'hh:mm'}}
+    </span>
+</div>
+
+<div ng-show="data.timeDisplay && data.timeType == 2" style="position:relative;display:flex;width:100%;height:100px;align-content:center;font-size:45px;">
+    <span style="position:relative;margin:auto;">
+      {{defaultTime | date:'H:mm:ss'}}
+    </span>
+</div>
+
+<div ng-show="data.timeDisplay && data.timeType == 3" style="position:relative;display:flex;width:100%;height:100px;align-content:center;font-size:45px;">
+    <span style="position:relative;margin:auto;">
+      {{defaultTime | date:'H:mm'}}
+    </span>
+</div>
+
+<div ng-show="data.timeDisplay && data.timeType == 4" style="position:relative;display:flex;width:100%;height:100px;align-content:center;font-size:45px;">
+    <span style="position:relative;margin:auto;">
+      {{defaultTime | date:'hh:mm:ss'}}
+      <span style="position:relative;margin:auto;font-size:5px;">{{defaultTime | date:'a'}}</span>
+    </span>
+</div>
+
+<div ng-show="data.timeDisplay && data.timeType == 5" style="position:relative;display:flex;width:100%;height:100px;align-content:center;font-size:45px;">
+    <span style="position:relative;margin:auto;">
+      {{defaultTime | date:'hh:mm'}}
+      <span style="position:relative;margin:auto;font-size:5px;">{{defaultTime | date:'a'}}</span>
+    </span>
+</div>
+
+<div ng-show="data.timeDisplay && data.timeType == 6" style="position:relative;display:flex;width:100%;height:100px;align-content:center;font-size:45px;">
+    <span style="position:relative;margin:auto;">
+      {{defaultTime | date:'H'}}
+      <span style="position:relative;margin:auto;font-size:5px;">时</span>
+      {{defaultTime | date:'mm'}}
+      <span style="position:relative;margin:auto;font-size:5px;">分</span>
+      {{defaultTime | date:'ss'}}
+      <span style="position:relative;margin:auto;font-size:5px;">秒</span>
+    </span>
+</div>
+
+<div ng-show="data.timeDisplay && data.timeType == 7" style="position:relative;display:flex;width:100%;height:100px;align-content:center;font-size:45px;">
+    <span style="position:relative;margin:auto;">
+      {{defaultTime | date:'H'}}
+      <span style="position:relative;margin:auto;font-size:5px;">时</span>
+      {{defaultTime | date:'mm'}}
+      <span style="position:relative;margin:auto;font-size:5px;">分</span>
+    </span>
+</div>
+
+<div ng-show="data.timeDisplay && data.timeType == 8" style="position:relative;display:flex;width:100%;height:100px;align-content:center;font-size:45px;">
+    <span style="position:relative;margin:auto;">
+      <span style="position:relative;font-size:5px;width:17px;word-break:break-all;display:inline-block;">{{halfDay}}</span>
+      {{defaultTime | date:'H'}}
+      <span style="position:relative;margin:auto;font-size:5px;">时</span>
+      {{defaultTime | date:'mm'}}
+      <span style="position:relative;margin:auto;font-size:5px;">分</span>
+      {{defaultTime | date:'ss'}}
+      <span style="position:relative;margin:auto;font-size:5px;">秒</span>
+    </span>
+</div>
+
+<div ng-show="data.timeDisplay && data.timeType == 9" style="position:relative;display:flex;width:100%;height:100px;align-content:center;font-size:45px;">
+    <span style="position:relative;margin:auto;">
+      <span style="position:relative;font-size:5px;width:17px;word-break:break-all;display:inline-block;">{{halfDay}}</span>
+      {{defaultTime | date:'H'}}
+      <span style="position:relative;margin:auto;font-size:5px;">时</span>
+      {{defaultTime | date:'mm'}}
+      <span style="position:relative;margin:auto;font-size:5px;">分</span>
+    </span>
+</div>
+
+<style>
+  .yearNormal {
+    position:relative;width:50%;text-align: center;
+  }
+  .yearLarget {
+    position:relative;display:flex;width:100%;height:100px;align-content:center;font-size:45px;
+  }
+  .weekNormal {
+    position:relative;width:50%;text-align: center;padding-left:50px;
+  }
+  .weekLarget {
+    position:relative;display:flex;width:100%;height:100px;align-content:center;font-size:45px;padding-left:0px !important;
+  }
+</style>
+<div ng-show="data.dateDisplay && data.dateType == 0" ng-class="{'yearNormal':data.timeDisplay,'yearLarget':!data.timeDisplay}">
+  <span style="margin:auto;">{{defaultTime | date:'yyyy/MM/d'}}</span>
+</div>
+<div ng-show="data.dateDisplay && data.dateType == 1" ng-class="{'yearNormal':data.timeDisplay,'yearLarget':!data.timeDisplay}">
+  <span style="margin:auto;">{{defaultTime | date:'yyyy/M/dd'}}</span>
+</div>
+<div ng-show="data.dateDisplay && data.dateType == 2" ng-class="{'yearNormal':data.timeDisplay,'yearLarget':!data.timeDisplay}">
+  <span style="margin:auto;">{{defaultTime | date:'yyyy年M月dd日'}}</span>
+</div>
+<div ng-show="data.dateDisplay && data.dateType == 3" ng-class="{'yearNormal':data.timeDisplay,'yearLarget':!data.timeDisplay}">
+  <span style="margin:auto;">{{ChineseMonth}}{{ChineseDay}}</span>
+</div>
+<div ng-show="data.dateDisplay && data.dateType == 4" ng-class="{'yearNormal':data.timeDisplay,'yearLarget':!data.timeDisplay}">
+  <span style="margin:auto;">{{defaultTime | date:'M月dd日'}}</span>
+</div>
+<div ng-show="data.dateDisplay && data.dateType == 5" ng-class="{'yearNormal':data.timeDisplay,'yearLarget':!data.timeDisplay}">
+  <span style="margin:auto;">{{defaultTime | date:'yy/M/dd'}}</span>
+</div>
+<div ng-show="data.dateDisplay && data.dateType == 6" ng-class="{'yearNormal':data.timeDisplay,'yearLarget':!data.timeDisplay}">
+  <span style="margin:auto;">{{defaultTime | date:'M/dd'}}</span>
+</div>
+<div ng-show="data.dateDisplay && data.dateType == 7" ng-class="{'yearNormal':data.timeDisplay,'yearLarget':!data.timeDisplay}">
+  <span style="margin:auto;">{{defaultTime | date:'M/dd/yy'}}</span>
+</div>
+<div ng-show="data.dateDisplay && data.dateType == 8" ng-class="{'yearNormal':data.timeDisplay,'yearLarget':!data.timeDisplay}">
+  <span style="margin:auto;">{{defaultTime | date:'MM/dd/yy'}}</span>
+</div>
+<div ng-show="data.dateDisplay && data.dateType == 9" ng-class="{'yearNormal':data.timeDisplay,'yearLarget':!data.timeDisplay}">
+  <span style="margin:auto;">{{defaultTime | date:'dd-MMM'}}</span>
+</div>
+<div ng-show="data.dateDisplay && data.dateType == 10" ng-class="{'yearNormal':data.timeDisplay,'yearLarget':!data.timeDisplay}">
+  <span style="margin:auto;">{{defaultTime | date:'dd-MMM-yy'}}</span>
+</div>
+<div ng-show="data.dateDisplay && data.dateType == 11" ng-class="{'yearNormal':data.timeDisplay,'yearLarget':!data.timeDisplay}">
+  <span style="margin:auto;">{{defaultTime | date:'dd-MM-yy'}}</span>
+</div>
+<div ng-show="data.dateDisplay && data.dateType == 12" ng-class="{'yearNormal':data.timeDisplay,'yearLarget':!data.timeDisplay}">
+  <span style="margin:auto;">{{defaultTime | date:'dd-MM'}}</span>
+</div>
+
+<div ng-show="data.weekDisplay && data.weekType == 0" ng-class="{'weekNormal':data.weekDisplay,'weekLarget':!data.timeDisplay&&!data.dateDisplay}">
+  <span style="margin:auto;">{{weekLong}}</span>
+</div>
+<div ng-show="data.weekDisplay && data.weekType == 1" ng-class="{'weekNormal':data.weekDisplay,'weekLarget':!data.timeDisplay&&!data.dateDisplay}">
+  <span style="margin:auto;">{{weekShort}}</span>
+</div>
+<div ng-show="data.weekDisplay && data.weekType == 2" ng-class="{'weekNormal':data.weekDisplay,'weekLarget':!data.timeDisplay&&!data.dateDisplay}">
+  <span style="margin:auto;">{{defaultTime | date:'EEEE'}}</span>
+</div>
+<div ng-show="data.weekDisplay && data.weekType == 3" ng-class="{'weekNormal':data.weekDisplay,'weekLarget':!data.timeDisplay&&!data.dateDisplay}">
+  <span style="margin:auto;">{{defaultTime | date:'EEE'}}</span>
+</div>

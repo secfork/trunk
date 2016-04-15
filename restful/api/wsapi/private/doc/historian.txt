@@ -1,0 +1,34 @@
+
+---- RESTful -----------
+
+// CREATE A HISTORIAN SPACE
+POST /historian/systems/{system_id}/create
+
+// SET
+PUT /historian/systems/{system_id}/set
+
+// GET
+GET /historian/systems/{system_id}/get
+
+// DROP TABLE
+DELETE /historian/systems/{system_id}/drop
+
+// INSERT
+POST /historian/systems/{system_id}/insert
+
+// DELETE DATA
+DELETE /historian/systems/{system_id}/delete
+
+// READ RAW DATA
+GET /historian/systems/{system_id}/readraw?id=id1[,id=id2[, ...]]&start={start_timestamp}[&end={end_timestamp}&limit={limit_count}&timestamp={server_ts|source_ts}&bound={true|false}]
+
+// READ INTERVAL
+GET /historian/systems/{system_id}/readinterval?id=id1[,id=id2[, ...]]&count={count_per_id}&timestamp={server_ts|source_ts}&mode={last_value|next_value|linear}
+
+// READ AT TIME
+GET /historian/systems/{system_id}/readattime?id=id1[,id=id2[, ...]]&t=t1[,t=t2[, ...]]&timestamp={server_ts|source_ts}&mode={last_value|next_value|linear}
+
+// READ AGGREGATION
+GET /historian/systems/{system_id}/readaggregation?id=id1[,id=id2[, ...]]&start={start_timestamp}[&end={end_timestamp}&timestamp={server_ts|source_ts}&interval={interval}&stats=<stats_enum>[,stats=<stats_enum>[,...]]]
+
+其中：<stats_enum>为"sum"||"avg"||"max"||"min"||"count"中的任何一个

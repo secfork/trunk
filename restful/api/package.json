@@ -1,0 +1,43 @@
+{
+  "name": "thinglinx-syalias",
+  "description": "thinglinx syalias",
+  "version": "0.0.1",
+  "private": true,
+  "author": "wangxiaodong@3dly.net",
+  "contributors": [],
+  "keywords": [
+    "syalias",
+    "dyalias"
+  ],
+  "dependencies": {
+    "ali-oss": "4.1.4",
+		"async":"0.9.0",
+		"body-parser":"1.9.0",
+		"co":"4.6.0",
+		"connect-multiparty":"2.0.0",
+		"cookie-parser":"1.4.0",
+		"debug":"0.7.4",
+		"express":"4.9.8",
+		"express-session":"1.11.3",
+		"fs-cnpm":"1.1.0",
+		"fs-extra":"0.26.2",
+		"gen-id":"0.1.1",
+		"jade":"1.8.1",
+		"log4js":"0.6.21",
+		"mongodb":"2.1.7",
+		"morgan":"1.4.0",
+		"mysql":"2.5.3",
+		"node-uuid":"1.4.2",
+		"qbox":"0.1.7",
+		"redis":"0.12.1",
+		"request":"2.65.0",
+		"shortid":"2.2.2",
+		"static-favicon":"1.0.1",
+		"supervisor":"0.6.0",
+		"underscore":"1.7.0",
+		"validator":"3.26.0"
+  },
+  "engines": {
+    "node": ">= 0.10.0"
+  }
+}

@@ -1,0 +1,13 @@
+POST {BASE_URL} /systems/{system_id}/live?accesskey={accesskey}
+{
+        "data":{
+                "tag_name1" : 30,
+                "tag_name2" : 30.0,
+                "tag_name3" : 0,
+                "tag_name4" : -9999
+        },
+        "quality" : {
+                "tag_name1" : "BAD"
+        },
+        "source" : 1425539410851
+}

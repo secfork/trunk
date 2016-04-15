@@ -1,0 +1,474 @@
+<div id='{{id}}' name="{{common.name}}" ng-controller="dy_input" type="dy_component" style="width:100%;height:100%;">
+
+<!-- input component -->
+<div class="input-group" style='position : absolute ; width : 100% ; height : 100% ;display: {{common.display}}'>
+    <input type="text" class="form-control" style="width: 100%;height: 100%;border: 1px solid;border-radius: 4px" placeholder='请输入' ng-model="op_value"/>
+</div>
+
+<style>
+    .ds_btn,.ds_btn:focus{
+        width:30px;
+        height: 30px;
+        border: 1px solid #FFFFFF;
+        background: rgba(0,0,0,0);
+        position: absolute;
+        top: 0;
+        right: -45px;
+        color: #FFFFFF;
+        padding: 0;
+    }
+    .ds_btn:hover{
+        border: 1px solid #CCCCCC;
+        color: #CCCCCC;
+    }
+</style>
+
+<script type="text/ng-template" id="set_property">
+
+<!--config nav component -->
+<div class="dy_widget_config_property">
+<!-- widget display area -->
+<div class="dy_widget_config_property_display_area">
+
+<!-- title -->
+<div class="dy_widget_title">
+    <span>{{glanguage.componentSetWidgetProperties}}</span>
+    <div ng-click="close_property()"><i class="glyphicon glyphicon-remove"></i></div>
+    <div ng-click="saveFn()"><i class="glyphicon glyphicon-transfer"></i></div>
+</div>
+
+<!--tabs标签-->
+<ul class="nav nav-tabs">
+    <li class="active"><a href="#common" data-toggle="tab">{{glanguage.componentCommon}}</a></li>
+    <li><a href="#connect" data-toggle="tab">{{glanguage.componentData}}</a></li>
+    <li><a href="#extend" data-toggle="tab">{{glanguage.componentExtends}}</a></li>
+</ul>
+
+<!-- config property container and tabs content-->
+<div class="dy_widget_config_property_container tab-content">
+
+<!-- common property -->
+<div class="dy_widget_common_property tab-pane fade in active" id="common">
+
+<!-- 用户可以在这里开始定义通用属性 -->
+<div class="dy_widget_common_property_info">
+<dl>
+    <dt>
+        <i class="glyphicon glyphicon-cog" style="margin: 0px 10px"></i>
+        <label>{{glanguage.componentName}} :</label>
+    </dt>
+    <dd>
+        <input type="text" class="form-control input-sm" ng-model="commonMirror.name"/>
+    </dd>
+</dl>
+<dl>
+    <dt>
+        <i class="glyphicon glyphicon-cog" style="margin: 0px 10px"></i>
+        <label>{{glanguage.componentzIndex}} :</label>
+    </dt>
+    <dd>
+        <input type="text" class="form-control input-sm" ng-model="commonMirror.zIndex" placeholder="0-99"/>
+    </dd>
+</dl>
+<dl>
+    <dt>
+        <i class="glyphicon glyphicon-cog" style="margin: 0px 10px"></i>
+        <label>{{glanguage.componentWidth}} :</label>
+    </dt>
+    <dd>
+        <input type="text" class="form-control input-sm" ng-model="commonMirror.width"/>
+    </dd>
+</dl>
+<dl>
+    <dt>
+        <i class="glyphicon glyphicon-cog" style="margin: 0px 10px"></i>
+        <label>{{glanguage.componentHeight}} :</label>
+    </dt>
+    <dd>
+        <input type="text" class="form-control input-sm" ng-model="commonMirror.height"/>
+    </dd>
+</dl>
+<dl>
+    <dt>
+        <i class="glyphicon glyphicon-cog" style="margin: 0px 10px"></i>
+        <label>{{glanguage.componentLeft}} :</label>
+    </dt>
+    <dd>
+        <input type="text" class="form-control input-sm" ng-model="commonMirror.left"/>
+    </dd>
+</dl>
+<dl>
+    <dt>
+        <i class="glyphicon glyphicon-cog" style="margin: 0px 10px"></i>
+        <label>{{glanguage.componentTop}} :</label>
+    </dt>
+    <dd>
+        <input type="text" class="form-control input-sm" ng-model="commonMirror.top"/>
+    </dd>
+</dl>
+<dl>
+    <dt>
+        <i class="glyphicon glyphicon-cog" style="margin: 0px 10px"></i>
+        <label>{{glanguage.componentDisplay}} :</label>
+    </dt>
+    <dd>
+        <input type="checkbox" ng-model="commonMirror.display" ng-true-value="block" ng-false-value="none"/>
+    </dd>
+</dl>
+</div>
+</div>
+
+<!-- connect property -->
+<div class="dy_widget_connect_property tab-pane fade" id="connect">
+
+    <!-- 用户可以在这里开始定义连接数据 -->
+    <div class="dy_widget_connect_property_info">
+        <dl>
+            <dt>
+                <i class="glyphicon glyphicon-cog" style="margin: 0px 10px"></i>
+                <label>{{glanguage.componentDatasource}} :</label>
+            </dt>
+            <dd style="position: relative">
+
+                <input type="text" class="form-control input-sm" ng-model="connectMirror.ds_name"/>
+                <button class="btn ds_btn" ng-click="showDatasources(40,173)">
+                    <span class="glyphicon glyphicon-th-list"></span>
+                </button>
+
+
+                <div class="dy_popover animated"
+                     ng-class="{'fadeIn' : ds_type_popover}"
+                     ng-style="{'display':pop_show,'left':pop_y,'top':pop_x}"
+                        >
+                    <div class="arrow"></div>
+                    <div class="popover-inner">
+
+                        <form class="dy_component_search" style="width:90%;">
+                            <input type="text" placeholder="Search" ng-model="searchText" class="dy_component_pristine">
+                        </form>
+
+                        <div class="dy_datasource_type_list">
+                            <div ng-repeat="list in pop_list track by $index | filter:searchText" ng-click="selectDatasource($index)">
+                                <span class="ds_type_name" title="{{list.name}}">{{list.name}}</span>
+                                <span class="ds_type_desc" title="{{list.type}}">{{list.type}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </dd>
+        </dl>
+        <dl style="margin-left: 100px">
+            <dt>
+                <i class="glyphicon glyphicon-cog" style="margin: 0px 10px"></i>
+                <label>{{glanguage.componentOption}} :</label>
+            </dt>
+            <dd>
+                <select class="form-control input-sm" ng-model="connectMirror.op_name" ng-options="option for option in options"></select>
+            </dd>
+        </dl>
+
+    </div>
+
+</div>
+
+<!--extend property-->
+<div class="dy_widget_extend_property tab-pane fade" id="extend">
+
+    <div class="dy_widget_extend_property_info" id="extend_info">
+
+    </div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</script>
+
+<!-- 元素反选框 -->
+<div class="free-transform" style="position:absolute;z-index:9000;width:{{common.width}}px;height:{{common.height}}px;left:0px;top:0px; pointer-events:none;" ng-style="style" ng-show="this_selected == 'active'"></div>
+
+<div class="halo animate" style="position:absolute;z-index:9000;width:{{common.width}}px;height:{{common.height}}px;left:0px;top:0px; pointer-events:none;" ng-show="this_selected == 'active'">
+
+    <div class="handle nw remove" ng-click="component_del($event)" data-action="remove"></div>
+
+    <div class="handle ne fork" ng-click="property_display(this)" data-action="fork"></div>
+
+    <!--<label class="box">x : {{common.left}}, y : {{common.top}}, width : {{common.width}}, height : {{common.height}}</label>-->
+
+</div>
+</div>
+<script>
+
+app.registerCtrl('dy_input', ['$scope' , '$unique_id' , '$element' ,'$datasource_factory' ,
+
+    function ($scope, $unique_id, $element,$datasource_factory) {
+
+        //获取驱动数据
+        var attr = $element.parent().attr('data');
+        var his_data = angular.fromJson(attr);
+
+
+        //common,connect
+        $scope.common;
+        $scope.connect;
+
+        $scope.commonMirror;
+        $scope.connectMirror;
+
+        $scope.common = his_data[0].common;
+        $scope.connect = his_data[0].connect;
+
+        $scope.id = Boolean(his_data[0].id)?his_data[0].id:$unique_id();
+        // 监听元素何时被选中
+        $scope.this_selected = "unactive";
+        $scope.style = {};
+
+        $scope.$watch("element_list", function (n, o) {
+            if(!$scope.element_list){
+                return;
+            }
+            if(angular.isArray($scope.element_list)&&$scope.element_list.length>0){
+                $.each($scope.element_list , function(idx , val){
+                    $.each(val.child , function(cidx , cval){
+                        if(cval.component_id == $scope.id){
+                            $scope.this_selected = cval.state;
+                            if(cval.locked){
+                                $scope.style = {border : "1px dashed #FF0000"}
+                            }else{
+                                $scope.style = {border : "1px dashed #000000"}
+                            }
+                        }
+                    })
+                })
+            }
+        }, true);
+
+        var datasource;
+        //监听id
+        $scope.$watch("id", function (n, o) {
+            if (n) {
+                his_data[0].id = n;
+                savehis_data();
+            }
+        }, true);
+
+        //通用属性监听
+        $scope.$watch('common', function (n,o) {
+            //写回驱动
+            his_data[0].common = n;
+            savehis_data();
+            //改变parent宽高和大小
+            var height = parseInt(n.height);
+            var width = parseInt(n.width);
+            var top = parseInt(n.top);
+            var left = parseInt(n.left);
+            var zindex = parseInt(n.zIndex);
+            $element.parent().css({
+                "height": height,
+                "width": width,
+                "top": top,
+                "left": left,
+                "z-index": zindex
+            });
+            //name属性修改同步到页面列表
+            syncName(n.name);
+        }, true);
+
+        //连接属性监听
+        $scope.$watch('connect', function (n,o) {
+            //写回驱动
+            his_data[0].connect = n;
+            savehis_data();
+            watch_connect(n);
+        }, true);
+
+        $scope.$watch('connectMirror', function (n,o) {
+            watch_connectMirror(n);
+        },true);
+
+        $scope.op_value;
+        $scope.$watch('op_value', function (n,o) {
+            watch_opValue(n);
+        },true);
+
+        //写回DOM驱动
+        function savehis_data(){
+            var data_str = JSON.stringify(his_data);
+            $element.parent().attr("data", data_str);
+        }
+
+
+        $scope.options;//供选择的点
+        function watch_connectMirror(n) {
+            if(angular.isObject(n)){
+                //确定datasource
+                if(n.hasOwnProperty('ds_name')){
+                    datasource = $datasource_factory.find(n.ds_name);
+                }
+                if(datasource){
+                    $scope.options = [];
+                    $.each(datasource.options, function (idx,val) {
+                        if(angular.isObject(val) && val.hasOwnProperty('oname')){
+                            $scope.options.push(val.oname);
+                        }
+                    })
+                }
+            }
+        }
+
+        function watch_connect(n) {
+            if(angular.isObject(n) && n.hasOwnProperty('ds_name')){
+                var requestNum = 0;
+                var temp = setInterval(function () {
+                    datasource = $datasource_factory.find(n.ds_name);
+                    if(datasource){
+                        clearInterval(temp);
+                        requestNum = 0;
+                    }else{
+                        requestNum++
+                        if(requestNum>10){
+                            clearInterval(temp);
+                            requestNum = 0;
+                            console.log('input:can not get datasource');
+                        }
+                    }
+                },500);
+            }
+        }
+
+        function watch_opValue(n) {
+            if(datasource && $scope.connect.op_name){
+                $.each(datasource.options, function (idx,val) {
+                    if(val.oname == $scope.connect.op_name){
+                        datasource.options[idx].value = n;
+                        return;
+                    }
+                });
+            }
+
+        }
+
+        //组件名称name同步到页面
+        function syncName(name) {
+            if(angular.isArray($scope.element_list)&&$scope.element_list.length>0){
+                $.each($scope.element_list , function(idx , val){
+                    $.each(val.child , function(cidx , cval){
+                        if(cval.component_id == $scope.id){
+                            cval.component_name = name;
+                        }
+                    })
+                })
+            }
+        }
+
+        //取消修改，属性设置页面关闭按钮触发
+        $scope.resetFn = function () {
+            //common
+            if(angular.isObject($scope.common)){
+                $scope.commonMirror = jsonCopy($scope.common);
+            }
+            //connect
+            if(angular.isObject($scope.connect)){
+                $scope.connectMirror = jsonCopy($scope.connect);
+            }
+        };
+
+
+        //设置属性保存
+        $scope.saveFn = function () {
+            //common
+            if(angular.isObject($scope.commonMirror)){
+                $scope.common = jsonCopy($scope.commonMirror);
+            }
+            //connect
+            if(angular.isObject($scope.connectMirror)){
+                $scope.connect = jsonCopy($scope.connectMirror);
+            }
+        };
+
+        //同步两个json，并防止引用同一内存
+        function jsonCopy(obj) {
+            var str = "("+JSON.stringify(obj)+")";
+            var json = eval(str);
+            return json;
+        }
+
+        $scope.pop_show = 'none';
+        $scope.pop_list = [];
+
+        //形成datasource选择列表
+        function ds_refresh() {
+            $scope.pop_list = [];
+            var ds_source = $datasource_factory.source;
+            if(ds_source.length>0){
+                for(var x = 0;x<ds_source.length;x++){
+                    var json = {
+                        name:ds_source[x].name,
+                        type:ds_source[x].type.name
+                    };
+                    $scope.pop_list.push(json);
+                }
+            }
+        }
+        //点击选择数据源按钮
+        $scope.showDatasources = function(x,y) {
+            $scope.pop_x = x;
+            $scope.pop_y = y;
+
+            if($scope.pop_show == 'block'){
+                $scope.pop_show = 'none';
+            }else{
+                $scope.pop_show = 'block';
+            }
+            ds_refresh();
+        };
+
+        $scope.selectDatasource = function(index) {
+            $scope.connectMirror.ds_name = $scope.pop_list[index].name;
+            $scope.pop_show = 'none';
+        };
+        /* **********************************************************************************************************
+         关闭属性窗口
+         ********************************************************************************************************** */
+        $scope.close_property = function () {
+            $("#componentPropertyDialog").empty();
+            $element.parent().draggable('enable');
+        };
+
+        /* **********************************************************************************************************
+         加载属性栏 datasource tree
+         ********************************************************************************************************** */
+        $scope.$on('datasource_reload', function (evt, id) { //点击设置重新加载实时数据源
+            if ($scope.id == id) {
+                //打开设置框的时候同步一次before
+                $scope.resetFn();
+            }
+        });
+
+        /* **********************************************************************************************************
+         响应组件拖拽，更改元素位置
+         ********************************************************************************************************** */
+        $scope.$on('COMPONENT_DRAGGABLE', function (evt, data) {
+            var left = $element.parent().css("left");
+            var top = $element.parent().css("top");
+            $scope.common.left = parseInt(left);
+            $scope.common.top = parseInt(top);
+        });
+
+        /* **********************************************************************************************************
+         响应组件缩放
+         ********************************************************************************************************** */
+        $scope.$on('COMPONENT_RESIZABLE', function (evt, data) {
+            var width = $element.parent().css("width");
+            var height = $element.parent().css("height");
+            $scope.common.width = parseInt(width);
+            $scope.common.height = parseInt(height);
+        });
+    }
+]);
+
+</script>

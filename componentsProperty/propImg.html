@@ -1,0 +1,284 @@
+<div>
+  <!-- 组件名 -->
+  <div class="uiPropertyTitle">
+    <input class="uiPropertyBaseName" type="text" ng-model="base.name"></input>
+    <div class="uiPropertyDelete" ng-click="del(base)"></div>
+    <!--<button class="btn btn-xs" style="float: right" ng-click="save()">保存</button>-->
+  </div>
+
+  <!-- 选项卡 -->
+  <div class="uiEditorPanelTabs" ng-init="componentProp='propertyList'">
+    <span ng-class="{'uiEditorPanelTabsActive':componentProp=='propertyList'}" ng-click="componentProp='propertyList'">属性</span>
+    <span ng-class="{'uiEditorPanelTabsActive':componentProp=='dataLink'}" ng-click="componentProp='dataLink'">数据连接</span>
+  </div>
+
+  <!-- 内容 -->
+  <div class="uiPropertyTabsContent" style="height:auto;">
+
+    <!-- 属性 -->
+    <div class="uiPropertyAttr" ng-show="componentProp=='propertyList'">
+
+      <div properties-box dir-title="布局">
+
+        <div>
+          <label class="w-60">宽度</label>
+          <div unit-select dir-class="w-40" dir-model="style.width"></div>
+        </div>
+
+        <div>
+          <label class="w-60">高度</label>
+          <div unit-select dir-class="w-40" dir-model="style.height"></div>
+        </div>
+
+        <div class="half">
+          <label class="w-60">左边距</label>
+          <!-- <input class='w-40' type="text" ng-model="style.marginLeft"/> -->
+          <div unit-out dir-class='w-40' dir-unit="px" dir-model="style.marginLeft"></div>
+        </div>
+
+        <div class="half">
+          <label class="w-60">上边距</label>
+          <!-- <input class="w-40" type="text" ng-model="style.marginTop"/> -->
+          <div unit-out dir-class='w-40' dir-unit="px" dir-model="style.marginTop"></div>
+        </div>
+
+        <div class="half">
+          <label class="w-60">右边距</label>
+          <!-- <input class="w-40" type="text" ng-model="style.marginRight"/> -->
+          <div unit-out dir-class='w-40' dir-unit="px" dir-model="style.marginRight"></div>
+        </div>
+
+        <div class="half">
+          <label class="w-60">下边距</label>
+          <!-- <input class="w-40" type="text" ng-model="style.marginBottom"/> -->
+          <div unit-out dir-class='w-40' dir-unit="px" dir-model="style.marginBottom"></div>
+        </div>
+
+        <div>
+          <label class="w-80">图片管理</label>
+          <input type="file" name="file" id="file" class="uploadImageFile" file-model="file" ng-model="file" onchange="angular.element(this).scope().uploadFile(this.files,this)"></input>
+
+          <div class="imgListManager">
+            <div class="imgListItem" ng-class="{uploadImageSelected : uploadImageSelected==0}" ng-style="{'background-image':(base.playList[0]) ? 'url(' + base.playList[0].rurl +')' : '','background-size':'100% 100%'}" ng-click="uploadImageSelected=0;setImagePlayerFrame(0);">
+              <span class="badge badgeSetting" ng-show="base.playList[0]">1</span>
+              <div class="imgPlayerAdd" ng-show="base.playList.length == 0" ng-click="uploadImage();$event.stopPropagation();"></div>
+            </div>
+            <div class="imgListItem" ng-class="{uploadImageSelected : uploadImageSelected==1}" ng-style="{'background-image':(base.playList[1]) ? 'url(' + base.playList[1].rurl +')' : '','background-size':'100% 100%'}" ng-click="uploadImageSelected=1;setImagePlayerFrame(1);">
+              <span class="badge badgeSetting" ng-show="base.playList[1]">2</span>
+              <div class="imgPlayerAdd" ng-show="base.playList.length == 1" ng-click="uploadImage();$event.stopPropagation();"></div>
+            </div>
+            <div class="imgListItem" ng-class="{uploadImageSelected : uploadImageSelected==2}" ng-style="{'background-image':(base.playList[2]) ? 'url(' + base.playList[2].rurl +')' : '','background-size':'100% 100%'}" ng-click="uploadImageSelected=2;setImagePlayerFrame(2);">
+              <span class="badge badgeSetting" ng-show="base.playList[2]">3</span>
+              <div class="imgPlayerAdd" ng-show="base.playList.length == 2" ng-click="uploadImage();$event.stopPropagation();"></div>
+            </div>
+            <div class="imgListItem" ng-class="{uploadImageSelected : uploadImageSelected==3}" ng-style="{'background-image':(base.playList[3]) ? 'url(' + base.playList[3].rurl +')' : '','background-size':'100% 100%'}" ng-click="uploadImageSelected=3;setImagePlayerFrame(3);">
+              <span class="badge badgeSetting" ng-show="base.playList[3]">4</span>
+              <div class="imgPlayerAdd" ng-show="base.playList.length == 3" ng-click="uploadImage();$event.stopPropagation();"></div>
+            </div>
+            <div class="imgListItem" ng-class="{uploadImageSelected : uploadImageSelected==4}" ng-style="{'background-image':(base.playList[4]) ? 'url(' + base.playList[4].rurl +')' : '','background-size':'100% 100%'}" ng-click="uploadImageSelected=4;setImagePlayerFrame(4);">
+              <span class="badge badgeSetting" ng-show="base.playList[4]">5</span>
+              <div class="imgPlayerAdd" ng-show="base.playList.length == 4" ng-click="uploadImage();$event.stopPropagation();"></div>
+            </div>
+            <div class="imgListItem" ng-class="{uploadImageSelected : uploadImageSelected==5}" ng-style="{'background-image':(base.playList[5]) ? 'url(' + base.playList[5].rurl +')' : '','background-size':'100% 100%'}" ng-click="uploadImageSelected=5;setImagePlayerFrame(5);">
+              <span class="badge badgeSetting" ng-show="base.playList[5]">6</span>
+              <div class="imgPlayerAdd" ng-show="base.playList.length == 5" ng-click="uploadImage();$event.stopPropagation();"></div>
+            </div>
+            <div class="imgListItem" ng-class="{uploadImageSelected : uploadImageSelected==6}" ng-style="{'background-image':(base.playList[6]) ? 'url(' + base.playList[6].rurl +')' : '','background-size':'100% 100%'}" ng-click="uploadImageSelected=6;setImagePlayerFrame(6);">
+              <span class="badge badgeSetting" ng-show="base.playList[6]">7</span>
+              <div class="imgPlayerAdd" ng-show="base.playList.length == 6" ng-click="uploadImage();$event.stopPropagation();"></div>
+            </div>
+            <div class="imgListItem" ng-class="{uploadImageSelected : uploadImageSelected==7}" ng-style="{'background-image':(base.playList[7]) ? 'url(' + base.playList[7].rurl +')' : '','background-size':'100% 100%'}" ng-click="uploadImageSelected=7;setImagePlayerFrame(7);">
+              <span class="badge badgeSetting" ng-show="base.playList[7]">8</span>
+              <div class="imgPlayerAdd" ng-show="base.playList.length == 7" ng-click="uploadImage();$event.stopPropagation();"></div>
+            </div>
+            <div class="imgListItem" ng-class="{uploadImageSelected : uploadImageSelected==8}" ng-style="{'background-image':(base.playList[8]) ? 'url(' + base.playList[8].rurl +')' : '','background-size':'100% 100%'}" ng-click="uploadImageSelected=8;setImagePlayerFrame(8);">
+              <span class="badge badgeSetting" ng-show="base.playList[8]">9</span>
+              <div class="imgPlayerAdd" ng-show="base.playList.length == 8" ng-click="uploadImage();$event.stopPropagation();"></div>
+            </div>
+            <div class="imgListItem" ng-class="{uploadImageSelected : uploadImageSelected==9}" ng-style="{'background-image':(base.playList[9]) ? 'url(' + base.playList[9].rurl +')' : '','background-size':'100% 100%'}" ng-click="uploadImageSelected=9;setImagePlayerFrame(9);">
+              <span class="badge badgeSetting" ng-show="base.playList[9]">10</span>
+              <div class="imgPlayerAdd" ng-show="base.playList.length == 9" ng-click="uploadImage();$event.stopPropagation();"></div>
+            </div>
+          </div>
+
+          <div class="imgListOperate">
+            <div class="imgListLeft" ng-click="turnLeft(uploadImageSelected)"></div>
+            <div class="imgListRight" ng-click="turnRight(uploadImageSelected)"></div>
+            <div class="imgListDelete" ng-click="uploadOffImage(uploadImageSelected)"></div>
+            <div class="imgListPlay" ng-class="{'imgListPlay_play' : !playState , 'imgListPlay_pause' : playState}" ng-click="play()"></div>
+            {{$parent.imagePlayerState}}
+          </div>
+        </div>
+
+        <div class="clear"></div>
+      </div>
+
+      <!--
+      <div properties-box dir-title="排列">
+        <div>
+          <label class="w-100">方向</label>
+          <select class="w-100" ng-model="style.flexDirection">
+            <option value="row">水平正序</option>
+            <option value="row-reverse">水平逆序</option>
+            <option value="column">垂直正序</option>
+            <option value="column-reverse">垂直逆序</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="w-100">换行</label>
+          <select class="w-100" ng-model="style.flexWrap">
+            <option value="wrap">首行在上</option>
+            <option value="wrap-reverse">首行在下</option>
+            <option value="nowrap">不换行</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="w-100">主轴对齐</label>
+          <select class="w-100" ng-model="style.justifyContent">
+            <option value="flex-start">左对齐</option>
+            <option value="flex-end">右对齐</option>
+            <option value="center">居中</option>
+            <option value="space-between">两端对齐</option>
+            <option value="space-around">适应对齐</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="w-100">交叉轴对齐</label>
+          <select class="w-100" ng-model="style.alignItems">
+            <option value="flex-start">起点对齐</option>
+            <option value="flex-end">终点对齐</option>
+            <option value="center">中点对齐</option>
+            <option value="baseline">基线对齐</option>
+            <option value="stretch">伸缩</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="w-100">多轴线对齐</label>
+          <select class="w-100" ng-model="style.alignContent">
+            <option value="flex-start">起点对齐</option>
+            <option value="flex-end">终点对齐</option>
+            <option value="center">中点对齐</option>
+            <option value="baseline">基线对齐</option>
+            <option value="stretch">伸缩</option>
+          </select>
+        </div>
+
+        <div class="clear"></div>
+      </div>
+    -->
+
+    </div>
+
+    <!-- 数据连接 -->
+    <div class="uiPropertyDataLink" ng-show="componentProp=='dataLink'">
+
+        <div properties-box dir-title="数据源">
+          <div>
+            <label class="w-80">类型</label>
+            <select class="w-80">
+              <option ng-model="data.datasouceName">实时数据源</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="w-80">模型</label>
+            <select class="w-80">
+              <option ng-model="data.systemModelName">{{data.systemModelName}}</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="w-80">系统</label>
+            <select class="w-80">
+              <option ng-model="data.systemName">{{data.systemName}}</option>
+            </select>
+          </div>
+        </div>
+
+        <div properties-box dir-title="播放设置">
+
+          <!-- 变量区域 -->
+          <div>
+            <label class="w-80">变量选择</label>
+            <select class="w-80" ng-model="tag" ng-change="selectedTag(tag)">
+              <option ng-repeat="tag in data.tags" ng-model="tag">{{tag.name}}</option>
+            </select>
+          </div>
+
+          <!-- 播放方式 -->
+          <div>
+            <label class="w-80">播放方式</label>
+            <select class="w-80" ng-model="data.mode">
+              <option value="condition">条件播放</option>
+              <option value="specify">指定针播放</option>
+            </select>
+          </div>
+
+          <!-- 条件播放 -->
+          <div ng-show="data.mode == 'condition'">
+            <div>
+              <label class="w-80">播放条件</label>
+              <select class="w-60" ng-model="data.condtion">
+                <option value="0">==</option>
+                <option value="1">&gt;</option>
+                <option value="2">&ge;</option>
+                <option value="3">&lt;</option>
+                <option value="4">&le;</option>
+                <option value="5">&</option>
+                <option value="6">!</option>
+              </select>
+              <input class="w-60" ng-model="data.conditionValue"></input>
+            </div>
+
+            <div>
+              <label class="w-80">循环播放</label>
+              <input type="checkbox" ng-model="data.loop" />
+            </div>
+            <!-- <div style="width:100%;height:500px;color:#fff;">{{data}}</div> -->
+          </div>
+
+
+
+          <!-- 指定针播放 -->
+          <div ng-show="data.mode == 'specify'">
+            <div>
+              <label class="w-80">默认帧</label>
+              <select class="w-80" ng-model="defaultFrame" ng-change="updateIdx(tagSelectedIdx)">
+                <option ng-repeat="item in base.playList">{{$index + 1}}</option>
+              </select>
+            </div>
+
+            <div>
+              <table class="table table-bordered propTable">
+                <thead>
+                  <tr>
+                    <td>变量值</td>
+                    <td>显示帧</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="item in base.playList">
+                    <td>
+                      <input ng-style="{'width':'60px'}" ng-model="item['trigger']"></input>
+                    </td>
+                    <td>{{$index}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!-- <div style="width:100%;height:500px;color:#fff;">{{base.playList}}</div>
+            <div style="width:100%;height:500px;color:#fff;">{{data}}</div> -->
+          </div>
+
+
+        </div>
+
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,3 @@
+{ 
+	"content" : "<div dy-select draggable class='dy_component_model' style='position:absolute;width:200px;height:30px;' data='[{\"id\":\"\",\"common\":{\"name\":\"select options\",\"left\":0,\"top\":0,\"width\":200,\"height\":30,\"zIndex\":0,\"display\":\"block\"},\"connect\":{\"ds_name\":\"\",\"op_name\":\"\"}}]'></div>"
+}

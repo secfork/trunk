@@ -1,0 +1,24 @@
+{
+	"name":"thinglinx-accounts",
+	"description":"thinglinx accounts",
+	"version":"0.0.1",
+	"private":true,
+	"author":"guangfei.me@gmail.com",
+	"contributors":[
+	],
+	"keywords":[
+		"accounts",
+		"users",
+		"users_in_group"
+	],
+	"dependencies":{
+		"async": "0.9.0",
+	   	 "mysql": "2.5.2",
+	    	"copy-to":"2.0.1",
+	    	"mocha":"2.2.4",
+	    	"assert":"1.3.0"
+	},
+	"engines": {
+		"node": ">= 0.10.0"
+	}
+}

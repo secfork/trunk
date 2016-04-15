@@ -1,0 +1,3 @@
+{
+    "content" : "<div dy-img selector-directive class='noContain' id='{{base.id}}' name='{{base.name}}' ng-show='base.display==\"flex\"' ng-style='style' data='{\"base\":{},\"style\":{},\"data\":{}}'></div>"
+}

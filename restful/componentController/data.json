@@ -1,0 +1,3 @@
+{
+	"content" : ["componentsController/dyPage.js","componentsController/dyPanel.js" , "componentsController/dyImg.js" , "componentsController/dyText.js", "componentsController/dyChart.js", "componentsController/dyTable.js", "componentsController/dyClock.js", "componentsController/dyAlarm.js","componentsController/dyWeather.js","componentsController/dyGauge.js","componentsController/dyButton.js"]
+}

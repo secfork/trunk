@@ -1,0 +1,809 @@
+<!--
+
+	text component :
+
+-->
+<div id='{{id}}' name="{{common.name}}" ng-controller="dy_image_player" type="dy_component" style="width:100%;height:100%;">
+
+	<!-- 组件主体部分 -->
+	<style>
+	.bg-image{
+		background-image:url('img/generator/generator_left_1.png');
+		background-size:100% 100%;
+	}
+	</style>
+	<div id="imagePlayer"  style='position : absolute ; width : 100% ; height : 100% ; z-index:1;' ng-style="{'display':common.display}" ng-class="{'bg-image' : extend.playlist.length==0}">
+		<image ng-repeat="imageSrc in extend.playlist" ng-src="/uploadImages/{{extend.folder}}/{{imageSrc.nname}}"  style='position : absolute ; width : 100% ; height : 100% ; display : block ;'></image>
+	</div>
+
+	<!-- 元素反选框 -->
+    <div class="free-transform" style="position:absolute;z-index:9000;width:{{common.width}}px;height:{{common.height}}px;left:0px;top:0px; pointer-events:none;" ng-style="style" ng-show="this_selected == 'active'"></div>
+
+    <div class="halo animate" style="position:absolute;z-index:9000;width:{{common.width}}px;height:{{common.height}}px;left:0px;top:0px; pointer-events:none;" ng-show="this_selected == 'active'">
+
+        <div class="handle nw remove" ng-click="component_del($event)" data-action="remove"></div>
+
+        <div class="handle ne fork" ng-click="open_properties_dialog()" data-action="fork"></div>
+
+    </div>
+
+	<!-- 组件配置页面 -->
+	<div class="dy_widget_property_frame" ng-show="propertiesDisplay" ng-click="$event.stopPropagation();">
+
+		<!-- 配置界面标头 -->
+		<div class="dy_widget_property_nav">
+                <span>{{glanguage.componentSetWidgetProperties}}</span>
+                <div ng-click="close_properties_dialog()"><i class="glyphicon glyphicon-remove"></i></div>
+                <div ng-click="saveFn()"><i class="glyphicon glyphicon-transfer"></i></div>
+        	</div>
+
+		<!-- 配置界面切换标签 -->
+		<ul class="dy_widget_property_tab nav nav-tabs" ng-init="selectedTab=1">
+			<li ng-class="{active: selectedTab == 1}">
+				<a ng-click="selectedTab = 1;">{{glanguage.componentCommon}}</a>
+			</li>
+			<li ng-class="{active: selectedTab == 2}">
+				<a ng-click="selectedTab = 2;">{{glanguage.componentExtends}}</a>
+			</li>
+			<li ng-class="{active: selectedTab == 3}">
+				<a ng-click="selectedTab = 3;">{{glanguage.componentData}}</a>
+			</li>
+			<li ng-class="{active: selectedTab == 4}">
+				<a ng-click="selectedTab = 4;">{{glanguage.componentConfig}}</a>
+			</li>
+		</ul>
+
+		<!-- 通用属性 common properties -->
+		<div class="tab-content dy_widget_common_property" ng-show="selectedTab == 1">
+			<div widget-common-properties></div>
+		</div>
+
+		<!-- 扩展属性 extend properties -->
+		<div class="tab-content dy_widget_extend_property" ng-show="selectedTab == 2">
+
+			<div class="dy_widget_properties_common_directive">
+				<label>{{glanguage.componentSpeed}} :</label>
+				<select class="form-control" style="position:relative;float:left;width:300px;color:#000;" ng-model="extendMirror.speed">
+					<option value="500ms">Slow</option>
+					<option value="300ms">Normal</option>
+					<option value="100ms">Fast</option>
+				</select>
+			</div>
+
+			<div class="dy_widget_properties_common_directive" style="max-width:600px;width:600px;">
+				<label>{{glanguage.componentUpload}} :</label>
+				<input type="file" nv-file-select="" uploader="uploader" multiple style="margin-top: 5px;"  /><br/>
+			</div>
+
+			<div class="dy_widget_properties_common_directive" style="max-width:90%;width:90%;;">
+				<div>
+                      		Queue progress:
+                            	<div class="progress" style="">
+		                          <div class="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
+                            	</div>
+                        </div>
+                        <button type="button" class="btn btn-success btn-s" ng-click="uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length">
+                            <span class="glyphicon glyphicon-upload"></span> Upload all
+                        </button>
+                        <button type="button" class="btn btn-danger btn-s" ng-click="removeAll()" ng-disabled="!uploader.queue.length">
+                            <span class="glyphicon glyphicon-trash"></span> Remove all
+                        </button>
+			</div>
+
+			<div class="dy_widget_properties_common_directive" style="max-width:90%;width:90%;margin-top: 55px;height: 200px;overflow-y: auto;">
+				<table class="table">
+	                        <thead>
+	                            <tr>
+	                                <th width="50%">Name</th>
+	                                <th ng-show="uploader.isHTML5">Size</th>
+	                                <th ng-show="uploader.isHTML5">Progress</th>
+	                                <th>Status</th>
+	                            </tr>
+	                        </thead>
+	                        <tbody>
+	                            <tr ng-repeat="item in uploader.queue">
+	                                <td><strong>{{ item.file.name }}</strong></td>
+	                                <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+	                                <td ng-show="uploader.isHTML5">
+	                                    <div class="progress" style="margin-bottom: 0;">
+	                                        <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+	                                    </div>
+	                                </td>
+	                                <td class="text-center">
+	                                    <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+	                                    <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+	                                    <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+	                                </td>
+	                            </tr>
+	                        </tbody>
+	                    </table>
+			</div>
+
+		</div>
+
+		<!-- 数据连接 connect properties -->
+		<div class="tab-content dy_widget_connect_property" ng-show="selectedTab == 3">
+			<div class="dy_widget_properties_common_directive">
+				<label>{{glanguage.componentDatasource}} :</label>
+				<select class="form-control" style="position:relative;float:left;width:300px;color:#000;" ng-model="connectMirror.datasource" ng-init="showDatasources()" ng-focus="ds_refresh()" ng-options="list.name as list.name group by list.type for list in pop_list"></select>
+			</div>
+		</div>
+
+		<!-- 连接配置 config properties -->
+		<div class="tab-content dy_widget_common_property" ng-show="selectedTab == 4">
+			<div widget-single-config-properties></div>
+		</div>
+
+	</div>
+
+	<!--  end  -->
+
+</div>
+
+<script>
+
+	app.registerCtrl('dy_image_player', ['$scope' , '$unique_id' , '$element' , '$datasource_factory' , '$console' , '$timeout' , 'FileUploader' , '$_createImageFolder' , '$_deleteImageFolder' ,
+
+    		function ($scope, $unique_id, $element , $datasource_factory , $console , $timeout , FileUploader , $_createImageFolder , $_deleteImageFolder) {
+
+
+			/**
+				variables:
+
+				common : 通用属性 所有组件的通用属性一致 可以通过widget-common-properties设置
+				connect : 连接属性 组件连接数据源名称
+				extend : 扩展属性 组件之间的差异属性都在这里设置
+
+				commonMirror , connectMirror , extendMirror 设置属性时，在属性栏中，还没有保存设置
+			*/
+			$scope.id;
+			$scope.common = {
+				"name" : "text",
+				"zIndex" : "0",
+				"width" : "250",
+				"height" : "250",
+				"left" : "0",
+				"top" : "0",
+				"display" : "block"
+			};
+			$scope.connect = {
+				"datasource" : ""
+			};
+			$scope.extend = {
+				"speed" : "100ms",
+				"folder" : "",
+				"playlist" : [],
+				"play" : false,
+
+				"options" : [],
+				"dataFilter" : [], // 数据过滤，在获取数据源数据后，需要根据dataFilter格式，过滤获取的数据，才能显示到table中
+				"syncDatasourceData" : true // 是否允许组件同步数据源数据变更推送
+			};
+
+			$scope.commonMirror;
+			$scope.connectMirror;
+			$scope.extendMirror;
+
+
+			var datasource;
+			var datasourceLoadTimes = 0;
+
+			$scope.propertiesDisplay = false; // 初始化加载组件，不显示组件属性列表
+
+			$scope.options; // 数据源请求参数
+			$scope.meta; // 数据源返回数据描述(meta),这里的meta只是获取数据源的meta，并不对表格数据过滤，需要使用extend.dataFilter过滤
+
+			/*
+				标注组件初始化状态，如果为false组件还没有初始化，true组件已经初始化
+				如果没有初始化，默认组件需要将所有配置图片显示出来
+			*/
+			$scope.initState = false;
+			// 控制图片播放
+			var id = 0;
+			$scope.$on("100ms" , function(evt , data){
+				if($scope.extend.speed == "100ms"){
+					generatorRun()
+				}
+			});
+			$scope.$on("300ms" , function(evt , data){
+				if($scope.extend.speed == "300ms"){
+					generatorRun()
+				}
+			});
+			$scope.$on("500ms" , function(evt , data){
+				if($scope.extend.speed == "500ms"){
+					generatorRun()
+				}
+			});
+
+			var playLength = 0; // 上传图片个数
+			var setPlayLength = function(){
+				playLength = $scope.extend.playlist.length;
+			}
+
+			var generatorRun = function(){
+				if($scope.extend.play){
+					if(id < playLength - 1){
+						id++;
+					}else{
+						id = 0 ;
+					}
+					if($element.find("#imagePlayer").children().length !=0)
+					{
+						$($element.find("#imagePlayer").children()[id]).show().siblings().hide();
+					}
+				}
+			}
+
+			// 初始化图片上传接口
+			$scope.uploader = new FileUploader({
+				url :  '/v5/json/syalias/imagesUpload'
+			});
+
+			// 过滤上传图片，要求上传图片格式必须是png，并且图片<2M，当然上传的图片越小越好，利于加载(本段代码没有对图片大小做限制)
+			$scope.uploader.filters.push({
+		            name: 'imageFilter',
+		            fn: function(item /*{File|FileLikeObject}*/, options) {
+		                var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
+		                return '|png|'.indexOf(type) !== -1;
+		            }
+	        	});
+
+			// 点击Upload All
+			$scope.uploadAll = function(){
+				/*
+				 	如果已经为本组件创建了图片存储文件夹，清空当前文件夹，并且将所有图片都上传到这个文件夹下
+					如果还没有为这个组件创建图片存储文件夹，先创建一个文件夹，然后将所有图片都上传这个文件夹下
+				*/
+				if($scope.extend.folder)
+				{
+					$.each($scope.uploader.queue , function(idx , val){
+						val.formData[0] = {
+							'foldername' : $scope.extend.folder
+						}
+					})
+					$scope.uploader.uploadAll();
+				}
+				else
+				{
+					$_createImageFolder("" , function(fname){
+						$scope.extend.folder = fname;
+						$scope.uploader.formData.push({
+							'foldername' : fname
+						})
+
+						$.each($scope.uploader.queue , function(idx , val){
+							val.formData.push({
+								'foldername' : fname
+							})
+						})
+						$scope.uploader.uploadAll();
+					})
+				}
+
+			}
+
+			// 每张图片上传成功后，都会自动调用这个方法，如果图片上传成功，则将图片的名称添加到 $scope.extend.playlist 中
+			$scope.uploader.onSuccessItem = function(fileItem, response, status, headers) {
+		            if(!response.err)
+				{
+					$scope.extend.playlist.push({nname : response.ret.nname , oname : response.ret.oname , size : response.ret.size});
+					setPlayLength();
+				}
+	        	};
+
+			// 取消所有已经上传或者还在队列中没有上传的图片，数据库中也同时删除已经保存的所有图片
+			$scope.removeAll = function(){
+				$_deleteImageFolder($scope.extend.folder , function(r){
+					if(r)
+					{
+						$_createImageFolder($scope.extend.folder , function(fname){
+							$scope.extend.playlist = [];
+							$scope.uploader.queue = [];
+						})
+					}else
+					{
+						$scope.uploader.queue = [];
+					}
+				})
+			}
+
+			// 如果上次保存了数据，下次加载时，需要在上传图片列表中，将上次上传的图片都显示出来
+			var reloadImagesForConfig = function(){
+				$.each($scope.extend.playlist , function(idx , val){
+					var json = {
+						alias : "file",
+						file :
+							{
+								name : val.oname,
+								size : val.size,
+								type : "image/png"
+							},
+						formData : [],
+						isCancel: false,
+						isError: false,
+						isReady: false,
+						isSuccess: true,
+						isUploaded: true,
+						isUploading: false,
+						progress : 100
+					}
+					$scope.uploader.queue.push(json)
+				})
+			}
+
+			/**
+				创建对 id common connect extend 监听
+			*/
+			$scope.$watch("id", function (n, o) {
+				if (n) {
+					$scope.id = n;
+					writeBack();
+				}
+			}, true);
+
+			$scope.$watch("common", function (n, o) {
+				if (n) {
+					//保存改变
+					$scope.common = n;
+					writeBack();
+
+					var height = parseInt(n.height);
+					var width = parseInt(n.width);
+					var top = parseInt(n.top);
+					var left = parseInt(n.left);
+					var zIndex = parseInt(n.zIndex);
+
+					$element.parent().css({
+						"height": height,
+						"width": width,
+						"top": top,
+						"left": left,
+						"z-index": zIndex
+					});
+					// 同步组件名称
+					syncName(n.name);
+				}
+			}, true);
+
+			$scope.$watch("connect", function (n, o) {
+
+				if (n) {
+					$scope.connect = n;
+					writeBack();
+					datasourceLoadTimes = 0;
+					getDatasourceByName(n.datasource , function(){
+
+						if(datasource && $scope.extend.syncDatasourceData)
+						{
+							$scope.$on(datasource.dataChanged(), function (evt,sdata) {
+
+								refreshComponent()
+
+							});
+						}
+
+					})
+				}
+			}, true);
+
+			$scope.$watch("extend", function (n, o) {
+				if (n) {
+
+					$scope.extend = n;
+					if(!$scope.initState)
+					{
+						reloadImagesForConfig();
+						$scope.initState = true;
+					}
+
+					setPlayLength();
+
+					if(datasource){
+
+						refreshComponent();
+
+					}
+
+					writeBack();
+				}
+			}, true);
+
+			$scope.$watch("connectMirror", function (n, o) {
+
+				getDatasourceByName(n.datasource , function(){
+
+					/*
+						组态数据源，切换连接数据源时
+
+						首先 需要获取数据源列表&参数directive
+						将数据源参数directive添加到组件connectMirror配置界面中
+						创建$scope.options 创建的数据源参数都保存到 $scope.options 中
+
+						然后 通过datasource.getMeta()获取meta数据 设置到 $scope.meta 中
+						在extendMirror中添加meta directive
+						通过 meta directive 重置$scope.meta
+					*/
+					if(!datasource){return;}
+					var datasource_directive = datasource.directive;
+					$scope.options = datasource.options;
+
+					/*
+					var content_compile = $compile( datasource_directive )( $scope );
+					$element.find(".dy_widget_connect_property").append(content_compile);
+					*/
+
+
+					datasource.getMeta(function(meta){
+						$scope.extendMirror.dataFilter = [];
+						$scope.meta = meta;
+						$.each($scope.meta , function(idx , val){
+							var json = {name : idx , proxyName : "" , value : null , field : (val.field) ? val.field : null , display : false};
+							$scope.extendMirror.dataFilter.push(json);
+						});
+					});
+				});
+
+			}, true);
+
+			/**
+				初始化数据，获取标签data数据，初始化给$scope对象
+			*/
+			var componentDataInit = function(){
+				var ida = $element.parent().attr('data');
+				var idata = angular.fromJson(ida);
+
+				//组件通用属性,连接属性，拓展属性
+				$scope.common = idata[0].common;
+				// 可以通过id判断当前组件是否是复制创建 , 如果是复制创建 , 则清空已经上传的图片
+				$scope.connect = idata[0].connect;
+				$scope.extend = idata[0].extend;
+				if(!idata[0]["id"])
+				{
+					$scope.extend.playlist = [];
+					$scope.extend.folder = "";
+				}
+
+				//对新建的组件，创建一个唯一系统id
+				$scope.id = Boolean(idata[0].id)?idata[0].id:$unique_id();
+				// 元素初始化以后，父类的element_list中，添加自己
+				var pageId = $element.parent().parent().parent().attr("id");
+				if($scope.element_list)
+				{
+					$.each($scope.element_list , function(idx , val){
+						var page_name = val.page_name ;
+						if(page_name == pageId)
+						{
+							var cjson = {"component_id" : $scope.id , "component_name" : $scope.common.name , "state" : "unactive" , "locked" : false};
+							val.child.push(cjson);
+						}
+					});
+				}
+
+				$scope.commonMirror = angular.copy($scope.common);
+				$scope.connectMirror = angular.copy($scope.connect);
+				$scope.extendMirror = angular.copy($scope.extend);
+			}
+			componentDataInit();
+
+
+
+			// 连接数据源后，更新组件状态
+			var refreshComponent = function(){
+				if(!datasource)
+				{
+					return;
+				}
+				datasource.getAllData(function(data){
+					if(data.length == 0)
+					{
+						return;
+					}
+					var index = datasource.index;
+					var k;
+					var v;
+					$.each($scope.extend.dataFilter , function(idx , val){
+						if(val.display)
+						{
+							k = val.name;
+							if(val.value)
+							{
+								v = val.value;
+							}
+						}
+					})
+
+					var text = (v)?data[index][k][v]:data[index][k];
+					if(angular.isNumber(text) && text > 0)
+					{
+						$scope.extend.play = true;
+					}
+					else
+					{
+						$scope.extend.play = false;
+					}
+
+				});
+			}
+
+
+			/*
+				写回DOM驱动
+			*/
+			var writeBack = function() {
+				var idata = [];
+				if(!$scope.extend.options )
+				{
+					$scope.extend.options = [];
+				}
+				$.each($scope.extend.options , function(idx , val){
+					delete val['$$hashKey'];
+				});
+				idata.push({'id' : $scope.id , 'common' : $scope.common , 'connect' : $scope.connect , 'extend' : $scope.extend});
+
+				var idataString = JSON.stringify(idata);
+				$element.parent().attr("data", idataString);
+			}
+
+
+
+			/**
+				组件名称name同步到页面
+			*/
+			var syncName = function(name) {
+				if(angular.isArray($scope.element_list)&&$scope.element_list.length>0){
+					$.each($scope.element_list , function(idx , val){
+						$.each(val.child , function(cidx , cval){
+							if(cval.component_id == $scope.id){
+								cval.component_name = name;
+							}
+						})
+					})
+				}
+			}
+
+			/**
+				组件根据用户配置的数据源名称，在datasource_factory中湖区数据源
+				如果第一时间没有获取到数据源，本方法会自动递归调用，如果5次没有获取数据源
+				则放弃获取数据源
+			*/
+			var si;
+			var getDatasourceByName = function(n , callback){
+				if($datasource_factory.source.length == 0 && datasourceLoadTimes <= 5){
+					datasourceLoadTimes++;
+					$timeout(function(){
+						getDatasourceByName( n , callback )
+					} , 1000)
+					return;
+				}
+				datasource = $datasource_factory.find(n);
+				if(datasourceLoadTimes <= 5 && !datasource){
+					clearInterval(si);
+					datasourceLoadTimes++;
+					si = setInterval(function(){
+						getDatasourceByName( n , callback )
+					} , 1000)
+					return;
+				}
+				if(datasourceLoadTimes > 5){
+					clearInterval(si);
+				}
+				if(datasource){
+					clearInterval(si);
+					callback();
+				}
+			}
+
+
+			 //取消修改，属性设置页面关闭按钮触发
+			$scope.resetFn = function () {
+				//common
+				if(angular.isObject($scope.common)){
+					$scope.commonMirror = jQuery.extend({},$scope.common);
+				}
+				//connect
+				$scope.connectMirror = jQuery.extend({},$scope.connect);
+
+				//extend
+				if(angular.isObject($scope.extend)){
+					$scope.extendMirror = jQuery.extend({},$scope.extend);
+				}
+
+			};
+
+
+			//设置属性保存
+			$scope.saveFn = function () {
+				//common
+				if(angular.isObject($scope.commonMirror)){
+					$scope.common = jQuery.extend({},$scope.commonMirror);
+				}
+				//connect
+				$scope.connect = jQuery.extend({},$scope.connectMirror);
+				//extend
+				if(angular.isObject($scope.extendMirror)){
+					var oExtend =  jQuery.extend({},$scope.extend);
+					$scope.extend = jQuery.extend({},$scope.extendMirror);
+					$scope.extend.options = $scope.extendMirrorOptions;
+					$scope.extend.folder = oExtend.folder;
+					$scope.extend.playlist = oExtend.playlist;
+				}
+				// if datasource , component will set datasource options , save it
+				if(datasource)
+				{
+					datasource.options = $scope.options;
+				}
+
+				$console.log($scope.extendMirror , 'text.html , show extendMirror - extendMirror');
+			};
+
+
+
+			/**
+				5. 系统设置，组件实现者不需要关心实现
+			*/
+
+			// 监听元素何时被选中
+			$scope.this_selected = "unactive";
+			$scope.style = {};
+
+			$scope.$watch("element_list", function (n, o) {
+				if(!$scope.element_list){
+					return;
+				}
+				if(angular.isArray($scope.element_list)&&$scope.element_list.length>0){
+					$.each($scope.element_list , function(idx , val){
+						$.each(val.child , function(cidx , cval){
+							if(cval.component_id == $scope.id){
+								$scope.this_selected = cval.state;
+								if(cval.locked){
+									$scope.style = {border : "1px dashed #FF0000"}
+								}else{
+									$scope.style = {border : "1px dashed #000000"}
+								}
+							}
+						})
+					})
+				}
+			}, true);
+
+			/**
+				控制属性栏显示，并且在显示属性栏同时，重新加载一次已经创建好的数据源
+			*/
+			$scope.open_properties_dialog = function(){
+				$scope.propertiesDisplay = true;
+				$scope.$parent.keyboardOperation = false;
+				$scope.resetFn();
+
+				try
+				{
+					$element.parent().draggable( 'disable' );
+				}
+				catch (e)
+				{
+					$console.log('Component did not open it has been closed ' , 'text.html')
+				}
+			}
+
+
+			/**
+				关闭属性窗口
+			*/
+			$scope.close_properties_dialog = function () {
+				$scope.propertiesDisplay = false;
+				$scope.$parent.keyboardOperation = true;
+				try
+				{
+					$element.parent().draggable( 'enable' );
+				}
+				catch (e)
+				{
+					$console.log('Component did not open it has been closed ' , 'text.html')
+				}
+			}
+
+
+			/**
+				响应组件拖拽，更改元素位置
+			*/
+			$scope.$on('COMPONENT_DRAGGABLE', function (evt, data) {
+				var left = $element.parent().css("left");
+				var top = $element.parent().css("top");
+				$scope.common.left = parseInt(left);
+				$scope.common.top = parseInt(top);
+			});
+
+			/**
+				响应组件缩放
+			*/
+			$scope.$on('COMPONENT_RESIZABLE', function (evt, data) {
+				var width = $element.parent().css("width");
+				var height = $element.parent().css("height");
+				$scope.common.width = parseInt(width);
+				$scope.common.height = parseInt(height);
+			});
+
+			/*
+				响应其他组件被点击，关闭自身的属性栏
+			*/
+			$scope.$on('COMPONENT_CLOSE_PROPERTY' , function(evt , data){
+				if(data != $scope.id)
+				{
+					$scope.close_properties_dialog();
+				}
+			});
+
+			/**
+				点击选择数据源按钮
+			*/
+			$scope.showDatasources = function(x,y) {
+				$timeout(function(){ds_refresh()} , 3000);
+			}
+
+			$scope.selectDatasource = function(index) {
+				$scope.connectMirror.datasource = $scope.pop_list[index].name;
+				$scope.pop_show = 'none';
+			}
+
+			$scope.$on('datasource_changed' , function(evt , data){
+				ds_refresh();
+			});
+
+			//形成datasource选择列表
+			function ds_refresh() {
+				$scope.pop_list = [];
+				var ds_source = $datasource_factory.source;
+				if(ds_source.length>0){
+					for(var x = 0;x<ds_source.length;x++){
+						var json = {
+							name:ds_source[x].name,
+							type:ds_source[x].type.name
+						};
+						$scope.pop_list.push(json);
+					}
+				}
+			}
+
+			// 控制组件在连接数据源列表的时候，只允许连接一列
+			$scope.select_one = function(name){
+				$.each($scope.extendMirror.dataFilter , function(idx , val){
+					if(val.name != name)
+					{
+						val.display = false;
+					}
+					else
+					{
+						val.display = true;
+					}
+				})
+			}
+
+			$scope.index;
+			$scope.metaSelect = function(idx){
+				$scope.index = idx;
+			}
+
+			$scope.$on('COMPONENT_DELETE' , function(evt , callback){
+				$_deleteImageFolder($scope.extend.folder , function(r){
+					console.log(r)
+					if(r)
+					{
+						callback();
+					}
+					else
+					{
+						callback();
+					}
+				})
+
+			});
+
+			$timeout(function(){
+				$(".dy_widget_properties_config_left").mCustomScrollbar({theme:"rounded-dark"});
+			} , 200);
+
+
+		}
+	]);
+
+</script>

@@ -1,0 +1,355 @@
+.uiComponentProperties .dropdown-menu {
+  background-color: #343C46 !important;
+}
+.colorpicker-position-bottom .dropdown-menu::after {
+  border-bottom: 6px solid #343C46 !important;
+}
+.close {
+  color: #FFFFFF !important;
+  opacity: 0.5 !important;
+}
+.selectedFrame {
+  /*border: 1px dashed #000000 !important;*/
+  border: 1px dashed #565656 !important;
+  outline: 1px dashed #C5C5C5 !important;
+}
+
+/*需要放到全局的css样式*/
+.dyaliasDrawArea {
+  height: 100%;
+  width: 100%;
+  font-size: 62.5%;
+}
+
+/*需要放到全局的css样式*/
+
+.uiComponentProperties {
+  background-color: #343c46;
+  font-size: 12px;
+}
+.uiComponentProperties .btn {
+  background-color: #B9BEC3;
+  border-radius: 2px;
+  height: 19px;
+  font-size: 12px;
+  color: #434d59;
+}
+.uiComponentProperties .btn:hover {
+  background-color: #fff;
+}
+.uiPropertyTitle {
+  width: 100%;
+  height: 38px;
+  line-height: 38px;
+  color: #DDDDDD;
+  background-color: #343C46;
+  padding-left: 10px;
+}
+.uiPropertyBaseName {
+  height: inherit;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  background-color: #343C46;
+  padding: 10px 0 0px 10px;
+}
+.uiPropertyBaseName:focus {
+  border-bottom: 1px solid #00DC94;
+  color: #FFFFFF;
+  outline: none;
+}
+.uiPropertyDelete {
+  position: relative;
+  display: inline-block;
+  top: 7px;
+  width: 20px;
+  height: 20px;
+  background-image: url(../img/icon/ic_delete_white_48dp.png);
+  background-size: 100% 100%;
+}
+.uiPropertyAttrBox {
+  width: 100%;
+  background-color: #434D59;
+  margin-bottom: 1px;
+}
+.uiPropertyAttrBox>label {
+  display: block;
+  color: #DDDDDD;
+  height: 38px;
+  line-height: 38px;
+  padding-left: 10px;
+  border-bottom: 1px solid #343C46;
+  margin: 0px;
+}
+.flexibleUpImage {
+  position: relative;
+  display: inline-block;
+  top: 5px;
+  width: 20px;
+  height: 20px;
+  background-image: url(../img/icon/ic_keyboard_arrow_up_white_48dp.png);
+  background-size: 100% 100%;
+}
+.flexibleDownImage {
+  position: relative;
+  display: inline-block;
+  top: 5px;
+  width: 20px;
+  height: 20px;
+  background-image: url(../img/icon/ic_keyboard_arrow_down_white_48dp.png);
+  background-size: 100% 100%;
+}
+.uiPropertyContent {
+  height: auto !important;
+  float: none !important;
+  padding: 10px 0;
+}
+.uiPropertyAttrBox>div {
+  width: 100%;
+  height: 25px;
+  float: left;
+}
+.uiPropertyAttrBox div>label {
+  color: #8C95A4;
+  display: inline-block;
+  height: 20px;
+  line-height: 20px;
+  padding-left: 15px;
+  font-size: 12px;
+}
+.uiPropertyAttrBox div>span {
+  color: #8C95A4;
+}
+.uiPropertyAttrBox .btn-p {
+  width: 22px;
+  height: 22px;
+  display: inline-block;
+  padding: 0px;
+  margin-right: 5px;
+  background-color: rgba(0, 0, 0, 0);
+  !important;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+.uiPropertyAttrBox .btn-active {
+  background-color: #343C46 !important;
+}
+.uiPropertyAttrBox div input, .uiPropertyAttrBox div select {
+  height: 20px;
+  border: 1px solid #363e48;
+  background-color: #404955;
+  text-indent: 2px;
+  color: #ced3da;
+  position: relative;
+  font-size: 12px;
+}
+.uiPropertyAttrBox div input[type=checkbox], .uiPropertyAttrBox div input[type=radio] {
+  margin: 4px auto;
+  height: 12px !important;
+  width: 12px !important;
+}
+.half {
+  width: 50% !important;
+}
+.w-40 {
+  width: 40px !important;
+}
+.w-50 {
+  width: 50px !important;
+}
+.w-60 {
+  width: 60px !important;
+}
+.w-80 {
+  width: 80px !important;
+}
+.w-100 {
+  width: 100px !important;
+}
+.w-140 {
+  width: 140px !important;
+}
+.propTable {
+  color: #fff;
+  width: 80% !important;
+  margin: 15px;
+}
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
+  margin: 0px;
+}
+input[type="number"] {
+  -moz-appearance: textfield !important;
+}
+
+/*kendo colorpicker插件样式*/
+
+.h-auto {
+  height: auto !important;
+}
+div.k-flatcolorpicker {
+  border: none;
+}
+.k-flatcolorpicker .k-selected-color input.k-color-value {
+  padding: 0px !important;
+  border: 1px solid #363e48 !important;
+  width: 180px !important;
+}
+.m-t-10 {
+  margin-top: 10px;
+}
+.m-t-20 {
+  margin-top: 20px;
+}
+.m-b-10 {
+  margin-bottom: 10px;
+}
+.m-b-20 {
+  margin-bottom: 20px;
+}
+
+/**********************************************
+ *                                            *
+ *         page&panel upload image ui         *
+ *                                            *
+ **********************************************/
+
+.uploadImage {
+  position: relative;
+  display: inline-block;
+  top: 7px;
+  height: 25px;
+  width: 25px;
+  background-image: url(../img/icon/ic_cloud_upload_white_48dp.png);
+  background-size: 100% 100%;
+}
+.uploadOffImage {
+  position: relative;
+  display: inline-block;
+  top: 7px;
+  left: 7px;
+  height: 25px;
+  width: 25px;
+  background-image: url(../img/icon/ic_cloud_off_white_48dp.png);
+  background-size: 100% 100%;
+}
+.uploadImageFile {
+  position: relative;
+  display: inline-block;
+  top: 7px;
+  left: 7px;
+  height: 0.1px !important;
+  width: 0.1px;
+}
+.uploadImageThumbnail {
+  width: 100%;
+  height: 200px;
+  background-size: 100% 100%;
+}
+
+/**********************************************
+ *                                            *
+ *    image component upload image manager    *
+ *                                            *
+ **********************************************/
+
+.imgListManager {
+  position: relative;
+  width: 230px;
+  height: 100px;
+  margin: 0 auto;
+}
+.imgListItem {
+  position: relative;
+  display: block;
+  float: left;
+  width: 45px;
+  height: 49px;
+  border: 1px solid #2B333E;
+  background-color: #323A44;
+}
+.badgeSetting {
+  color: #FFFFFF !important;
+  background-color: #FDA300 !important;
+  margin: 27px 0 0 22px;
+}
+.imgPlayerAdd {
+  width: 100%;
+  height: 100%;
+  background-image: url(../img/icon/ic_add_grey600_48dp.png);
+  background-size: 100% 100%;
+}
+.imgListOperate {
+  position: relative;
+  display: block;
+  width: 230px;
+  height: 25px;
+  margin: 0 auto;
+}
+.imgListLeft {
+  float: left;
+  width: 18px;
+  height: 18px;
+  background-image: url(../img/icon/ic_arrow_back_white_48dp.png);
+  background-size: 100% 100%;
+  margin: 3px 0 0 30px;
+}
+.imgListRight {
+  float: left;
+  width: 18px;
+  height: 18px;
+  background-image: url(../img/icon/ic_arrow_forward_white_48dp.png);
+  background-size: 100% 100%;
+  margin: 3px 0 0 30px;
+}
+.imgListDelete {
+  float: left;
+  width: 18px;
+  height: 18px;
+  background-image: url(../img/icon/ic_delete_white_48dp.png);
+  background-size: 100% 100%;
+  margin: 3px 0 0 30px;
+}
+.imgListPlay {
+  float: left;
+  width: 18px;
+  height: 18px;
+  background-image: url(../img/icon/ic_play_arrow_white_48dp.png);
+  background-size: 100% 100%;
+  margin: 3px 0 0 30px;
+}
+.imgListPlay_play {
+  background-image: url(../img/icon/ic_play_arrow_white_48dp.png) !important;
+}
+.imgListPlay_pause {
+  background-image: url(../img/icon/ic_pause_white_48dp.png) !important;
+}
+.uploadImageSelected {
+  border: 2px solid #038DEF;
+}
+
+/**********************************************
+ *                                            *
+ *           chart data vari style            *
+ *                                            *
+ **********************************************/
+.chartDataSelect {
+  position: relative;
+  left: 30px;
+}
+.chartDataColorPicker {
+  position: relative;
+  display: inline-block;
+  background-color: #ffffff;
+  height: 20px;
+  top: 7px;
+  left: 35px;
+  width: 30px;
+}
+.chartDataPic {
+  position: relative;
+  left: 25px;
+}
+.cbOffset{
+  left: 20px;
+  top: 2px;
+}

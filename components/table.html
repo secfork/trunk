@@ -1,0 +1,70 @@
+<div style="position:absolute;width:100%;height:100%;z-index:1;overflow:auto;">
+	
+	<!-- 时间设置控件 -->
+	<div ng-if="style.timeCtrl=='1'" style="background:{{style.oddColor}}" class="table_ctrl">
+		<!-- 时间控件 -->
+		<div ng-if="data.tb.type!='auto'" style="text-align:center;font-size:2em;height:2em;line-height:2em">
+			<span ng-click="leftTime()" class="glyphicon glyphicon-triangle-left pointer"></span>
+			<span style="display:inline-block;width:100px">{{showTime}}</span>
+			<span ng-click="rightTime()" class="glyphicon glyphicon-triangle-right pointer"></span>
+		</div>
+		<!-- 时间设置控件 -->
+		<div ng-if="data.tb.type=='auto'">
+            <div class="col-sm-6 col-xs-12" style="height:30px;line-height:30px;margin:3px auto">
+                <label for="dtp_input1" class="col-sm-3 control-label">start</label>
+                <div class="input-group date form_datetime col-sm-8 dtp1" data-date-format="yyyy/mm/dd hh:ii" data-link-field="dtp_input1">
+                    <input class="form-control input-sm" type="text" value="" readonly>
+					<span class="input-group-addon btn" ng-click="showDate1()"><span class="glyphicon glyphicon-calendar"></span></span>
+                </div>
+				<input type="hidden" id="dtp_input1" value=""/><br/>
+            </div>
+            <div class="col-sm-6 col-xs-12" style="height:30px;line-height:30px;margin:3px auto">
+                <label for="dtp_input2" class="col-sm-3 control-label">end</label>
+                <div class="input-group date form_datetime col-sm-8 dtp2" data-date-format="yyyy/mm/dd hh:ii" data-link-field="dtp_input2">
+                    <input class="form-control input-sm" type="text" value="" readonly>
+					<span class="input-group-addon btn" ng-click="showDate2()"><span class="glyphicon glyphicon-calendar"></span></span>
+                </div>
+				<input type="hidden" id="dtp_input2" value=""/><br/>
+            </div>
+			<div class="col-sm-6 col-xs-12" style="height:30px;line-height:30px;margin:3px auto">
+				<label class="col-sm-3">间隔</label>
+				<div class="col-sm-8" style="padding:0">
+					<input class="input-sm form-control" style="width:60%;float:left" type="text" ng-model="intvalNum"/>
+
+					<select class="input-sm form-control" style="width:40%;padding-left:0;" ng-model="intvalUnit">
+						<option value="day">天</option>
+						<option value="hour">小时</option>
+						<option value="minute">分钟</option>
+					</select>
+				</div>
+				
+			</div>
+			<div class="col-sm-6 col-xs-12" style="height:30px;line-height:30px;margin:3px auto;text-align:center">
+				<button class="btn btn-sm btn-info" ng-click="query(intvalNum,intvalUnit)">query</button>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+	
+
+	<!-- table表格 -->
+	<table class="table" ng-class="{'table-bordered':style.tbBorder=='1'}" style="width:100%;height:100%;margin:0">
+		<thead style="background:#E9E9E9">
+			<tr>
+				<th>时间</th>
+				<th ng-repeat="tag in thead">{{tag.name}}</th>
+			</tr>	
+		</thead>
+		<tbody>
+			<tr ng-repeat="tr in tbody track by $index" ng-class="{'active':rowSelected==$index}" style="background:{{$index%2==0?style.oddColor:style.evenColor}}" ng-click="rowSelect($index)">
+				<td>{{tr[thead[0].name]['ts']}}</td>
+				<td ng-repeat="(k,v) in tr">{{(v.pv)?v.pv:' '}}</td>
+			</tr>
+		</tbody>
+	</table>
+	<!-- 分页 -->
+<!-- 	<pagination total-items="bigTotalItems" ng-change="pageChanged()" items-per-page="itemsPerPage"  ng-model="bigCurrentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" rotate="false" num-pages="numPages" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
+
+	</pagination> -->
+
+</div>

@@ -1,0 +1,43 @@
+////////////////////////////////////////////
+// PUBLIC
+////////////////////////////////////////////
+
+// BIND BOX TO SYSTEM
+POST {BASE_URL}/systems/{system_id}/bind?accesskey={accesskey}
+REQUEST
+{
+	"sn":Serial_Number,
+	"privilege":["P1","P2",...]
+}
+
+// UNBIND BOX TO SYSTEM
+POST {BASE_URL}/systems/{system_id}/unbind?accesskey={accesskey}
+
+// GET BOUND BOX TO SYSTEM BY SYSTEM ID
+GET {BASE_URL}/systems/{system_id}/bind?accesskey={accesskey}
+RESPONSE
+{
+	err:error_code
+	ret:{
+		"sn":Serial_Number
+		,"ticket":ticket_hex_string
+	}
+}
+
+// GET SYSTEM ID BY BOUND BOX's SN
+GET {BASE_URL}/boxes/{sn}/bind?accesskey={accesskey}
+RESPONSE
+{
+	err:error_code
+	ret:{
+		"system_id":system_id
+		,"ticket":ticket_hex_string
+		[,"xmpp_user":xmpp_user]
+		[,"xmpp_passwd":xmpp_passwd],
+		[,"client_id":xmpp client id]		
+	}
+}
+
+////////////////////////////////////////////
+// INTERNAL
+////////////////////////////////////////////

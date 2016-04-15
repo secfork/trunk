@@ -1,0 +1,123 @@
+{
+	"1" : {
+		"url" : "generator/data.json" ,
+		"type" : [1,2,3,4,5,6,7] ,
+		"thumbnail" : "img/1.jpg" ,
+		"desc" : "live component - power-generating" ,
+		"patten" : "live" ,
+		"text" : "Image Player"
+	},
+	"2" : {
+		"url" : "text/data.json" ,
+		"type" : [1] ,
+		"thumbnail" : "img/1.jpg" ,
+		"desc" : "history component - history input" ,
+		"patten" : "history" ,
+		"text" : "Text"
+	},
+	"3" : {
+		"url" : "nav/data.json" ,
+		"type" : [1] ,
+		"thumbnail" : "img/1.jpg" ,
+		"desc" : "navigation component - navigation" ,
+		"patten" : "" ,
+		"text" : "Nav"
+	},
+	"4" : {
+		"url" : "table/data.json" ,
+		"type" : [1] ,
+		"thumbnail" : "img/1.jpg" ,
+		"desc" : "table component - table" ,
+		"patten" : "" ,
+		"text" : "Table"
+	},
+	"5" : {
+		"url" : "historychart/data.json" ,
+		"type" : [1] ,
+		"thumbnail" : "img/1.jpg" ,
+		"desc" : "historychart component - historychart" ,
+		"patten" : "" ,
+		"text" : "Historychart"
+	},
+	"6" : {
+		"url" : "bulb/data.json" ,
+		"type" : [1,2] ,
+		"thumbnail" : "img/1.jpg" ,
+		"desc" : "live component - bulb" ,
+		"patten" : "live" ,
+		"text" : "Bulb"
+	},
+	"7" : {
+		"url" : "button/data.json" ,
+		"type" : [1,2] ,
+		"thumbnail" : "img/1.jpg" ,
+		"desc" : "button component - basic button" ,
+		"patten" : "" ,
+		"text" : "Button"
+	},
+	"8" : {
+		"url" : "gauge/data.json" ,
+		"type" : [1] ,
+		"thumbnail" : "img/1.jpg" ,
+		"desc" : "gauges component - show data directly" ,
+		"patten" : "live" ,
+		"text" : "Gauge"
+	},
+	"9" : {
+		"url" : "inputbox/data.json" ,
+		"type" : [1] ,
+		"thumbnail" : "img/1.jpg" ,
+		"desc" : "input component - input directly" ,
+		"patten" : "" ,
+		"text" : "Input"
+	},
+    "10" : {
+        "url" : "panel/data.json" ,
+        "type" : [1] ,
+        "thumbnail" : "img/1.jpg" ,
+        "desc" : "panel component - panel" ,
+        "patten" : "" ,
+        "text" : "Panel"
+    },
+    "11" : {
+        "url" : "img/data.json" ,
+        "type" : [1] ,
+        "thumbnail" : "img/1.jpg" ,
+        "desc" : "img component - show img" ,
+        "patten" : "" ,
+        "text" : "Img"
+    },
+    "12" : {
+        "url" : "chart/data.json" ,
+        "type" : [1] ,
+        "thumbnail" : "img/1.jpg" ,
+        "desc" : "chart component - show chart" ,
+        "patten" : "" ,
+        "text" : "Chart"
+    },
+    "13" : {
+        "url" : "clock/data.json" ,
+        "type" : [1] ,
+        "thumbnail" : "img/1.jpg" ,
+        "desc" : "clock component - show time" ,
+        "patten" : "" ,
+        "text" : "Clock"
+    },
+		"14" : {
+		    "url" : "weather/data.json" ,
+		    "type" : [1] ,
+		    "thumbnail" : "img/1.jpg" ,
+		    "desc" : "weather component - weather" ,
+		    "patten" : "" ,
+		    "text" : "Weather"
+
+		},
+    "15" : {
+        "url" : "alarm/data.json" ,
+        "type" : [1] ,
+        "thumbnail" : "img/1.jpg" ,
+        "desc" : "Alarm table component - show Alarm" ,
+        "patten" : "" ,
+        "text" : "Alarm Table"
+    }
+}

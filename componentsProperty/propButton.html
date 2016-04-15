@@ -1,0 +1,185 @@
+<div>
+  <!-- 组件名 -->
+  <div class="uiPropertyTitle">
+    <input class="uiPropertyBaseName" type="text" ng-model="base.name"></input>
+    <div class="uiPropertyDelete" ng-click="del(base)"></div>
+    <!--<button class="btn btn-xs" style="float: right" ng-click="save()">保存</button>-->
+  </div>
+
+  <!-- 选项卡 -->
+  <div class="uiEditorPanelTabs" ng-init="componentProp='propertyList'">
+    <span ng-class="{'uiEditorPanelTabsActive':componentProp=='propertyList'}" ng-click="componentProp='propertyList'">属性</span>
+    <span ng-class="{'uiEditorPanelTabsActive':componentProp=='dataLink'}" ng-click="componentProp='dataLink'">数据连接</span>
+  </div>
+
+  <!-- 内容 -->
+  <div class="uiPropertyTabsContent" style="height:auto;">
+
+    <!-- 属性 -->
+    <div class="uiPropertyAttr" ng-show="componentProp=='propertyList'">
+
+      <div properties-box dir-title="布局">
+
+        <div>
+          <label class="w-60">宽度</label>
+          <div unit-select dir-class="w-40" dir-model="style.width"></div>
+        </div>
+
+        <div>
+          <label class="w-60">高度</label>
+          <div unit-select dir-class="w-40" dir-model="style.height"></div>
+        </div>
+
+        <div class="half">
+          <label class="w-60">左边距</label>
+          <!-- <input class='w-40' type="text" ng-model="style.marginLeft"/> -->
+          <div unit-out dir-class='w-40' dir-unit="px" dir-model="style.marginLeft"></div>
+        </div>
+
+        <div class="half">
+          <label class="w-60">上边距</label>
+          <!-- <input class="w-40" type="text" ng-model="style.marginTop"/> -->
+          <div unit-out dir-class='w-40' dir-unit="px" dir-model="style.marginTop"></div>
+        </div>
+
+        <div class="half">
+          <label class="w-60">右边距</label>
+          <!-- <input class="w-40" type="text" ng-model="style.marginRight"/> -->
+          <div unit-out dir-class='w-40' dir-unit="px" dir-model="style.marginRight"></div>
+        </div>
+
+        <div class="half">
+          <label class="w-60">下边距</label>
+          <!-- <input class="w-40" type="text" ng-model="style.marginBottom"/> -->
+          <div unit-out dir-class='w-40' dir-unit="px" dir-model="style.marginBottom"></div>
+        </div>
+
+        <div>
+          <label class="w-100">自适应缩放</label>
+          <select class="w-100" ng-model="style.flex">
+            <option value="1 1 auto">适应缩放</option>
+            <option value="0 0 auto">不缩放</option>
+          </select>
+        </div>
+
+        <div class="clear"></div>
+      </div>
+
+      <div properties-box dir-title="样式">
+        <div>
+          <label class="w-60">文本</label>
+          <input class="w-100" type="text" ng-model="style.btnText" />
+        </div>
+        <div>
+          <label class="w-60">字体</label>
+          <select class="w-100" ng-model="style.fontFamily">
+            <option value="Arial">Arial</option>
+            <option value="Microsoft YaHei">Microsoft YaHei</option>
+            <option value="Cursive">Cursive</option>
+            <option value="Fantasy">Fantasy</option>
+          </select>
+        </div>
+        <div>
+          <label class="w-60">字号</label>
+          <div unit-out dir-class='w-40' dir-unit="em" dir-model="style.fontSize"></div>
+        </div>
+
+        <div class="h-auto">
+          <label class="w-60">字色</label>
+          <input type="text" colorpicker="rgba" ng-model="style.color" class="w-100"/>
+        </div>
+
+        <div class="h-auto">
+          <label class="w-60"></label>
+          <div class="w-100" ng-model="style.color" ng-style="{'background-color' : style.color}" colorpicker="rgba" style="position:relative;display:inline-block;height:20px;"></div>
+        </div>
+
+        <div class="h-auto">
+          <label class="w-60">填充</label>
+          <input type="text" colorpicker="rgba" ng-model="style.backgroundColor" class="w-100" />
+        </div>
+
+        <div class="h-auto">
+          <label class="w-60"></label>
+          <div class="w-100" ng-model="style.backgroundColor" ng-style="{'background-color' : style.backgroundColor}" colorpicker="rgba" style="position:relative;display:inline-block;height:20px;"></div>
+        </div>
+
+
+        <div>
+          <label class="w-60">圆角</label>
+          <div unit-out dir-class='w-40' dir-unit="px" dir-model="style.borderRadius"></div>
+        </div>
+
+        <div>
+          <label class="w-60">边框</label>
+          <div unit-out dir-class='w-40' dir-unit="px" dir-model="style.borderWidth"></div>
+          <select class="w-60" ng-model="style.borderStyle">
+            <option value="solid">实线</option>
+            <option value="dotted">虚线</option>
+          </select>
+        </div>
+        <div>
+          <label class="w-80">边框颜色</label>
+          <input type="text" class="w-100" colorpicker ng-model="style.borderColor">
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- 数据连接 -->
+    <div class="uiPropertyDataLink" ng-show="componentProp=='dataLink'">
+
+      <div properties-box dir-title="按钮控制">
+        <div>
+          <label class="w-80">事件</label>
+          <select class="w-100" ng-model="data.type">
+            <option value="ctrl">系统控制</option>
+            <option value="call">数据召唤</option>
+            <option value="openLink">打开链接</option>
+            <option value="openPage">打开页面</option>
+          </select>
+        </div>
+        <!-- 系统控制 -->
+        <div ng-if="data.type=='ctrl'">
+          <label class="w-80">变量</label>
+          <select class="w-100" ng-model="data.tag" ng-mouseover="getTags()">
+            <option ng-repeat="tag in tags">{{tag.name}}</option>
+          </select>
+        </div>
+        <div ng-if="data.type=='ctrl'">
+          <label class="w-140">运行态下设置控制参数</label>
+          <input type="checkbox" ng-model="data.run" />
+        </div>
+        <div ng-if="data.type=='ctrl' && data.run">
+          <label class="w-80">控制参数</label>
+          <input type="text" class="w-100" ng-model="data.data" />
+        </div>
+
+        <!-- 打开链接 -->
+        <div ng-if="data.type=='openLink'">
+          <label class="w-80">链接地址</label>
+          <input type="text" class="w-140" ng-model="data.link" />
+        </div>
+
+        <!-- 打开页面 -->
+        <div ng-if="data.type=='openPage'">
+          <label class="w-80">页面</label>
+          <input type="text" class="w-140" ng-model="data.page" />
+        </div>
+
+        <!-- 打开方式 -->
+        <div ng-if="data.type=='openLink' && data.type!='openPage'">
+          <label class="w-80">打开方式</label>
+          <select class="w-80" ng-model="base.redirectMode">
+            <option value="_self">本页跳转</option>
+            <option value="_blank">开启新页</option>
+          </select>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,51 @@
+<div class="dy_widget_properties_common_directive">
+	<label>{{glanguage.componentName}} :</label>
+	<input type="text" class="form-control input-sm" ng-model="commonMirror.name"/>
+</div>
+
+<div class="dy_widget_properties_common_directive">
+	<label>{{glanguage.componentzIndex}} :</label>
+	<input input-length-limit-one class="form-control input-sm" type="number" name="input" ng-model="commonMirror.zIndex" min="0" max="99" required/>
+</div>
+
+<div class="dy_widget_properties_common_directive">
+	<label>{{glanguage.componentWidth}} :</label>
+	<input class="form-control input-sm" type="number" style="width:150px" name="input" ng-model="commonMirror.width" min="0" max="3000" required/>
+    <select class="form-control input-sm" style="width: 50px;padding-left: 0" ng-model="commonMirror.widthStyle" ng-options="option for option in ['px','%']"></select>
+    <button class="form-control input-sm" style="width:50px" ng-click="commonMirror.width=100;commonMirror.widthStyle='%'">100%</button>
+</div>
+
+<div class="dy_widget_properties_common_directive">
+	<label>{{glanguage.componentHeight}} :</label>
+	<input class="form-control input-sm" type="number" style="width:150px" name="input" ng-model="commonMirror.height" min="0" max="3000" required/>
+    <select class="form-control input-sm" style="width: 50px;padding-left: 0" ng-model="commonMirror.heightStyle" ng-options="option for option in ['px','%']"></select>
+    <button class="form-control input-sm" style="width:50px" ng-click="commonMirror.height=100;commonMirror.heightStyle='%'">100%</button>
+</div>
+
+<div class="dy_widget_properties_common_directive">
+	<label>左边距 :</label>
+	<input class="form-control input-sm" type="number" name="input" ng-model="commonMirror.left" min="-3000" max="3000" required/>
+</div>
+
+<div class="dy_widget_properties_common_directive">
+	<label>上边距 :</label>
+	<input class="form-control input-sm" type="number" name="input" ng-model="commonMirror.top" min="-3000" max="3000" required/>
+</div>
+
+
+<div class="dy_widget_properties_common_directive">
+    <label>右边距 :</label>
+    <input class="form-control input-sm" type="number" name="input" ng-model="commonMirror.right" min="-3000" max="3000" required/>
+</div>
+
+<div class="dy_widget_properties_common_directive">
+    <label>下边距 :</label>
+    <input class="form-control input-sm" type="number" name="input" ng-model="commonMirror.bottom" min="-3000" max="3000" required/>
+</div>
+
+
+
+<div class="dy_widget_properties_common_directive">
+	<label>{{glanguage.componentDisplay}} :</label>
+	<input style="margin-top:10px;width:20px;" type="checkbox" ng-model="commonMirror.display" ng-true-value="'flex'" ng-false-value="'none'"  ng-checked="commonMirror.display == 'flex'">
+</div>

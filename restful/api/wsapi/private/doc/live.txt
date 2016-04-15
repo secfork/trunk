@@ -1,0 +1,14 @@
+/////////////////////////////////////////////////////////////
+// SET METHODS
+
+/////////////////////////////////////////////////////////////
+// GET METHODS
+
+// GET SYSTEM'S LIVE DATA
+GET /live/systems/{systems}
+
+// GET SYSTEM'S LIVE DATA BY POINT ID
+GET /live/systems/{systems}/tags/{tag_name}
+
+// GET SYSTEM'S LIVE DATA BY POINTS ID
+GET /live/systems/{systems}/tags?tag={tag_name}[&tag=...][, ...]]

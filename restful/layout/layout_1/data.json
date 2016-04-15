@@ -1,0 +1,3 @@
+{
+	"content" : "<div dy-page selector-directive ng-transclude id='{{base.id}}' name='{{base.name}}' ng-show='base.display==\"flex\"' ng-style='style' class='panel' data='{\"base\":{},\"style\":{}}'></div>"
+}

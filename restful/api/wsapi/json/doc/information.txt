@@ -1,0 +1,299 @@
+BASE_URL=/private/info
+exi
+--------------------------------------------------------------------------------------------------------------------------
+SYSTEMS
+
+ REQUIRED PARAMS
+ name,model,sn
+
+CREATE SYSTEM
+POST {BASE_URL}/systems?accesskey={accesskey}
+required: 
+{
+	name : {system_name},
+	model : {system_model},
+	sn : {serial_number}
+}
+
+POST {BASE_URL}/systems?accesskey={accesskey}
+
+GET SYSTEM
+GET {BASE_URL}/systems/{system_id}?accesskey={accesskey}[&include_tags={true|false}][&extend_profile={true|false}][& extend_devices={true|false}]
+
+GET SYSTEM BY SN
+GET {BASE_URL}/systems?sn={serial_number}&accesskey={accesskey}[&extend_profile={true|false}][& extend_devices={true|false}]
+
+MODIFY SYSTEM
+PUT {BASE_URL}/systems/{system_id}?accesskey={accesskey}
+
+MODIFY SYSTEM BY SN
+PUT {BASE_URL}/systems?sn={serial_number}&accesskey={accesskey}
+
+DELETE SYSTEM
+DELETE {BASE_URL}/systems/{system_id}?accesskey={accesskey}
+
+DELETE SYSTEM BY SN
+DELETE {BASE_URL}/systems?sn={serial_number}&accesskey={accesskey}
+
+GET SYSTEMS WHAT IS NEED UPDATE
+GET {BASE_URL}/systems/{system_id}/needupdate?accesskey={accesskey}
+
+--------------------------------------------------------------------------------------------------------------------------
+SYSTEM MODELS
+
+REQUIRED PARAMS
+name
+
+CREATE SYSTEM MODEL
+POST {BASE_URL}/sysmodels?accesskey={accesskey}
+required:
+{
+	name : {system_model_name}
+}
+
+GET SYSTEM MODEL
+GET {BASE_URL}/sysmodels/{system_model_id}?accesskey={accesskey}
+[&extend_profiles={true|false}][& extend_devices={true|false}]
+
+MODIFY SYSTEM MODEL
+PUT {BASE_URL}/sysmodels/{system_model_id}?accesskey={accesskey}
+
+DELETE SYSTEM MODEL
+DELETE {BASE_URL}/sysmodels/{system_model_id}?accesskey={accesskey}
+
+ADD DEVICE TO SYSTEM MODEL
+POST {BASE_URL}/sysmodels/{system_model_id}/devices?accesskey={accesskey}
+required:
+{
+	name : {device_name},
+	device_model : {device_model_id}
+}
+
+GET DEVICE OF SYSTEM MODEL
+GET {BASE_URL}/sysmodels/{system_model_id}/devices/{device_id}?accesskey={accesskey}[&alllevel={true|false}]
+
+GET DEVICES OF SYSTEM MODEL
+GET {BASE_URL}/sysmodels/{system_model_id}/devices?accesskey={accesskey}
+
+MODIFY DEVICE OF SYSTEM MODEL
+PUT {BASE_URL}/sysmodels/{system_model_id}/devices/{device_id}?accesskey={accesskey}
+
+DELETE DEVICE FROM SYSTEM MODEL
+DELETE {BASE_URL}/sysmodels/{system_model_id}/devices/{device_id}?accesskey={accesskey}
+
+ADD TAG TO SYSTEM MODEL
+POST {BASE_URL}/sysmodels/{system_model_id}/tags?accesskey={accesskey}
+required:
+{
+	name : {tag_name},
+	type : {data_type}
+}
+
+MODIFY TAG OF SYSTEM MODEL
+PUT {BASE_URL}/sysmodels/{system_model_id}/tags/{tag_id}?accesskey={accesskey}
+
+GET TAG OF SYSTEM MODEL
+GET {BASE_URL}/sysmodels/{system_model_id}/tags/{tag_id}?accesskey={accesskey}
+
+GET TAGS OF SYSTEM MODEL
+GET {BASE_URL}/sysmodels/{system_model_id}/tags?accesskey={accesskey}[&id={number}][&id=...]
+
+DELETE TAG FROM SYSTEM MODEL
+DELETE {BASE_URL}/sysmodels/{system_model_id}/tags/{tag_id}?accesskey={accesskey}
+
+--------------------------------------------------------------------------------------------------------------------------
+SYSTEM MODEL PROFILES
+
+REQUIRED PARAMS
+name,system_model
+
+CREATE SYSTEM MODEL PROFILE
+POST {BASE_URL}/profiles?accesskey={accesskey}
+required:
+{
+	name : {profile_name},
+	system_model : {system_model_id}
+}
+
+GET PROFILE OF SYSTEM MODEL
+GET {BASE_URL}/profiles/{profile_id}?accesskey={accesskey}[&alllevel={true|false}]
+
+GET PROFILES OF SYSTEM MODEL
+GET {BASE_URL}/profiles?accesskey={accesskey}&system_model={system_model_id}
+
+MODIFY SYSTEM MODEL PROFILE
+PUT {BASE_URL}/profiles/{profile_id}?accesskey={accesskey}
+
+-----------------------
+
+SET LOG PROFILE OF SYSTEM MODEL TAG
+PUT {BASE_URL}/profiles/{profile_id}/tags/{tag_id}?accesskey={accesskey}
+
+GET SYSTEM MODEL TAG WITH LOG PROFILE
+GET {BASE_URL}/profiles/{profile_id}/tags/{tag_id}?accesskey={accesskey}
+
+GET SYSTEM MODEL TAGS WITH LOG PROFILE
+GET {BASE_URL}/profiles/{profile_id}/tags?accesskey={accesskey}[&id={number}][&id=...]
+
+DELETE LOG PROFILE OF SYSTEM MODEL TAG
+DELETE {BASE_URL}/profiles/{profile_id}/tags/{tag_id}?accesskey={accesskey}
+
+------------------------
+
+ADD TRIGGER TO SYSTEM MODEL PROFILE
+POST {BASE_URL}/profiles/{profile_id}/triggers?accesskey={accesskey}
+required:
+{
+	name : {trigger_name}
+}
+
+POST {BASE_URL}/profiles/{profile_id}/triggers?accesskey={accesskey}
+
+GET TRIGGER OF SYSTEM MODEL PROFILE
+GET {BASE_URL}/profiles/{profile_id}/triggers/{trigger_id}?accesskey={accesskey}
+
+GET TRIGGERS OF SYSTEM MODEL PROFILE
+GET {BASE_URL}/profiles/{profile_id}/triggers?accesskey={accesskey}
+
+MODIFY TRIGGER OF SYSTEM MODEL PROFILE
+PUT {BASE_URL}/profiles/{profile_id}/triggers/{trigger_id}?accesskey={accesskey}
+
+DELETE TRIGGER OF SYSTE MODEL PROFILE
+DELETE {BASE_URL}/profiles/{profile_id}/triggers/{trigger_id}?accesskey={accesskey}
+
+--------------------------------------------------------------------------------------------------------------------------
+DEVICE MODELS
+
+CREATE DEVICE MODEL
+POST {BASE_URL}/devmodels?accesskey={accesskey}
+required:
+{
+	name : {device_model_name}
+}
+
+POST {BASE_URL}/devmodels?accesskey={accesskey}
+
+GET DEVICE MODEL
+GET {BASE_URL}/devmodels/{device_model_id}?accesskey={accesskey}[&alllevel=true]
+
+MODIFY DEVICE MODEL
+PUT {BASE_URL}/devmodels/{device_model_id}?accesskey={accesskey}
+
+DELETE DEVICE MODEL
+DELETE {BASE_URL}/devmodels/{device_model_id}?accesskey={accesskey}
+
+ADD POINT TO DEVICE MODEL
+POST {BASE_URL}/devmodels/{device_model_id}/points?accesskey={accesskey}
+required:
+{
+	name : {point_name}
+}
+
+GET POINT OF DEVICE MODEL
+GET {BASE_URL}/devmodels/{device_model_id}/points/{point_id}?accesskey={accesskey}
+
+GET POINTS OF DEVICE MODEL
+GET {BASE_URL}/devmodels/{device_model_id}/points?accesskey={accesskey}
+
+MODIFY POINT OF DEVICE MODEL
+PUT {BASE_URL}/devmodels/{device_model_id}/points/{point_id}?accesskey={accesskey}
+
+DELETE POINT FROM DEVICE MODEL
+DELETE {BASE_URL}/devmodels/{device_model_id}/points/{point_id}?accesskey={accesskey}
+
+
+DRIVERS
+
+CREATE DRIVER
+REQUIRED PARAMS
+name={driver_name}
+
+POST {BASE_URL}/drivers&accesskey={accesskey}
+
+GET DRIVER
+GET {BASE_URL}/drivers/{driver_id}?accesskey={accesskey}
+
+GET DRIVER BY NAME
+GET {BASE_URL}/drivers?name={driver_name}&accesskey={accesskey}
+
+SET DRIVER
+PUT {BASE_URL}/drivers/{driver_id}?accesskey={accesskey}
+
+DELETE DRIVER
+DELETE {BASE_URL}/drivers/{driver_uuid}?accesskey={accesskey}
+
+--------------------------------------------------------------------------------------------------------------------------
+DA SERVERS
+
+CREATE DASERVER
+REQUIRED PARAMS
+name={daserver_name}
+
+POST {BASE_URL}/daserver?accesskey={accesskey}
+
+GET DASERVER
+GET {BASE_URL}/daserver/{daserver_id}?accesskey={accesskey}
+
+GET DASERVER BY NAME
+GET {BASE_URL}/daserver?name={daserver_name}&accesskey={accesskey}
+
+SET DASERVER
+PUT {BASE_URL}/daserver/{daserver_id}?accesskey={accesskey}
+
+DELETE DASERVER
+DELETE {BASE_URL}/daserver/{daserver_id}?accesskey={accesskey}
+
+--------------------------------------------------------------------------------------------------------------------------
+QUERY 
+
+FIND SYSTEMS
+GET {BASE_URL}/query/systems?accesskey={accesskey}[&state={state}][&sorts={field[-]}[&sorts=...]][&offset={start_item_index}][&limit={max_count}][&calc_sum={true|false}]
+
+FIND SYSTEM MODELS
+GET {BASE_URL}/query/sysmodels?accesskey={accesskey}[&sorts={field[-]}[&sorts=...]][&offset={start_item_index}][&limit={max_count}][&calc_sum={true|false}]
+
+FIND DEVICE MODELS
+GET {BASE_URL}/query/devmodels?accesskey={accesskey}[&sorts={field[-]}[&sorts=...]][&offset={start_item_index}][&limit={max_count}][&calc_sum={true|false}]
+//LIST DRIVERS
+GET {BASE_URL}/query/drivers?accesskey={accesskey}[&sorts={field[-]}[&sorts=...]][&offset={start_item_index}][&limit={max_count}][&calc_sum={true|false}]
+
+--------------------------------------------------------------------------------------------------------------------------
+FETCH (SUBSCRIBE/PUBLISH)
+
+LAST MODIFY VERSION
+GET {BASE_URL}/lastversion?accesskey={accesskey}
+
+FETCH 
+GET {BASE_URL}/fetch/{version}?accesskey={accesskey}
+
+--------------------------------------------------------------------------------------------------
+GET UPDATED SYSTEMS
+GET {BASE_URL}/updated/systems?[id={system_id}[&id=...]]
+
+ASSIGN DASERVER TO SYSTEM
+PUT {BASE_URL}/systems/{system_id}/assign
+
+
+///////////////////////////////////////////////////////////////////////////
+//CREATE MESSAGE PROFILE OF SYSTEM MODEL 
+POST {BASE_URL}/profiles/{profile_id}/messages?accesskey={accesskey}
+{
+	user_id:user_id
+	user_category:0,
+	trigger:trigger_id
+}
+
+//GET SYSTEM MODEL MESSAGE PROFILE
+GET {BASE_URL}/profiles/{profile_id}/messages/{msgprofile_id}?accesskey={accesskey}
+
+//GET SYSTEM MODEL MESSAGES PROFILE
+GET {BASE_URL}/profiles/{profile_id}/messages?accesskey={accesskey}[&id={number}][&id=...]
+
+//MODIFY SYSTEM MODEL MESSAGE PROFILE
+PUT {BASE_URL}/profiles/{profile_id}/messages/{msgprofile_id}?accesskey={accesskey}
+//DELETE MESSAGE PROFILE OF SYSTEM MODEL 
+DELETE {BASE_URL}/profiles/{profile_id}/messages/{msgprofile_id}?accesskey={accesskey}
+
+
+
+

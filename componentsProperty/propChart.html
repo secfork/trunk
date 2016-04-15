@@ -1,0 +1,166 @@
+<div>
+  <!-- 组件名 -->
+  <div class="uiPropertyTitle">
+    <input class="uiPropertyBaseName" type="text" ng-model="base.name"></input>
+    <div class="uiPropertyDelete" ng-click="del(base)"></div>
+    <!--<button class="btn btn-xs" style="float: right" ng-click="save()">保存</button>-->
+  </div>
+
+  <!-- 选项卡 -->
+  <div class="uiEditorPanelTabs" ng-init="componentProp='propertyList'">
+    <span ng-class="{'uiEditorPanelTabsActive':componentProp=='propertyList'}" ng-click="componentProp='propertyList'">属性</span>
+    <span ng-class="{'uiEditorPanelTabsActive':componentProp=='dataLink'}" ng-click="componentProp='dataLink'">数据连接</span>
+  </div>
+
+  <!-- 内容 -->
+  <div class="uiPropertyTabsContent" style="height:auto;">
+
+    <!-- 属性 -->
+    <div class="uiPropertyAttr" ng-show="componentProp=='propertyList'">
+
+      <div properties-box dir-title="布局">
+
+        <div>
+          <label class="w-60">宽度</label>
+          <div unit-select dir-class="w-40" dir-model="style.width"></div>
+        </div>
+
+        <div>
+          <label class="w-60">高度</label>
+          <div unit-select dir-class="w-40" dir-model="style.height"></div>
+        </div>
+
+        <div class="half">
+          <label class="w-60">左边距</label>
+          <!-- <input class='w-40' type="text" ng-model="style.marginLeft"/> -->
+          <div unit-out dir-class='w-40' dir-unit="px" dir-model="style.marginLeft"></div>
+        </div>
+
+        <div class="half">
+          <label class="w-60">上边距</label>
+          <!-- <input class="w-40" type="text" ng-model="style.marginTop"/> -->
+          <div unit-out dir-class='w-40' dir-unit="px" dir-model="style.marginTop"></div>
+        </div>
+
+        <div class="half">
+          <label class="w-60">右边距</label>
+          <!-- <input class="w-40" type="text" ng-model="style.marginRight"/> -->
+          <div unit-out dir-class='w-40' dir-unit="px" dir-model="style.marginRight"></div>
+        </div>
+
+        <div class="half">
+          <label class="w-60">下边距</label>
+          <!-- <input class="w-40" type="text" ng-model="style.marginBottom"/> -->
+          <div unit-out dir-class='w-40' dir-unit="px" dir-model="style.marginBottom"></div>
+        </div>
+
+        <div class="h-auto">
+          <label class="w-60">背景色</label>
+          <div kendo-flat-color-picker ng-model="style.backgroundColor" k-opacity="true"></div>
+        </div>
+
+        <div class="clear"></div>
+      </div>
+
+    </div>
+
+    <!-- 数据连接 -->
+    <div class="uiPropertyDataLink" ng-show="componentProp=='dataLink'">
+
+      <div properties-box dir-title="数据源">
+        <div>
+          <label class="w-80">类型</label>
+          <select class="w-80" ng-model="data.datasouceName" ng-change="redrawChart()">
+            <option value="getSystemLive">实时数据源</option>
+            <option value="getSystemHistoryReadInterval">历史数据源</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="w-80">模型</label>
+          <select class="w-80">
+            <option ng-model="data.systemModelName">{{data.systemModelName}}</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="w-80">系统</label>
+          <select class="w-80">
+            <option ng-model="data.systemName">{{data.systemName}}</option>
+          </select>
+        </div>
+
+      </div>
+
+      <div properties-box dir-title="变量">
+        <div>
+          <select class="w-80 chartDataSelect" ng-model="data.configTags[0].tag_name" ng-change="redrawChart()">
+            <option ng-repeat="tag in data.tags" ng-model="tag.name">{{tag.name}}</option>
+          </select>
+
+          <div class="chartDataColorPicker" ng-model="data.configTags[0].tag_color" ng-style="{'background-color' : data.configTags[0].tag_color}" colorpicker ng-change="redrawChart()"></div>
+
+          <label class="w-60 chartDataPic">面积图</label>
+          <input type="checkbox" class="cbOffset" ng-model="data.configTags[0].tag_area_map" ng-true-value="'area'" ng-false-value="'line'" ng-change="redrawChart()" />
+        </div>
+
+        <div>
+          <select class="w-80 chartDataSelect" ng-model="data.configTags[1].tag_name" ng-change="redrawChart()">
+            <option ng-repeat="tag in data.tags" ng-model="tag.name">{{tag.name}}</option>
+          </select>
+
+          <div class="chartDataColorPicker" ng-model="data.configTags[1].tag_color" ng-style="{'background-color' : data.configTags[1].tag_color}" colorpicker ng-change="redrawChart()"></div>
+
+          <label class="w-60 chartDataPic">面积图</label>
+          <input type="checkbox" class="cbOffset" ng-model="data.configTags[1].tag_area_map" ng-true-value="'area'" ng-false-value="'line'" ng-change="redrawChart()" />
+        </div>
+
+        <div>
+          <select class="w-80 chartDataSelect" ng-model="data.configTags[2].tag_name" ng-change="redrawChart()">
+            <option ng-repeat="tag in data.tags" ng-model="tag.name">{{tag.name}}</option>
+          </select>
+
+          <div class="chartDataColorPicker" ng-model="data.configTags[2].tag_color" ng-style="{'background-color' : data.configTags[2].tag_color}" colorpicker ng-change="redrawChart()"></div>
+
+          <label class="w-60 chartDataPic">面积图</label>
+          <input type="checkbox" class="cbOffset" ng-model="data.configTags[2].tag_area_map" ng-true-value="'area'" ng-false-value="'line'" ng-change="redrawChart()" />
+        </div>
+
+        <div>
+          <select class="w-80 chartDataSelect" ng-model="data.configTags[3].tag_name" ng-change="redrawChart()">
+            <option ng-repeat="tag in data.tags" ng-model="tag.name">{{tag.name}}</option>
+          </select>
+
+          <div class="chartDataColorPicker" ng-model="data.configTags[3].tag_color" ng-style="{'background-color' : data.configTags[3].tag_color}" colorpicker ng-change="redrawChart()"></div>
+
+          <label class="w-60 chartDataPic">面积图</label>
+          <input type="checkbox" class="cbOffset" ng-model="data.configTags[3].tag_area_map" ng-true-value="'area'" ng-false-value="'line'" ng-change="redrawChart()" />
+        </div>
+      </div>
+
+      <div properties-box dir-title="时间设置">
+        <div ng-show="data.datasouceName=='getSystemHistoryReadInterval'">
+          <input type="radio" class="cbOffset" ng-model="data.timeType" value="fixedTime" ng-change="redrawChart()" />
+          <label class="w-100 chartDataPic" style="left:15px !important">固定时间范围</label>
+          <select class="w-80 chartDataSelect" style="left:15px !important" ng-model="data.fixedTime" ng-change="redrawChart()">
+            <option ng-model="day" value="day">日</option>
+            <option ng-model="week" value="week">周</option>
+            <option ng-model="month" value="month">月</option>
+            <option ng-model="year" value="year">年</option>
+          </select>
+        </div>
+        <div>
+          <input type="radio" class="cbOffset" ng-model="data.timeType" value="userDefineTime" ng-change="redrawChart()" />
+          <label class="w-100 chartDataPic" style="left:15px !important">自定义时间范围</label>
+          <input inputLengthLimitOne class='w-40 chartDataSelect' type="number" ng-model="data.customTime" style="left:15px !important" ng-change="redrawChart();checkMax()" />
+          <label class="w-50 chartDataPic" style="left:15px !important">分</label>
+        </div>
+      </div>
+
+    </div>
+
+
+
+  </div>
+
+</div>

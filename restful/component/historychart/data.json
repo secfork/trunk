@@ -1,0 +1,3 @@
+{ 
+	"content" : "<div dy-historychart draggable class='dy_component_model' style='position: absolute;width:420px;height:300px;' data='[{\"id\":\"\",\"common\":{\"name\":\"table\",\"left\":0,\"top\":0,\"width\":600,\"height\":300,\"zIndex\":0,\"display\":\"block\"},\"connect\":{\"datasource\":\"\"},\"extend\":{\"title\":\"History Table\",\"pageNumber\":5,\"options\":[\"\"],\"dataFilter\":[],\"syncDatasourceData\":true}}]'></div>"
+}

@@ -1,0 +1,2 @@
+// READ SYSTEM ONLINE STATUS BY SYSTEM_IDS
+GET {BASE_URL}/systems/status?accesskey={accesskey}[&id={system_id}][&id=....]

@@ -1,0 +1,37 @@
+////////////////////////////////////////////
+// PUBLIC
+////////////////////////////////////////////
+
+// ASSIGN NEW TICKET TO SYSTEM
+POST {BASE_URL}/systems/{system_id}/tickets?accesskey={accesskey}
+
+// GET TICKETS OF SYSTEM
+GET {BASE_URL}/systems/{system_id}/tickets?accesskey={accesskey}
+
+// SET TICKET OF SYSTEM
+PUT {BASE_URL}/systems/{system_id}/tickets?accesskey={accesskey}
+REQUEST
+{
+	"ticket":ticket_hex_string
+	[,"privilege":["P1","P2",...]]
+	[,"expire":minutes]
+}
+
+// DELETE A TICKET OF SYSTEM
+DELETE {BASE_URL}/systems/{system_id}/tickets?accesskey={accesskey}
+REQUEST
+{
+	"ticket":ticket_hex_string
+}
+
+// AUTH TICKET TO THINGLINX
+POST {BASE_URL}/authenticate/ticket
+REQUEST
+{
+	"ticket":ticket_hex_string
+	[,"sn":Serial_Number]	
+}
+
+////////////////////////////////////////////
+// INTERNAL
+////////////////////////////////////////////

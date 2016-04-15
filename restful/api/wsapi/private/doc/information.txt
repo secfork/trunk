@@ -1,0 +1,8 @@
+---- RESTful -----------
+
+ASSIGN DASERVER TO SYSTEM 
+PUT /info/systems/{system_id}/assign
+
+GET SYSTEMS WHAT IS NEED UPDATE
+GET /info/needupdate/systems?id=id1[,id=id2[, ...]]
+

@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta http-equiv="content-type" content="text/html;charset=utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=9">
+		<script type="text/javascript" src="lib/jquery.min.js"></script>
+
+		<style>
+			html , body , container
+			{
+				width:100%;
+				height:100%;
+			}
+			.row
+			{
+				position:relative;
+				display: flex;
+				justify-content: flex-start;
+				flex-wrap: wrap;
+				align-items: stretch;
+				align-content: flex-start;
+				padding: 0px;
+				flex: 0 0 auto;
+			}
+			.item
+			{
+				position:relative;
+				background-color:#ccc;
+				height:110px;
+				width:300px;
+				flex: 1 0 auto;
+				font-size : 1em;
+			}
+			.pic
+			{
+				position:relative;
+				background-color:#FF0000;
+				height:400px;
+				width:300px;
+				flex: 1 0 auto;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<div class="container">
+
+			<div class="row">
+
+				<div class="item">
+					<span style="position:absolute;top:10px;left:130px;width:20px;height:20px;margin:auto;">
+						Title
+					</span>
+					<image style="position:absolute;top:40px;left:130px;width:40px;height:40px;margin:auto;" src="img/page_model_add.png"></image>
+					<div style="position:absolute;top:90px;left:30px;width:260px;height:40px;margin:auto;">
+						Description , 啊啊啊哦哦哦呃呃呃
+					</div>
+				</div>
+
+				<div class="item">
+					<span style="position:absolute;top:10px;left:130px;width:20px;height:20px;margin:auto;">
+						Title
+					</span>
+					<image style="position:absolute;top:40px;left:130px;width:40px;height:40px;margin:auto;" src="img/page_model_add.png"></image>
+					<div style="position:absolute;top:90px;left:30px;width:260px;height:40px;margin:auto;">
+						Description , 啊啊啊哦哦哦呃呃呃
+					</div>
+				</div>
+
+				<div class="item">
+					<span style="position:absolute;top:10px;left:130px;width:20px;height:20px;margin:auto;">
+						Title
+					</span>
+					<image style="position:absolute;top:40px;left:130px;width:40px;height:40px;margin:auto;" src="img/page_model_add.png"></image>
+					<div style="position:absolute;top:90px;left:30px;width:260px;height:40px;margin:auto;">
+						Description , 啊啊啊哦哦哦呃呃呃
+					</div>
+				</div>
+
+				<div class="item">
+					<span style="position:absolute;top:10px;left:130px;width:20px;height:20px;margin:auto;">
+						Title
+					</span>
+					<image style="position:absolute;top:40px;left:130px;width:40px;height:40px;margin:auto;" src="img/page_model_add.png"></image>
+					<div style="position:absolute;top:90px;left:30px;width:260px;height:40px;margin:auto;">
+						Description , 啊啊啊哦哦哦呃呃呃
+					</div>
+				</div>
+
+			</div>
+
+			<div class="row">
+
+				<div class="pic">
+					<image id="generator" style="transform-origin: 0px 0px 0px; align-items: stretch; align-content: flex-start; width:500px;height:280px;" src="img/generator/pg1.png" onload="imageLoad()"></image>
+				</div>
+
+			</div>
+
+		</div>
+
+	</body>
+
+	<script>
+		function imageLoad(){
+			var pWidth = $("#generator").parent().width();
+			var pHeight = $("#generator").parent().height();
+			var width = $("#generator").width();
+			var height = $("#generator").height();
+			var wscale = width/pWidth;
+			var hscale = pHeight/height;
+
+			var xOffset = ( pWidth - width * hscale ) / 2;
+			$("#generator").css(
+				{
+				  '-webkit-transform' : 'translate(' + xOffset + 'px , 0) scale(' + hscale + ' , ' + hscale + ')',
+				  '-moz-transform'    : 'translate(' + xOffset + 'px , 0) scale(' + hscale + ' , ' + hscale + ')',
+				  '-ms-transform'     : 'translate(' + xOffset + 'px , 0) scale(' + hscale + ' , ' + hscale + ')',
+				  '-o-transform'      : 'translate(' + xOffset + 'px , 0) scale(' + hscale + ' , ' + hscale + ')',
+				  'transform'         : ' translate(' + xOffset + 'px , 0)scale(' + hscale + ' , ' + hscale + ')'
+				}
+			);
+
+
+			console.log(xOffset)
+
+		}
+		window.onresize = function(){
+			imageLoad();
+		}
+	</script>
+
+</html>

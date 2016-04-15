@@ -1,0 +1,79 @@
+<div class="dy_datasource_datasource_widget">
+	<span style="width:10px;color:#FF0000;"></span>
+	<span>start</span>
+	<input tranlate-time type="datetime-local" style="height:30px;width:244px;" class="form-control input-sm" name="input" ng-model="options[0].value"
+      placeholder="yyyy-MM-ddTHH:mm" min="1970-01-01T00:00" max="2040-12-31T00:00" required />
+</div>
+
+<div class="dy_datasource_datasource_widget">
+	<span style="width:10px;color:#FF0000;"></span>
+	<span>end</span>
+	<input tranlate-time type="datetime-local" style="height:30px;width:244px;" class="form-control input-sm" name="input" ng-model="options[1].value" placeholder="yyyy-MM-ddTHH:mm" min="1970-01-01T00:00" max="2040-12-31T00:00" required />
+</div>
+
+<div class="dy_datasource_datasource_widget">
+	<span style="width:10px;color:#FF0000;"></span>
+	<span>limit</span>
+	<input input-length-limit-three class="form-control input-sm" style="height:30px;width:244px;" type="number" name="input" ng-model="options[2].value" min="0" max="1000"  placeholder="0-1000" required/>
+</div>
+
+<div class="dy_datasource_datasource_widget">
+	<span style="width:10px;color:#FF0000;"></span>
+	<span>offset</span>
+	<input input-length-limit-three class="form-control input-sm" style="height:30px;width:244px;" type="number" name="input" ng-model="options[3].value" min="0" max="1000"  placeholder="0-1000" required/>
+</div>
+
+<div class="dy_datasource_datasource_widget">
+	<span style="width:10px;color:#FF0000;"></span>
+	<span>class_id</span>
+	<input input-length-limit-three class="form-control input-sm" style="height:30px;width:244px;" type="number" name="input" ng-model="options[4].value" min="0" max="1000"  placeholder="0-1000" required/>
+</div>
+
+<div class="dy_datasource_datasource_widget">
+	<span style="width:10px;color:#FF0000;"></span>
+	<span>type</span>
+	<select class="form-control" style="height:30px;width:244px;" ng-model="options[5].value">
+		<option value="0">越限值报警 &lt </option>
+		<option value="1">越限值报警 &ge </option>
+		<option value="2">越限值报警 &gt </option>
+		<option value="3">越限值报警 &le </option>
+		<option value="4">变化报警 = </option>
+		<option value="5">变化报警 != </option>
+		<option value="6">位报警 (与) </option>
+		<option value="7">位报警 (或) </option>
+		<option value="8">位报警 (异或) </option>
+		<option value="9">位报警 not(与) </option>
+		<option value="10">位报警 not(或) </option>
+		<option value="11">位报警 not(异或) </option>
+	</select>
+</div>
+
+<div class="dy_datasource_datasource_widget">
+	<span style="width:10px;color:#FF0000;"></span>
+	<span>severity</span>
+	<select class="form-control" style="height:30px;width:244px;" ng-model="options[6].value">
+		<option value="0">不确定的</option>
+		<option value="1">Critical alarm(紧急的)</option>
+		<option value="2">Major alarm(重要的)</option>
+		<option value="3">Minor alarm(一般的)</option>
+		<option value="4">Warning(警告)</option>
+	</select>
+</div>
+
+<div class="dy_datasource_datasource_widget">
+	<span style="width:10px;color:#FF0000;"></span>
+	<span>timestamp</span>
+	<select class="form-control" style="height:30px;width:244px;" ng-model="options[7].value">
+		<option value="server_ts">服务器时间戳</option>
+		<option value="source_ts">采集时间戳</option>
+	</select>
+</div>
+
+<div class="dy_datasource_datasource_widget">
+	<span style="width:10px;color:#FF0000;"></span>
+	<span>calc_sum</span>
+	<select class="form-control" style="height:30px;width:244px;" ng-model="options[8].value">
+		<option value="true">开启计算总和</option>
+		<option value="false">关闭计算总和</option>
+	</select>
+</div>
